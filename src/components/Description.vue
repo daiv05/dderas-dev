@@ -24,21 +24,15 @@
                     <div class="paragraph">
                         <h3>¿QUIEN SOY?</h3>
                         <div class="begin">Informático con experiencia en el desarrollo web y móvil.
-                            Estudiante apasionado
-                            por el análisis y
+                            Estudiante aplicado y entusiasta del análisis y
                             diseño de sistemas.</div>
-                        <p>I always liked to get into projects using the skills that I didn't have or that
-                            weren't even necessarily related to pure programming like web design, 3D modeling,
-                            video game making using engines like Unity, ect... This allowed me to learn to be
-                            autonomous and to learn on my own, certainly not without difficulties far from it
-                            but I always managed to overcome the obstacles and solve the problems I encountered!
-                            I'm currently searching new challenges and opportunities to get back into software
-                            design and development.</p>
+                        <p>Me gusta trabajar los proyectos desafiantes, aprender nuevas formas de solucionar problemas,
+                            y comprender sus enfoques.</p>
                     </div>
                 </div>
                 <div id="item-2">
                     <div>
-                        <h3>David Deras</h3>
+                        <h3>Información de Contacto</h3>
                         <div class="data"><strong>Correo:</strong> davidderas50@gmail.com</div>
                         <div class="data"><strong>Teléfono:</strong> +503 74641460</div>
                         <div class="data"><strong>Ciudad:</strong> San Salvador</div>
@@ -109,7 +103,7 @@ export default {
 }
 
 .about {
-    padding: 100px 0;
+    padding: 50px 0;
     background-color: #ffffff;
 }
 
@@ -123,8 +117,13 @@ export default {
     text-transform: uppercase;
 }
 
+h3 {
+    margin-bottom: 10px;
+}
+
 .text-wrapper {
     text-transform: uppercase;
+    margin: 0 15px 0 15px;
 }
 
 .text-wrapper &:after {
@@ -155,7 +154,7 @@ export default {
 }
 
 .data {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 
@@ -181,6 +180,9 @@ export default {
     grid-row-end: 5;
     grid-column-end: 8;
 
+    margin-top: 10px;
+    margin-bottom: 100px;
+
 }
 
 #item-1 {
@@ -205,6 +207,8 @@ export default {
 
 }
 
+/* FIN PARA GRID */
+
 /* PARA GRID MD */
 @media (max-width: 768px) {
     .angry-grid {
@@ -223,6 +227,8 @@ export default {
         justify-content: center;
         align-items: center;
 
+        margin-top: 10px;
+
     }
 
     #item-1 {
@@ -231,7 +237,6 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 10%;
 
     }
 
