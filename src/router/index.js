@@ -7,20 +7,50 @@ const routes = [
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
-        path: '',
+        path: '/inicio',
         name: 'Home',
-        // route level code-splitting
-        // this generates a separate chunk (Home-[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () => import('@/views/Home.vue'),
+      },
+      {
+        path: '/me',
+        name: 'Me',
+        component: () => import('@/views/Me.vue'),
+      },
+      {
+        path: '/proyectos',
+        name: 'Projects',
+        component: () => import('@/views/Projects.vue'),
+      },
+      {
+        path: '/documentos-y-guias',
+        name: 'Ues',
+        component: () => import('@/views/Ues.vue'),
+      },
+      {
+        path: '/tutoriales',
+        name: 'Tutos',
+        component: () => import('@/views/Tutos.vue'),
       },
     ],
   },
 ]
 
+
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+
+router.beforeEach((to, from) => {
+  // Si el path es '/' redirecciona a '/inicio'
+  if (to.path === '/') {
+    return { path: '/inicio' }
+  }
+  // Si no se encuentra la ruta redirecciona a '/inicio'
+  if (!to.matched.length) {
+    return { path: '/inicio' }
+  }
 })
 
 export default router

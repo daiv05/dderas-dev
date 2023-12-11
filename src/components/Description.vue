@@ -2,91 +2,85 @@
     <section class="about">
         <AnimateOnVisible name="slide-fade">
             <div class="title">
-                <h2>Sobre mi</h2>
+                <h2>¿Que encontrarás aqui?</h2>
                 <div class="wrapper">
-                    <div class="text-wrapper">Desarrollador Fullstack salvadoreño </div>
+                    <div class="text-wrapper">La idea de este sitio es compartir documentos, tutoriales y
+                        guías que pueden ser de interés para cualquier estudiante.
+                        Así mismo, publicar distintos proyectos en los que he trabajado y que
+                        pueden ser de utilidad.</div>
                 </div>
             </div>
         </AnimateOnVisible>
-
+        <v-divider></v-divider>
         <AnimateOnVisible name="slide-fade">
-            <div class="angry-grid">
-                <div id="item-0">
-                    <div>
-                        <div class="photo">
-                            <a>
-                                <img src="../assets/maki.jpg" alt="photo" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div id="item-1">
-                    <div class="paragraph">
-                        <h3>¿QUIEN SOY?</h3>
-                        <div class="begin">Informático con experiencia en el desarrollo web y móvil.
-                            Estudiante aplicado y entusiasta del análisis y
-                            diseño de sistemas.</div>
-                        <p>Me gusta trabajar los proyectos desafiantes, aprender nuevas formas de solucionar problemas,
-                            y comprender sus enfoques.</p>
-                    </div>
-                </div>
-                <div id="item-2">
-                    <div>
-                        <h3>Información de Contacto</h3>
-                        <div class="data"><strong>Correo:</strong> davidderas50@gmail.com</div>
-                        <div class="data"><strong>Teléfono:</strong> +503 74641460</div>
-                        <div class="data"><strong>Ciudad:</strong> San Salvador</div>
-                        <div class="data"><strong>Idiomas:</strong> Español (nativo), Inglés (B1)</div>
-                    </div>
-                </div>
+            <v-row align="center" justify="center">
+                <v-col cols="auto">
+                    <v-card class="mx-8 my-8" max-width="344" min-width="344">
+                        <v-img src="../assets/books-repo.jpg" height="200px" cover></v-img>
+                        <v-card-title>
+                            Repositorio UES
+                        </v-card-title>
+                        <v-card-subtitle>
+                            Documentos, guías y pruebas.
+                        </v-card-subtitle>
+                        <v-card-actions>
+                            <v-btn color="orange-lighten-2" variant="text" to="/documentos-y-guias">
+                                Explorar
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn :icon="show_1 ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show_1 = !show_1"></v-btn>
+                        </v-card-actions>
+                        <v-expand-transition>
+                            <div v-show="show_1">
+                                <v-divider></v-divider>
 
-            </div>
+                                <v-card-text>
+                                    Recopilación de varios archivos, herramientas, guias y exámenes de la carrera de Ing de
+                                    Sistemas Informáticos.
+                                </v-card-text>
+                            </div>
+                        </v-expand-transition>
+                    </v-card>
+                </v-col>
+                <v-col cols="auto">
+                    <v-card class="mx-8 my-8" max-width="344" min-width="344">
+                        <v-img src="../assets/projects.jpg" height="200px" cover></v-img>
+                        <v-card-title>
+                            Proyectos y Utilidades
+                        </v-card-title>
+                        <v-card-subtitle>
+                            Aplicaciones web y otras herramientas.
+                        </v-card-subtitle>
+                        <v-card-actions>
+                            <v-btn color="orange-lighten-2" variant="text" to="/proyectos">
+                                Explorar
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+                        </v-card-actions>
+                        <v-expand-transition>
+                            <div v-show="show">
+                                <v-divider></v-divider>
+                                <v-card-text>
+                                    Aplicaciones (mayormente WebApps) creadas por mi persona.
+                                </v-card-text>
+                            </div>
+                        </v-expand-transition>
+                    </v-card>
+                </v-col>
+            </v-row>
         </AnimateOnVisible>
-
-        <!-- <div class="section-content">
-            <div class="container-fluid">
-                <AnimateOnVisible name="slide-fade">
-                    <div class="row justify-content-center">
-                        <div>
-                            <div class="photo">
-                                <a>
-                                    <img src="../assets/maki.jpg" alt="photo" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="paragraph">
-                                <h3>WHO AM I ?</h3>
-                                <div class="begin">I'm a DevOps Engineer working at Camptocamp. Currently, I have a
-                                    Master's Degree in Computer Science specialized in artificial intelligence and
-                                    collaborative systems. IT is not only my professional background. It is also and
-                                    above all a passion that has grown since I was 16 years old.</div>
-                                <p>I always liked to get into projects using the skills that I didn't have or that
-                                    weren't even necessarily related to pure programming like web design, 3D modeling,
-                                    video game making using engines like Unity, ect... This allowed me to learn to be
-                                    autonomous and to learn on my own, certainly not without difficulties far from it
-                                    but I always managed to overcome the obstacles and solve the problems I encountered!
-                                    I'm currently searching new challenges and opportunities to get back into software
-                                    design and development.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div>
-                                <h3>David Deras</h3>
-                                <div class="data"><strong>Correo:</strong> davidderas50@gmail.com</div>
-                                <div class="data"><strong>Teléfono:</strong> +503 74641460</div>
-                                <div class="data"><strong>Ciudad:</strong> San Salvador</div>
-                                <div class="data"><strong>Idiomas:</strong> Español (nativo), Inglés (B1)</div>
-                                <SocialBar :links="links"/>
-                            </div>
-                        </div>
-                    </div>
-                </AnimateOnVisible>
+        <v-divider></v-divider>
+        <!-- Contacto -->
+        <div class="title">
+            <div class="wrapper">
+                <div class="text-wrapper-contact">
+                    <a href="mailto:davidderas50@gmail.com">
+                        <v-btn color="primary" dark>Contáctame</v-btn>
+                    </a>
+                </div>
             </div>
-        </div> -->
-
+        </div>
     </section>
 </template>
 
@@ -94,27 +88,33 @@
 
 export default {
     name: 'Description',
+    data() {
+        return {
+            show: false,
+            show_1: false,
+        }
+    }
 }
 </script>
 
 <style scoped>
-* {
-    box-sizing: border-box;
-}
-
 .about {
-    padding: 50px 0;
     background-color: #ffffff;
 }
 
 .title {
     text-align: center;
     color: #353535;
+    margin: 40px 0 40px 0;
 }
 
 .title h2 {
-    font-size: 4rem;
+    font-size: 2rem;
     text-transform: uppercase;
+    font-weight: bold;
+    color: #7f1a30;
+    margin-bottom: 10px;
+    padding: 0 10px 0 10px;
 }
 
 h3 {
@@ -122,8 +122,12 @@ h3 {
 }
 
 .text-wrapper {
-    text-transform: uppercase;
-    margin: 0 15px 0 15px;
+    margin: 0 25% 0 25%;
+    font-style: italic;
+}
+
+.text-wrapper-contact {
+    margin: 0 25% 0 25%;
 }
 
 .text-wrapper &:after {
@@ -218,6 +222,11 @@ h3 {
         margin-right: 15%;
         margin-top: 10%;
 
+    }
+
+    .text-wrapper {
+        margin: 0 10% 0 10%;
+        font-style: italic;
     }
 
     #item-0 {

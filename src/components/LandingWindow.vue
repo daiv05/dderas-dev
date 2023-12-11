@@ -64,7 +64,7 @@ export default {
       this.timer ? clearTimeout(this.timer) : null;
       this.timer = setTimeout(() => {
         this.plusSlides(1);
-      }, 3000);
+      }, 5000);
     },
     showSlides(n) {
       let i;
