@@ -26,7 +26,7 @@
                         <div class="begin">Informático con experiencia en el desarrollo web y móvil.
                             Estudiante aplicado y entusiasta del análisis y
                             diseño de sistemas.</div>
-                        <p>Me gusta trabajar los proyectos desafiantes, aprender nuevas formas de solucionar problemas,
+                        <p>Me gusta trabajar en proyectos desafiantes, aprender nuevas formas de solucionar problemas,
                             y comprender sus enfoques.</p>
                     </div>
                 </div>
