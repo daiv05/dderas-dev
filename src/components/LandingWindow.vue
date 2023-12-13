@@ -51,7 +51,6 @@ export default {
   }),
   mounted() {
     this.showSlides(this.slideIndex);
-    this.card_timer();
   },
   methods: {
     plusSlides(n) {
@@ -101,7 +100,7 @@ export default {
 }
 
 .card1 {
-  background-image: url("../assets/punpun_wallpaper.jpg");
+  background-image: url("/img/slides/punpun_wallpaper.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -110,7 +109,7 @@ export default {
 }
 
 .card2 {
-  background-image: url("../assets/ues-wall.jpg");
+  background-image: url("/img/slides/ues-wall.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -119,7 +118,7 @@ export default {
 }
 
 .card3 {
-  background-image: url("../assets/project-wall.jpg");
+  background-image: url("/img/slides/project-wall.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;

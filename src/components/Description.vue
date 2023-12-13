@@ -16,7 +16,7 @@
             <v-row align="center" justify="center">
                 <v-col cols="auto">
                     <v-card class="mx-8 my-8" max-width="344" min-width="344">
-                        <v-img src="../assets/books-repo.jpg" height="200px" cover></v-img>
+                        <v-img src="/img/dev/books-repo.jpg" height="200px" cover></v-img>
                         <v-card-title>
                             Repositorio UES
                         </v-card-title>
@@ -44,7 +44,7 @@
                 </v-col>
                 <v-col cols="auto">
                     <v-card class="mx-8 my-8" max-width="344" min-width="344">
-                        <v-img src="../assets/projects.jpg" height="200px" cover></v-img>
+                        <v-img src="/img/dev/projects.jpg" height="200px" cover></v-img>
                         <v-card-title>
                             Proyectos y Utilidades
                         </v-card-title>

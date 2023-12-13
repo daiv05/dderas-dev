@@ -17,14 +17,10 @@
             <div class="projects-grid">
                 <div id="item-0">
                     <div>
-                        <div class="photo">
-                            <a v-if="!(proy.link == '#')" :href="proy.link" target="_blank">
-                                <img :src="proy.image" alt="photo" />
-                            </a>
-                            <a v-else>
-                                <img :src="proy.image" alt="photo" />
-                            </a>
-                        </div>
+                        <v-carousel cycle width="300px" height="300px" :show-arrows="false">
+                            <v-carousel-item @click="open_dialog(proy)" v-for="image in proy.images" :src="image"
+                                position="50"></v-carousel-item>
+                        </v-carousel>
                     </div>
                 </div>
                 <div id="item-1">
@@ -34,7 +30,8 @@
                         <div class="begin">{{ proy.category }}</div>
                         <p>{{ proy.description }}</p>
                         <div class="tags">
-                            <v-chip v-for="tag in proy.tags" :key="tag" color="primary" text-color="white" small>
+                            <v-chip v-for="tag in proy.tags" :key="tag" class="ma-1" color="primary" label small>
+                                <v-icon start icon="mdi-label"></v-icon>
                                 {{ tag }}
                             </v-chip>
                         </div>
@@ -46,179 +43,75 @@
                         <v-divider></v-divider>
                         <div class="datas">
                             <div class="data"><strong>Fecha: </strong>{{ proy.date }}</div>
-                        <div class="data"><strong>Cliente: </strong>{{ proy.client }}</div>
-                        <div class="data"><strong>Categoría: </strong>{{ proy.category }}</div>
-                        <div class="data"><strong>Tecnologías: </strong>{{ proy.technologies }}</div>
+                            <div class="data"><strong>Cliente: </strong>{{ proy.client }}</div>
+                            <div class="data"><strong>Categoría: </strong>{{ proy.category }}</div>
+                            <div class="data"><strong>Tecnologías: </strong>{{ proy.technologies }}</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </AnimateOnVisible>
-        <!-- 
-        <AnimateOnVisible name="slide-fade">
-            <div class="projects-grid">
-                <div id="item-0">
-                    <div>
-                        <div class="photo">
-                            <a href="
-                            https://davidderas.github.io/Proyecto-2-Portafolio/
-                            " target="_blank">
-                                <img src="../assets/project-wall.jpg" alt="photo" />
+                        <v-divider style="margin: 8px 0 8px 0;"></v-divider>
+                        <div class="tags">
+                            <a v-if="proy.online" :href="proy.link" target="_blank">
+                                <v-chip class="ma-2" color="green-accent-4" label small link>
+                                    <v-icon start icon="mdi-web"></v-icon>
+                                    Online
+                                </v-chip>
                             </a>
-                        </div>
-                    </div>
-                </div>
-                <div id="item-1">
-                    <div class="paragraph">
-                        <h3>Proyecto 2</h3>
-                        <div class="begin">Portafolio</div>
-                        <p>Portafolio de proyectos, con información sobre mi y mis proyectos.</p>
-                    </div>
-                </div>
-                <div id="item-2">
-                    <div>
-                        <h3>Información</h3>
-                        <div class="data"><strong>Fecha:</strong> 2021</div>
-                        <div class="data"><strong>Cliente:</strong> Personal</div>
-                        <div class="data"><strong>Categoría:</strong> Portafolio</div>
-                        <div class="data"><strong>Tecnologías:</strong> HTML, CSS, JavaScript</div>
-                    </div>
-                </div>
-            </div>
-        </AnimateOnVisible>
+                            <v-chip v-else class="ma-2" color="red-darken-2" label small>
+                                <v-icon start icon="mdi-web-off"></v-icon>
+                                Offline
+                            </v-chip>
 
-        <AnimateOnVisible name="slide-fade">
-            <div class="projects-grid">
-                <div id="item-0">
-                    <div>
-                        <div class="photo">
-                            <a href="
-                            https://davidderas.github.io/Proyecto-3-Portafolio/
-                            " target="_blank">
-                                <img src="../assets/project-wall.jpg" alt="photo" />
+                            <a v-if="proy.repo" :href="proy.link_repo" target="_blank">
+                                <v-chip class="ma-2" color="grey-lighten-3" label small link>
+                                    <v-icon start icon="mdi-github"></v-icon>
+                                    GitHub
+                                </v-chip>
                             </a>
                         </div>
-                    </div>
-                </div>
-                <div id="item-1">
-                    <div class="paragraph">
-                        <h3>Proyecto 3</h3>
-                        <div class="begin">Portafolio</div>
-                        <p>Portafolio de proyectos, con información sobre mi y mis proyectos.</p>
-                    </div>
-                </div>
-                <div id="item-2">
-                    <div>
-                        <h3>Información</h3>
-                        <div class="data"><strong>Fecha:</strong> 2021</div>
-                        <div class="data"><strong>Cliente:</strong> Personal</div>
-                        <div class="data"><strong>Categoría:</strong> Portafolio</div>
-                        <div class="data"><strong>Tecnologías:</strong> HTML, CSS, JavaScript</div>
                     </div>
                 </div>
             </div>
         </AnimateOnVisible>
-
-        <AnimateOnVisible name="slide-fade">
-            <div class="projects-grid">
-                <div id="item-0">
-                    <div>
-                        <div class="photo">
-                            <a href="
-                            https://davidderas.github.io/Proyecto-4-Portafolio/
-                            " target="_blank">
-                                <img src="../assets/project-wall.jpg" alt="photo" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div id="item-1">
-                    <div class="paragraph">
-                        <h3>Proyecto 4</h3>
-                        <div class="begin">Portafolio</div>
-                        <p>Portafolio de proyectos, con información sobre mi y mis proyectos.</p>
-                    </div>
-                </div>
-                <div id="item-2">
-                    <div>
-                        <h3>Información</h3>
-                        <div class="data"><strong>Fecha:</strong> 2021</div>
-                        <div class="data"><strong>Cliente:</strong> Personal</div>
-                        <div class="data"><strong>Categoría:</strong> Portafolio</div>
-                        <div class="data"><strong>Tecnologías:</strong> HTML, CSS, JavaScript</div>
-                    </div>
-                </div>
-            </div>
-        </AnimateOnVisible> -->
     </section>
+    <v-dialog v-model="dialog" fullscreen :scrim="false" transition="dialog-bottom-transition" z-index="999">
+        <v-card>
+            <v-toolbar color="white">
+                <v-btn icon @click="close()">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title></v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-carousel hide-delimiters cycle>
+                <v-carousel-item v-for="image in selected_proy.images" :src="image" height="95%" position="50"></v-carousel-item>
+            </v-carousel>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
+
+import project_list from '@/projects.js'
 
 export default {
     name: 'Projects',
     data() {
         return {
-            show: false,
-            show_1: false,
-            projects: [
-                {
-                    id: 1,
-                    name: 'musycharts by dcdv',
-                    description: 'Visualiza las canciones y géneros mas escuchados de tu Spotify. Utilizando la API de Spotify y amcharts.js para la visualización de datos.',
-                    date: '2023',
-                    client: 'Personal',
-                    category: 'Portafolio',
-                    tags: ['Vue.js', 'Vuetify'],
-                    online: true,
-                    repo: true,
-                    technologies: 'Vue.js, Vuetify, Spotify API, amcharts.js',
-                    image: '/img/projects/musylogo22.png',
-                    link: 'https://musycharts-dcdv.vercel.app/'
-                },
-                {
-                    id: 2,
-                    name: 'Sistema de Gestión para la Tienda y Depósito "Carmencita"',
-                    description: 'Plataforma de gestión comercial y administrativa para una tienda. Control de inventario, empleados, planilla, facturación y gestión de pedidos de domicilio',
-                    date: '2023',
-                    client: 'Tienda y Depósito "Carmencita"',
-                    category: 'Privado',
-                    tags: ['Vue.js', 'Laravel', 'MySQL', 'TailwindCSS'],
-                    online: false,
-                    repo: false,
-                    technologies: 'Vue.js, TailwindCSS, Laravel',
-                    image: '/img/projects/carmencita.jpg',
-                    link: '#'
-                },
-                {
-                    id: 3,
-                    name: 'RatioInsights',
-                    description: 'Sistema para el análisis financieros de una empresa. Calcula los ratios financieros y los compara con los de la industria. Registro de estados financieros desde Excel.',
-                    date: '2023',
-                    client: 'Personal',
-                    category: 'Portafolio',
-                    tags: ['Vue.js'],
-                    online: false,
-                    repo: true,
-                    technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Excel',
-                    image: '/img/projects/ues-wall.jpg',
-                    link: 'https://github.com/daiv05/ratios-sis'
-                },
-                {
-                    id: 4,
-                    name: 'cherooms sv',
-                    description: 'Plataforma para la busqueda de roomies en San Salvador.',
-                    date: '2022',
-                    client: 'Personal',
-                    category: 'Portafolio',
-                    tags: ['Vue.js', 'Django'],
-                    online: false,
-                    repo: true,
-                    technologies: 'Vue.js, Django, PostgreSQL',
-                    image: '/img/projects/ues-wall.jpg',
-                    link: 'https://github.com/daiv05/cherooms-proy'
-                }
-            ]
+            dialog: false,
+            notifications: false,
+            sound: true,
+            widgets: false,
+            projects: project_list,
+            selected_proy: {}
+        }
+    },
+    methods: {
+        open_dialog(current_proy) {
+            console.log('dwwqwq');
+            this.selected_proy = current_proy;
+            this.dialog = true;
+        },
+        close() {
+            this.dialog = false;
         }
     }
 }
@@ -229,7 +122,7 @@ export default {
 <style scoped>
 .projects {
     background-color: #ffffff;
-    margin: 20px 10% 10% 10%;
+    margin: 20px 5% 10% 5%;
 }
 
 .title {
@@ -263,24 +156,24 @@ export default {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 20px;
     margin-bottom: 50px;
 }
 
 .projects-grid #item-0 {
-    grid-column: 1 / 2;
+    grid-column: 1 / 5;
     grid-row: 1 / 2;
 }
 
 .projects-grid #item-1 {
-    grid-column: 2 / 3;
+    grid-column: 5 / 8;
     grid-row: 1 / 2;
 }
 
 .projects-grid #item-2 {
-    grid-column: 3 / 4;
+    grid-column: 8 / 11;
     grid-row: 1 / 2;
 }
 
@@ -318,22 +211,27 @@ export default {
 
 .info h3 {
     margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.info .datas strong {
+    font-size: 13px;
 }
 
 .datas {
     margin-top: 10px;
-
+    font-size: 13px;
 }
 
 .paragraph .begin {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 
 .paragraph p {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     margin-bottom: 10px;
 }
@@ -343,5 +241,49 @@ export default {
     border-radius: 10px;
     background-color: #353535;
     color: #ffffff;
+}
+
+@media (max-width: 960px) {
+    .projects {
+        margin: 10px 5% 5% 5%;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .projects-grid #item-0 {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    .projects-grid #item-1 {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    .projects-grid #item-2 {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    .photo {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        border: 1px solid #353535;
+    }
+
+    .photo img {
+        object-fit: cover;
+        transition: all 0.3s ease-in-out;
+        border: 1px solid #d70606;
+        justify-content: center;
+    }
+
 }
 </style>

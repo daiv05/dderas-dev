@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="black" prominent>
+  <v-app-bar color="black" style="overflow: initial; z-index: 998">
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     <v-toolbar-title>Daiv DV</v-toolbar-title>
     <v-spacer></v-spacer>
@@ -18,42 +18,12 @@
 
 <script>
 import Footer from '@/components/Footer.vue'
+import sidebar_items from '@/sidebar-items.js'
 export default {
   data: () => ({
     drawer: false,
     group: null,
-    items: [
-      {
-        title: 'Inicio',
-        value: 'home',
-        icon: 'mdi-home',
-        to: '/inicio',
-      },
-      {
-        title: 'Sobre mi',
-        value: 'about',
-        icon: 'mdi-account',
-        to: '/me',
-      },
-      {
-        title: 'Proyectos',
-        value: 'projects',
-        icon: 'mdi-folder',
-        to: '/proyectos',
-      },
-      {
-        title: 'UES',
-        value: 'ues',
-        icon: 'mdi-school',
-        to: '/documentos-y-guias',
-      },
-      {
-        title: 'Tutoriales',
-        value: 'tutorials',
-        icon: 'mdi-book-open-page-variant',
-        to: '/tutoriales',
-      }
-    ],
+    items: sidebar_items,
   }),
   components: {
     Footer,
@@ -68,9 +38,8 @@ export default {
 </script>
 
 <style>
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 @font-face {

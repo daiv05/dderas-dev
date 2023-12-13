@@ -15,7 +15,7 @@
                     <div>
                         <div class="photo">
                             <a>
-                                <img src="../assets/maki.jpg" alt="photo" />
+                                <img src="/img/me/maki.jpg" alt="photo" />
                             </a>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
             <h3>Mi CV</h3>
             <div class="wrapper">
                 <div class="text-wrapper">
-                    <a href="../../public/CV_David_Deras_carta.pdf" download="CV_David_Deras_carta.pdf">Descarga mi CV</a>
+                    <a href="/CV_David_Deras_carta.pdf" download="CV_David_Deras_carta.pdf">Descarga mi CV</a>
                 </div>
             </div>
         </div>
