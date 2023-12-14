@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="text-center mt-2">
-            <p class="text-gray-700">&copy; 2023 David Deras. Powered by Daiv DV.</p>
+            <p class="text-gray-700">&copy; 2023 David Deras. Todos los derechos reservados.</p>
         </div>
     </footer>
 </template>

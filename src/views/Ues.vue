@@ -28,10 +28,12 @@
         <div class="title">
             <div class="wrapper">
                 <div class="text-wrapper-contact">
-                    <p>Si deseas compartir algún recurso o enviar recomendaciones, puedes hacerlo al correo:
+                    <p>(*) Este repositorio es una recopilación de recursos de la UES, no es un repositorio oficial de la
+                        universidad. Si tienes preguntas o deseas compartir algún recurso, puedes hacerlo al
+                        correo: 
                     </p>
                     <a href="mailto:davidderas50@gmail.com">
-                        <v-btn style="margin-top: 10px;" color="primary" dark>Contáctame</v-btn>
+                        <v-btn style="margin-top: 10px;" color="primary" dark size="small">Contáctame</v-btn>
                     </a>
                 </div>
             </div>
@@ -78,7 +80,8 @@
 }
 
 .text-wrapper-contact {
-    margin: 20px 35% 0 35%;
+    margin: 20px 15% 0 15%;
+    font-size: 11px;
 }
 
 

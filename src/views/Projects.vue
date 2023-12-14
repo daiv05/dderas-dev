@@ -70,6 +70,7 @@
                     </div>
                 </div>
             </div>
+            <v-divider class="ma-2"></v-divider>
         </AnimateOnVisible>
     </section>
     <v-dialog v-model="dialog" fullscreen :scrim="false" transition="dialog-bottom-transition" z-index="999">
