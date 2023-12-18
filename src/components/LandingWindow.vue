@@ -1,6 +1,6 @@
 <template>
   <v-carousel cycle width="100%" height="90vh" :show-arrows="false">
-    <v-carousel-item v-for="image in images" :src="image" position="100"></v-carousel-item>
+    <v-carousel-item v-for="image in images" position="100" :lazy-src="image"></v-carousel-item>
   </v-carousel>
 </template>
 <script>
