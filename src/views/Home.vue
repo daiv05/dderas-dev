@@ -1,25 +1,15 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <div v-show="isLoaded">
-      <landing-window/>
-      <description />
-    </div>
-  </transition>
+  <animate-on-visible>
+    <landing-window />
+    <description />
+  </animate-on-visible>
 </template>
 
 <script setup>
 import LandingWindow from '@/components/LandingWindow.vue';
 import Description from '@/components/Description.vue';
-import { ref } from 'vue';
-
-let isLoaded = ref(false);
-
-setTimeout(() => {
-  isLoaded.value = true;
-}, 10);
+import AnimateOnVisible from '@/components/AnimateOnVisible.vue';
 
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -15,8 +15,8 @@
         <AnimateOnVisible name="slide-fade">
             <v-row align="center" justify="center">
                 <v-col cols="auto">
-                    <v-card class="mx-8 my-8" max-width="344" min-width="344">
-                        <v-img src="/img/dev/books-repo.jpg" height="200px" cover></v-img>
+                    <v-card class="mx-8 my-8" width="344">
+                        <v-img src="/img/dev/books-repo.jpg" lazy-src="/img/dev/books-repo.jpg" height="200px"></v-img>
                         <v-card-title>
                             Repositorio UES
                         </v-card-title>
@@ -24,16 +24,17 @@
                             Documentos, guías y pruebas.
                         </v-card-subtitle>
                         <v-card-actions>
-                            <v-btn color="orange-lighten-2" variant="text" to="/documentos-y-guias">
-                                Explorar
-                            </v-btn>
+                            <RouterLink to="/documentos-y-guias">
+                                <v-btn color="orange-lighten-2" variant="text">
+                                    Explorar
+                                </v-btn>
+                            </RouterLink>
                             <v-spacer></v-spacer>
                             <v-btn :icon="show_1 ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show_1 = !show_1"></v-btn>
                         </v-card-actions>
                         <v-expand-transition>
                             <div v-show="show_1">
                                 <v-divider></v-divider>
-
                                 <v-card-text>
                                     Recopilación de varios archivos, herramientas, guias y exámenes de la carrera de Ing de
                                     Sistemas Informáticos.
@@ -44,7 +45,7 @@
                 </v-col>
                 <v-col cols="auto">
                     <v-card class="mx-8 my-8" max-width="344" min-width="344">
-                        <v-img src="/img/dev/projects.jpg" height="200px" cover></v-img>
+                        <v-img src="/img/dev/projects.jpg" lazy-src="/img/dev/projects.jpg" height="200px" cover></v-img>
                         <v-card-title>
                             Proyectos y Utilidades
                         </v-card-title>
@@ -52,9 +53,11 @@
                             Aplicaciones web y otras herramientas.
                         </v-card-subtitle>
                         <v-card-actions>
-                            <v-btn color="orange-lighten-2" variant="text" to="/proyectos">
-                                Explorar
-                            </v-btn>
+                            <RouterLink to="/proyectos">
+                                <v-btn color="orange-lighten-2" variant="text">
+                                    Explorar
+                                </v-btn>
+                            </RouterLink>
                             <v-spacer></v-spacer>
                             <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
                         </v-card-actions>
