@@ -12,11 +12,12 @@
         </AnimateOnVisible>
     </section>
 
-    <AnimateOnVisible name="slide-fade">
-        <v-card class="mx-auto card-container">
-            <v-container>
+
+    <v-card class="mx-auto card-container">
+        <v-container>
+            <AnimateOnVisible name="slide-fade" v-for="tuto in tutos">
                 <v-row dense>
-                    <v-col cols="12" v-for="tuto in tutos">
+                    <v-col cols="12">
                         <v-card :color="tuto.color" theme="dark">
                             <div class="d-flex flex-no-wrap justify-space-between overflow-auto">
                                 <div>
@@ -44,9 +45,9 @@
                         </v-card>
                     </v-col>
                 </v-row>
-            </v-container>
-        </v-card>
-    </AnimateOnVisible>
+            </AnimateOnVisible>
+        </v-container>
+    </v-card>
 </template>
 <script>
 import tutos_list from "@/tutos.js";
