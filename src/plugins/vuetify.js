@@ -15,6 +15,7 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
+  ssr: true,
   theme: {
     themes: {
       light: {
