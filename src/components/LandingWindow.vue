@@ -52,6 +52,9 @@ export default {
   mounted() {
     this.showSlides(this.slideIndex);
   },
+  unmounted() {
+    clearTimeout(this.timer);
+  },
   methods: {
     plusSlides(n) {
       this.showSlides(this.slideIndex += n);

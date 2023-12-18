@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition :name="name" ::appear="true">
-      <div v-if="isVisible">
+      <div v-show="isVisible">
         <slot></slot>
       </div>
     </transition>

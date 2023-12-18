@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="isLoaded">
+    <div v-show="isLoaded">
       <landing-window/>
       <description />
     </div>
@@ -16,7 +16,7 @@ let isLoaded = ref(false);
 
 setTimeout(() => {
   isLoaded.value = true;
-}, 500);
+}, 10);
 
 </script>
 
