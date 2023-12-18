@@ -44,7 +44,7 @@ export default {
 
 @font-face {
   font-family: "Montserrat-Regular";
-  src: url("../../assets/fonts/Montserrat-Medium.ttf");
+  src: url("@/assets/fonts/Montserrat-Medium.ttf");
 }
 
 .wrapper {

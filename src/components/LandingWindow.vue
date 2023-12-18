@@ -81,8 +81,13 @@ export default {
       for (i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
       }
-      slides[this.slideIndex - 1].style.display = "block";
-      dots[this.slideIndex - 1].className += " active";
+      try {
+        slides[this.slideIndex - 1].style.display = "block";
+        dots[this.slideIndex - 1].className += " active";
+      } catch (error) {
+        console.log('... no slide');
+      }
+
 
       this.card_timer();
     }
@@ -146,7 +151,7 @@ export default {
   width: auto;
   padding: 16px;
   margin-top: -22px;
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
