@@ -2,14 +2,16 @@
   "name": "dderas-dev",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
-  },
+    "dev": "vite",
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/manifest-icon-512.maskable.png"
+  },  
   "dependencies": {
     "@mdi/font": "7.0.96",
     "animate.css": "^4.1.1",
     "pinia": "^2.0.23",
+    "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",
     "vue": "^3.2.0",
     "vue-observe-visibility": "^1.0.0",
@@ -18,9 +20,12 @@
     "workbox-precaching": "^7.0.0"
   },
   "devDependencies": {
+    "@vite-pwa/assets-generator": "^0.2.1",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/cli-plugin-pwa": "~5.0.0",
     "unplugin-fonts": "^1.0.3",
     "vite": "^4.2.0",
+    "vite-plugin-pwa": "^0.17.4",
     "vite-plugin-vuetify": "^1.0.0"
   }
 }

@@ -10,6 +10,11 @@ import { registerPlugins } from '@/plugins'
 // Components
 import App from './App.vue'
 import AnimateOnVisible from './components/AnimateOnVisible.vue'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({
+    immediate: true
+})
 
 // Composables
 import { createApp } from 'vue'
