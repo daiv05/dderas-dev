@@ -29,6 +29,7 @@ export default defineConfig({
     }),
     VitePWA({
       includeAssets: ['fonts/*.ttf', 'images/*.png', "/favicon.ico"],
+      registerType: 'autoUpdate',
       manifest: {
         name: "dderas-dev",
         short_name: "dderas-dev",
