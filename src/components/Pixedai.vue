@@ -12,14 +12,18 @@
             </div>
         </AnimateOnVisible>
         <AnimateOnVisible name="slide-fade">
-            <div class="control-section my-4 mx-2">
-                <v-file-input density="compact" label="Cargar imagen" variant="solo" v-model="img_file"></v-file-input>
-                <v-btn class="mx-4" @click="pixel()">Pixedai!</v-btn>
-                <v-btn class="mx-1" id="btn-save" @click="save()">Guardar</v-btn>
-            </div>
+            <v-row justify="center">
+                <v-col md="8" sm="12" xs="12" lg="8">
+                    <v-file-input density="compact" label="Cargar imagen" variant="solo" v-model="img_file"></v-file-input>
+                </v-col>
+                <v-col md="4" sm="12" xs="12" lg="4">
+                    <v-btn class="mx-4 my-2 px-2" @click="pixel()">Pixedai!</v-btn>
+                    <v-btn class="mx-1 my-2 px-2" id="btn-save" @click="save()">Guardar</v-btn>
+                </v-col>
+            </v-row>
             <div class="custom-pixelart">
                 <div class="options-slide my-2">
-                    <v-slider thumb-label class="mx-2" label="Tamaño de los bloques" v-model="cstm.bloque_t"
+                    <v-slider id="slider_1" thumb-label label="Bloque" class="mx-2" v-model="cstm.bloque_t"
                         :color="color_bar" track-color="grey" min="2" max="25" :step="1">
                         <template v-slot:prepend>
                             <v-btn size="small" icon="mdi-minus" variant="text" :color="color_bar"
@@ -44,9 +48,6 @@
                             type="number" hide-spin-buttons></v-text-field>
                     </v-col>
                 </v-row>
-                <div class="options-others my-2">
-
-                </div>
                 <div class="infoselects">
                     <v-checkbox label="Aplicar otra paleta de colores" v-model="paleta"></v-checkbox>
                     <div class="palette-selector">
