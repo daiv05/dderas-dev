@@ -190,7 +190,6 @@ h3 {
         margin-left: 15%;
         margin-right: 15%;
         margin-top: 10%;
-
     }
 
     #item-0 {

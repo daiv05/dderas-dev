@@ -28,6 +28,12 @@ const sidebar_items = [
         value: 'tutorials',
         icon: 'mdi-book-open-page-variant',
         to: '/tutoriales',
+    },
+    {
+        title: 'Herramientas',
+        value: 'herramientas',
+        icon: 'mdi-wrench',
+        to: '/herramientas',
     }
 ]
 

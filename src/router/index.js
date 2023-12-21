@@ -31,6 +31,11 @@ const routes = [
         name: 'Tutos',
         component: () => import('@/views/Tutos.vue'),
       },
+      {
+        path: '/herramientas',
+        name: 'Herramientas',
+        component: () => import('@/views/Herramientas.vue'),
+      },
     ],
   },
 ]
