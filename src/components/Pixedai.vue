@@ -1,4 +1,5 @@
 <template>
+    <app-loader v-if="loader_screen"></app-loader>
     <v-container>
         <AnimateOnVisible name="slide-fade">
             <div class="title">
@@ -79,13 +80,17 @@
 </template>
 
 <script>
-
+import AppLoader from '@/components/AppLoader.vue';
 const url = window.location.href.split('/')[0] + '//' + window.location.href.split('/')[2];
 var px = null;
 export default {
     name: 'Pixedai',
+    components: {
+        AppLoader
+    },
     data() {
         return {
+            loader_screen: false,
             cstm: {
                 bloque_t: 7,
                 greyscale: false,
@@ -274,7 +279,12 @@ export default {
     watch: {
         paleta() {
             if (this.paleta) {
-                this.pixel();
+                this.loader_screen = true;
+                setTimeout(() => {
+                    this.loader_screen = false;
+                    this.pixel();
+                }, 1000);
+
             } else {
                 px.setPalette(this.paleta_rgb_colors[8].rgb_color).draw().pixelate();
             }
@@ -286,9 +296,11 @@ export default {
                 var img = new Image();
                 img.src = URL.createObjectURL(this.img_file[0]);
                 px.setFromImgSource(img.src);
+                this.loader_screen = true;
                 setTimeout(() => {
                     this.img_src = img.src;
                     this.pixel();
+                    this.loader_screen = false;
                 }, 500);
             }
 
@@ -296,13 +308,20 @@ export default {
         cstm: {
             handler() {
                 console.log('cstm change');
-                this.pixel()
+                this.paleta ? this.paleta = false : this.pixel();
+
             },
             deep: true
         },
         paleta_selected() {
             console.log('paleta_selected');
-            this.pixel()
+            if (this.paleta) {
+                this.loader_screen = true;
+                setTimeout(() => {
+                    this.loader_screen = false;
+                    this.pixel();
+                }, 1000);
+            }
         }
     },
     computed: {
