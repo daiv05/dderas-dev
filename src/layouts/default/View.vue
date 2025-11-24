@@ -172,12 +172,12 @@ const scrollToTop = () => {
 
 const toggleTheme = () => {
   isDark.value = !isDark.value;
-  theme.global.name.value = isDark.value ? 'dark' : 'light';
+  theme.global.change(isDark.value ? 'dark' : 'light');
 };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  theme.global.name.value = 'dark';
+  theme.global.change('dark');
 });
 
 onUnmounted(() => {

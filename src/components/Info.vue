@@ -326,11 +326,12 @@ onMounted(() => {
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(10, 9, 8, 0.95);
+            background: rgb(var(--v-theme-surface));
             backdrop-filter: blur(10px);
             border-radius: 50px;
             font-size: 0.875rem;
             font-weight: 600;
+            color: rgb(var(--v-theme-on-surface));
             border: 1px solid var(--primary-opacity-30);
             z-index: 2;
 
@@ -350,12 +351,12 @@ onMounted(() => {
     }
 
     .quick-info {
-        background: rgba(22, 21, 20, 0.6);
+        background: rgb(var(--v-theme-surface));
         border-radius: 16px;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
-        border: 1px solid var(--primary-opacity-10);
-        backdrop-filter: blur(10px);
+        border: 1px solid var(--primary-opacity-20);
+        box-shadow: 0 4px 20px var(--primary-opacity-10);
 
         .info-item {
             display: flex;
@@ -377,6 +378,7 @@ onMounted(() => {
             .info-value {
                 font-size: 0.9375rem;
                 font-weight: 500;
+                color: rgb(var(--v-theme-on-surface));
             }
         }
     }
@@ -416,11 +418,11 @@ onMounted(() => {
     .skills-card,
     .experience-card,
     .interests-card {
-        background: rgba(22, 21, 20, 0.6);
+        background: rgb(var(--v-theme-surface));
         border-radius: 16px;
         padding: 2rem;
-        border: 1px solid var(--primary-opacity-10);
-        backdrop-filter: blur(10px);
+        border: 1px solid var(--primary-opacity-20);
+        box-shadow: 0 4px 20px var(--primary-opacity-10);
 
         .card-title {
             display: flex;
@@ -523,10 +525,10 @@ onMounted(() => {
                 top: 0;
                 width: 12px;
                 height: 12px;
-                background: var(--color-primary);
+                background: rgb(var(--v-theme-primary));
                 border-radius: 50%;
-                border: 3px solid rgba(10, 9, 8, 1);
-                // box-shadow: 0 0 0 4px var(--primary-opacity-20);
+                border: 3px solid rgb(var(--v-theme-surface));
+                box-shadow: 0 0 0 4px var(--primary-opacity-20);
             }
 
             .timeline-content {
@@ -542,11 +544,13 @@ onMounted(() => {
                     font-size: 1.25rem;
                     font-weight: 700;
                     margin-bottom: 0.5rem;
+                    color: rgb(var(--v-theme-on-surface));
                 }
 
                 .timeline-description {
                     font-size: 0.9375rem;
                     line-height: 1.6;
+                    color: rgb(var(--v-theme-on-surface));
                     opacity: 0.7;
                     margin-bottom: 1rem;
                 }
@@ -593,6 +597,7 @@ onMounted(() => {
             .interest-name {
                 font-size: 0.875rem;
                 font-weight: 600;
+                color: rgb(var(--v-theme-on-surface));
             }
         }
     }
