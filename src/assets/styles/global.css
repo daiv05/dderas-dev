@@ -1,0 +1,150 @@
+/* Importar fuentes únicas de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Crimson+Pro:wght@300;400;600;700;900&display=swap');
+
+/* Reset y configuración global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Fuentes */
+  --font-display: 'Epilogue', sans-serif;
+  --font-body: 'Crimson Pro', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Gradientes usando variables de Vuetify */
+  --gradient-primary: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  --gradient-accent: linear-gradient(135deg, rgb(var(--v-theme-accent)) 0%, rgb(var(--v-theme-primary)) 50%, rgb(var(--v-theme-secondary)) 100%);
+  --gradient-dark: linear-gradient(180deg, rgb(var(--v-theme-background)) 0%, rgb(var(--v-theme-surface)) 100%);
+  --gradient-mesh: radial-gradient(at 0% 0%, rgba(var(--v-theme-primary), 0.2) 0px, transparent 50%),
+                   radial-gradient(at 100% 0%, rgba(var(--v-theme-secondary), 0.15) 0px, transparent 50%),
+                   radial-gradient(at 100% 100%, rgba(var(--v-theme-accent), 0.2) 0px, transparent 50%),
+                   radial-gradient(at 0% 100%, rgba(var(--v-theme-primary), 0.15) 0px, transparent 50%);
+  
+  /* Sombras con color primario de Vuetify */
+  --shadow-primary-sm: 0 4px 12px rgba(var(--v-theme-primary), 0.2);
+  --shadow-primary-md: 0 8px 24px rgba(var(--v-theme-primary), 0.3);
+  --shadow-primary-lg: 0 12px 32px rgba(var(--v-theme-primary), 0.4);
+  --shadow-primary-xl: 0 16px 48px rgba(var(--v-theme-primary), 0.6);
+  
+  /* Sombras generales */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.24);
+  
+  /* Transiciones */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Opacidades de color primario (usando variables de Vuetify) */
+  --primary-opacity-02: rgba(var(--v-theme-primary), 0.02);
+  --primary-opacity-03: rgba(var(--v-theme-primary), 0.03);
+  --primary-opacity-05: rgba(var(--v-theme-primary), 0.05);
+  --primary-opacity-10: rgba(var(--v-theme-primary), 0.1);
+  --primary-opacity-15: rgba(var(--v-theme-primary), 0.15);
+  --primary-opacity-20: rgba(var(--v-theme-primary), 0.2);
+  --primary-opacity-30: rgba(var(--v-theme-primary), 0.3);
+  --primary-opacity-40: rgba(var(--v-theme-primary), 0.4);
+  --primary-opacity-90: rgba(var(--v-theme-primary), 0.9);
+  
+  /* Opacidades de color secundario (usando variables de Vuetify) */
+  --secondary-opacity-10: rgba(var(--v-theme-secondary), 0.1);
+  --secondary-opacity-15: rgba(var(--v-theme-secondary), 0.15);
+  --secondary-opacity-20: rgba(var(--v-theme-secondary), 0.2);
+  
+  /* Opacidades de color accent (usando variables de Vuetify) */
+  --accent-opacity-10: rgba(var(--v-theme-accent), 0.1);
+  --accent-opacity-20: rgba(var(--v-theme-accent), 0.2);
+  --accent-opacity-30: rgba(var(--v-theme-accent), 0.3);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Utilidades para animaciones */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Efectos glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradiente de texto - Solo usar en modo dark o con fondos oscuros */
+.gradient-text {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 700;
+}
+
+/* Patrón de fondo geométrico */
+.pattern-dots {
+  background-image: radial-gradient(circle, var(--primary-opacity-15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pattern-grid {
+  background-image: 
+    linear-gradient(var(--primary-opacity-10) 1px, transparent 1px),
+    linear-gradient(90deg, var(--primary-opacity-10) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgb(var(--v-theme-primary));
+  color: white;
+}

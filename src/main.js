@@ -7,6 +7,9 @@
 // Plugins
 import { registerPlugins } from '@/plugins'
 
+// Estilos globales
+import '@/assets/styles/global.css'
+
 // Components
 import App from './App.vue'
 import AnimateOnVisible from './components/AnimateOnVisible.vue'

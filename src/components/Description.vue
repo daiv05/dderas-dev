@@ -1,263 +1,440 @@
-<template>
-    <section class="about">
-        <AnimateOnVisible name="slide-fade">
-            <div class="title">
-                <h2>¿Que encontrarás aqui?</h2>
-                <div class="wrapper">
-                    <div class="text-wrapper">La idea de este sitio es compartir documentos, tutoriales y
-                        guías que pueden ser de interés para cualquier estudiante.
-                        Así mismo, publicar distintos proyectos en los que he trabajado y que
-                        pueden ser de utilidad.</div>
+﻿<template>
+    <section class="features-section">
+        <div class="features-header">
+            <h2 class="section-title" ref="titleEl">
+                ¿Qué encontrarás aquí?
+            </h2>
+            <p class="section-description" ref="descriptionEl">
+                Este espacio reúne proyectos, tutoriales y recursos diseñados para la comunidad de desarrolladores.
+                Desde aplicaciones fullstack hasta guías técnicas prácticas.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div
+                class="feature-card card-projects"
+                ref="card1"
+                @click="navigateTo('/proyectos')"
+            >
+                <div class="card-icon">
+                    <v-icon icon="mdi-briefcase-variant" size="48"></v-icon>
                 </div>
+                <div class="card-content">
+                    <h3 class="card-title">Proyectos & Portfolio</h3>
+                    <p class="card-description">
+                        Aplicaciones web fullstack, desde sistemas empresariales hasta
+                        herramientas de visualización de datos. Cada proyecto con su historia técnica.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="explore-link">
+                        Explorar proyectos
+                        <v-icon icon="mdi-arrow-right" size="20"></v-icon>
+                    </span>
+                </div>
+                <div class="card-glow"></div>
             </div>
-        </AnimateOnVisible>
-        <v-divider></v-divider>
-        <AnimateOnVisible name="slide-fade">
-            <v-row align="center" justify="center">
-                <v-col cols="auto">
-                    <v-card class="mx-8 my-8" width="344">
-                        <v-img src="/img/dev/books-repo.jpg" lazy-src="/img/dev/books-repo.jpg" height="200px"></v-img>
-                        <v-card-title>
-                            Repositorio UES
-                        </v-card-title>
-                        <v-card-subtitle>
-                            Documentos, guías y pruebas.
-                        </v-card-subtitle>
-                        <v-card-actions>
-                            <RouterLink to="/documentos-y-guias">
-                                <v-btn color="orange-lighten-2" variant="text">
-                                    Explorar
-                                </v-btn>
-                            </RouterLink>
-                            <v-spacer></v-spacer>
-                            <v-btn :icon="show_1 ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show_1 = !show_1"></v-btn>
-                        </v-card-actions>
-                        <v-expand-transition>
-                            <div v-show="show_1">
-                                <v-divider></v-divider>
-                                <v-card-text>
-                                    Recopilación de varios archivos, herramientas, guias y exámenes de la carrera de Ing de
-                                    Sistemas Informáticos.
-                                </v-card-text>
-                            </div>
-                        </v-expand-transition>
-                    </v-card>
-                </v-col>
-                <v-col cols="auto">
-                    <v-card class="mx-8 my-8" max-width="344" min-width="344">
-                        <v-img src="/img/dev/projects.jpg" lazy-src="/img/dev/projects.jpg" height="200px" cover></v-img>
-                        <v-card-title>
-                            Proyectos y Utilidades
-                        </v-card-title>
-                        <v-card-subtitle>
-                            Aplicaciones web y otras herramientas.
-                        </v-card-subtitle>
-                        <v-card-actions>
-                            <RouterLink to="/proyectos">
-                                <v-btn color="orange-lighten-2" variant="text">
-                                    Explorar
-                                </v-btn>
-                            </RouterLink>
-                            <v-spacer></v-spacer>
-                            <v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
-                        </v-card-actions>
-                        <v-expand-transition>
-                            <div v-show="show">
-                                <v-divider></v-divider>
-                                <v-card-text>
-                                    Aplicaciones (mayormente WebApps) creadas por mi persona.
-                                </v-card-text>
-                            </div>
-                        </v-expand-transition>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </AnimateOnVisible>
-        <v-divider></v-divider>
-        <!-- Contacto -->
-        <div class="title">
-            <div class="wrapper">
-                <div class="text-wrapper-contact">
-                    <a href="mailto:davidderas50@gmail.com">
-                        <v-btn color="primary" dark>Contáctame</v-btn>
-                    </a>
+
+            <div
+                class="feature-card card-blog"
+                ref="card2"
+                @click="navigateTo('/tutoriales')"
+            >
+                <div class="card-icon">
+                    <v-icon icon="mdi-book-open-page-variant" size="48"></v-icon>
                 </div>
+                <div class="card-content">
+                    <h3 class="card-title">Blog & Tutoriales</h3>
+                    <p class="card-description">
+                        Guías técnicas, tutoriales paso a paso sobre cloud computing,
+                        deployment y desarrollo web moderno.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Azure</span>
+                        <span class="tag">Deployment</span>
+                        <span class="tag">DevOps</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="explore-link">
+                        Leer tutoriales
+                        <v-icon icon="mdi-arrow-right" size="20"></v-icon>
+                    </span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <div
+                class="feature-card card-resources"
+                ref="card3"
+                @click="navigateTo('/documentos-y-guias')"
+            >
+                <div class="card-icon">
+                    <v-icon icon="mdi-folder-multiple" size="48"></v-icon>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Recursos UES</h3>
+                    <p class="card-description">
+                        Repositorio de materiales académicos, guías de estudio y recursos
+                        para estudiantes de Ingeniería de Sistemas.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Documentos</span>
+                        <span class="tag">Guías</span>
+                        <span class="tag">Academia</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="explore-link">
+                        Ver recursos
+                        <v-icon icon="mdi-arrow-right" size="20"></v-icon>
+                    </span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+        </div>
+
+        <div class="cta-section" ref="ctaSection">
+            <div class="cta-content">
+                <h3 class="cta-title">¿Listo para colaborar?</h3>
+                <p class="cta-description">
+                    Siempre abierto a nuevos proyectos y oportunidades de colaboración
+                </p>
+                <v-btn
+                    size="x-large"
+                    class="cta-button"
+                    href="mailto:davidderas50@gmail.com"
+                >
+                    <v-icon start icon="mdi-email-outline"></v-icon>
+                    Contáctame
+                </v-btn>
             </div>
         </div>
     </section>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default {
-    name: 'Description',
-    data() {
-        return {
-            show: false,
-            show_1: false,
+gsap.registerPlugin(ScrollTrigger);
+
+const router = useRouter();
+const titleEl = ref(null);
+const descriptionEl = ref(null);
+const card1 = ref(null);
+const card2 = ref(null);
+const card3 = ref(null);
+const ctaSection = ref(null);
+
+const navigateTo = (path) => {
+    router.push(path);
+};
+
+onMounted(() => {
+    // Asegurar que los elementos sean visibles desde el inicio
+    gsap.set([titleEl.value, descriptionEl.value, card1.value, card2.value, card3.value, ctaSection.value], {
+        opacity: 1,
+        y: 0
+    });
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.features-section',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        }
+    });
+
+    tl.from(titleEl.value, {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: 'power2.out'
+    })
+    .from(descriptionEl.value, {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        ease: 'power2.out'
+    }, '-=0.3')
+    .from([card1.value, card2.value, card3.value], {
+        opacity: 0,
+        y: 40,
+        stagger: 0.15,
+        duration: 0.6,
+        ease: 'power2.out'
+    }, '-=0.2')
+    .from(ctaSection.value, {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: 'power2.out'
+    }, '-=0.3');
+});
+</script>
+
+<style scoped lang="scss">
+.features-section {
+    padding: 120px 5%;
+    background: transparent;
+}
+
+.features-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 80px;
+
+    .section-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        color: rgb(var(--v-theme-on-surface));
+    }
+
+    .section-description {
+        font-size: 1.125rem;
+        line-height: 1.8;
+        color: rgb(var(--v-theme-on-surface));
+        opacity: 0.7;
+    }
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto 100px;
+}
+
+.feature-card {
+    position: relative;
+    background: rgb(var(--v-theme-surface));
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
+    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: rgb(var(--v-theme-primary));
+        transform: scaleX(0);
+        transition: transform var(--transition-base);
+        transform-origin: left;
+    }
+
+    &:hover {
+        transform: translateY(-12px);
+        border-color: var(--primary-opacity-40);
+        // box-shadow: 0 24px 60px var(--primary-opacity-30);
+
+        &::before {
+            transform: scaleX(1);
+        }
+
+        .card-glow {
+            opacity: 1;
+        }
+
+        .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .explore-link {
+            color: rgb(var(--v-theme-primary));
+            transform: translateX(4px);
+        }
+    }
+
+    .card-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 50% 0%,
+            var(--primary-opacity-15),
+            transparent 60%
+        );
+        opacity: 0;
+        transition: opacity var(--transition-base);
+        pointer-events: none;
+    }
+
+    .card-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary-opacity-10);
+        border-radius: 16px;
+        color: rgb(var(--v-theme-primary));
+        margin-bottom: 1.5rem;
+        transition: all var(--transition-base);
+    }
+
+    .card-content {
+        margin-bottom: 2rem;
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: rgb(var(--v-theme-on-surface));
+        }
+
+        .card-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgb(var(--v-theme-on-surface));
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .tag {
+                padding: 0.375rem 0.75rem;
+                background: var(--primary-opacity-15);
+                border-radius: 6px;
+                font-size: 0.75rem;
+                font-family: var(--font-mono);
+                color: rgb(var(--v-theme-primary));
+                font-weight: 500;
+            }
+        }
+    }
+
+    .card-footer {
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--primary-opacity-10);
+
+        .explore-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: rgb(var(--v-theme-on-surface));
+            transition: all var(--transition-base);
         }
     }
 }
-</script>
 
-<style scoped>
-.about {
-    background-color: #ffffff;
-}
-
-.title {
+.cta-section {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
-    color: #353535;
-    margin: 40px 0 40px 0;
+    padding: 4rem 2rem;
+    background: rgb(var(--v-theme-surface));
+    border-radius: 24px;
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
+    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+            circle,
+            var(--primary-opacity-10) 0%,
+            transparent 70%
+        );
+        animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.5;
+        }
+        50% {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 1;
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: rgb(var(--v-theme-primary));
+        }
+
+        .cta-description {
+            font-size: 1.125rem;
+            color: rgb(var(--v-theme-on-surface));
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: rgb(var(--v-theme-primary)) !important;
+            color: white !important;
+            font-weight: 600;
+            text-transform: none;
+            padding: 0 3rem;
+            // box-shadow: 0 8px 24px var(--primary-opacity-40);
+            transition: all var(--transition-base);
+
+            &:hover {
+                transform: translateY(-4px);
+                // box-shadow: var(--shadow-primary-lg);
+            }
+        }
+    }
 }
 
-.title h2 {
-    font-size: 2rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #7f1a30;
-    margin-bottom: 10px;
-    padding: 0 10px 0 10px;
-}
-
-h3 {
-    margin-bottom: 10px;
-}
-
-.text-wrapper {
-    margin: 0 25% 0 25%;
-    font-style: italic;
-}
-
-.text-wrapper-contact {
-    margin: 0 25% 0 25%;
-}
-
-.text-wrapper &:after {
-    content: "";
-    width: 150px;
-    display: block;
-    margin: 20px auto;
-    border-bottom: 1px solid #353535;
-}
-
-.photo a:focus {
-    outline: none;
-}
-
-.photo img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.paragraph {
-    color: #353535;
-}
-
-.paragraph .begin {
-    color: #3C6E71;
-}
-
-.data {
-    margin-bottom: 5px;
-}
-
-
-
-/* PARA GRID */
-.angry-grid {
-    display: grid;
-
-    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10%;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-
-    gap: 0px;
-    height: 100%;
-
-}
-
-#item-0 {
-
-    /* background-color: #955799; */
-    grid-row-start: 1;
-    grid-column-start: 5;
-
-    grid-row-end: 5;
-    grid-column-end: 8;
-
-    margin-top: 10px;
-    margin-bottom: 100px;
-
-}
-
-#item-1 {
-
-    /* background-color: #cbdbec; */
-    grid-row-start: 5;
-    grid-column-start: 2;
-
-    grid-row-end: 8;
-    grid-column-end: 6;
-
-}
-
-#item-2 {
-
-    /* background-color: #cbd875; */
-    grid-row-start: 5;
-    grid-column-start: 7;
-
-    grid-row-end: 8;
-    grid-column-end: 10;
-
-}
-
-/* FIN PARA GRID */
-
-/* PARA GRID MD */
 @media (max-width: 768px) {
-    .angry-grid {
-        display: inline-block;
-        height: 100%;
-        margin-left: 15%;
-        margin-right: 15%;
-        margin-top: 10%;
-
+    .features-section {
+        padding: 60px 5%;
     }
 
-    .text-wrapper {
-        margin: 0 10% 0 10%;
-        font-style: italic;
+    .features-header {
+        margin-bottom: 40px;
     }
 
-    #item-0 {
-
-        /* background-color: #955799; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 10px;
-
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 60px;
     }
 
-    #item-1 {
+    .cta-section {
+        padding: 3rem 1.5rem;
 
-        /* background-color: #cbdbec; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-    }
-
-    #item-2 {
-
-        /* background-color: #cbd875; */
-        display: flex;
-        margin-top: 10%;
-
+        .cta-content .cta-title {
+            font-size: 1.5rem;
+        }
     }
 }
 </style>

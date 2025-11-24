@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <transition :name="name" ::appear="true">
       <div v-show="isVisible">
@@ -42,7 +42,9 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(this.detectVisibility)
+    // Detectar inmediatamente si ya está visible
+    this.detectVisibility();
+    this.$nextTick(this.detectVisibility);
     window.addEventListener('scroll', this.detectVisibility, isPassiveSupported ? { passive: true } : false)
     window.addEventListener('resize', this.detectVisibility, isPassiveSupported ? { passive: true } : false)
     window.addEventListener('orientationchange', this.detectVisibility, isPassiveSupported ? { passive: true } : false)

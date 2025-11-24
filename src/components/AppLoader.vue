@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-loader" style="z-index: 2000;">
     <!-- <div class="lds-ripple">
       <div></div>

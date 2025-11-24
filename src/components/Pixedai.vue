@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <app-loader v-if="loader_screen"></app-loader>
     <v-container>
         <AnimateOnVisible name="slide-fade">

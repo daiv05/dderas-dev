@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <transition name="fade" mode="out-in">
       <div v-if="isLoaded">
         <landing-window/>

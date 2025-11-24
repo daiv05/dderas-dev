@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <v-app>
     <default-view />
   </v-app>
