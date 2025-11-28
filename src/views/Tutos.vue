@@ -240,7 +240,6 @@ onUnmounted(() => {
         .search-field {
             :deep(.v-field) {
                 border-radius: 12px;
-                background: rgba(22, 21, 20, 0.6);
                 backdrop-filter: blur(10px);
             }
         }
@@ -256,7 +255,6 @@ onUnmounted(() => {
 }
 
 .blog-card {
-    background: rgba(22, 21, 20, 0.6);
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
@@ -265,6 +263,7 @@ onUnmounted(() => {
     backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
+    box-shadow: 0 10px 30px var(--primary-opacity-20);
 
     &:hover {
         transform: translateY(-8px);
@@ -288,7 +287,6 @@ onUnmounted(() => {
     position: relative;
     height: 220px;
     overflow: hidden;
-    background: rgba(10, 9, 8, 0.8);
 
     img {
         width: 100%;
@@ -303,7 +301,7 @@ onUnmounted(() => {
         left: 0;
         width: 100%;
         height: 100%;
-        background: var(--primary-opacity-90);
+        background: var(--primary-opacity-30);
         display: flex;
         align-items: center;
         justify-content: center;
