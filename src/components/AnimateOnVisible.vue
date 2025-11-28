@@ -1,11 +1,9 @@
 ﻿<template>
-  <div>
-    <transition :name="name" ::appear="true">
-      <div v-show="isVisible">
-        <slot></slot>
-      </div>
-    </transition>
-  </div>
+  <transition :name="name" :appear="true">
+    <div v-show="isVisible">
+      <slot></slot>
+    </div>
+  </transition>
 </template>
 
 <script>

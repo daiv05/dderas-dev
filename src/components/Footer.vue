@@ -64,7 +64,7 @@
                     <ul class="links-list">
                         <li><router-link to="/documentos-y-guias">UES Drive</router-link></li>
                         <li><router-link to="/herramientas">Herramientas</router-link></li>
-                        <li><a href="/CV_David_Deras_carta.pdf" download>Descargar CV</a></li>
+                        <li><a href="/David_Deras_Frontend_Engineer.pdf" download>Descargar CV</a></li>
                     </ul>
                 </div>
 

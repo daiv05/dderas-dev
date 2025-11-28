@@ -1,5 +1,7 @@
 ﻿<template>
-    <pixedai />
+    <div>
+      <pixedai />
+    </div>
 </template>
 
 <script>

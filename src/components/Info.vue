@@ -53,8 +53,8 @@
                         <v-btn
                             size="large"
                             class="download-cv"
-                            href="/CV_David_Deras_carta.pdf"
-                            download="CV_David_Deras_carta.pdf"
+                            href="/David_Deras_Frontend_Engineer.pdf"
+                            download="David_Deras_Frontend_Engineer.pdf"
                         >
                             <v-icon start icon="mdi-download"></v-icon>
                             Descargar CV
