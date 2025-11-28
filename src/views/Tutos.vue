@@ -112,13 +112,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import tutos_list from '@/tutos.js';
 
 const tutorials = ref(tutos_list);
 const selectedCategory = ref('all');
 const searchQuery = ref('');
+let ctx;
 
 const categories = computed(() => {
     const cats = new Set(tutorials.value.map(t => t.category));
@@ -153,12 +154,18 @@ const openTutorial = (tutorial) => {
 };
 
 onMounted(() => {
-    gsap.from('.blog-header', {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: 'power3.out'
+    ctx = gsap.context(() => {
+        gsap.from('.blog-header', {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            ease: 'power3.out'
+        });
     });
+});
+
+onUnmounted(() => {
+    ctx.revert();
 });
 </script>
 
@@ -262,7 +269,6 @@ onMounted(() => {
     &:hover {
         transform: translateY(-8px);
         border-color: var(--primary-opacity-40);
-        // box-shadow: 0 20px 60px var(--primary-opacity-20);
 
         .card-image img {
             transform: scale(1.1);

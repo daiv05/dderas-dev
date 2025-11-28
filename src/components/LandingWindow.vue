@@ -12,7 +12,7 @@
       <div class="hero-text">
         <div class="greeting" ref="greeting">Hola, soy</div>
         <h1 class="name" ref="name">
-          <span class="gradient-text">--</span>
+          <span class="gradient-text">David Deras</span>
         </h1>
         <h2 class="title" ref="title">
           <span class="typed-text">{{ currentRole }}</span>
@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 
 const greeting = ref(null);
@@ -106,6 +106,7 @@ const buttons = ref(null);
 const techStackRef = ref(null);
 const visual = ref(null);
 const scrollIndicator = ref(null);
+let ctx;
 
 const techStack = [
   { name: 'Vue.js', icon: 'mdi-vuejs' },
@@ -174,13 +175,14 @@ const scrollToProjects = () => {
 
 onMounted(() => {
   // Animaciones GSAP
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  ctx = gsap.context(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  tl.from(greeting.value, {
-    opacity: 0,
-    y: 30,
-    duration: 0.8
-  })
+    tl.from(greeting.value, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8
+    })
   .from(name.value, {
     opacity: 0,
     y: 30,
@@ -216,6 +218,7 @@ onMounted(() => {
     y: -20,
     duration: 0.8
   }, '-=0.3');
+  });
 
   // Iniciar efecto typewriter
   setTimeout(typeWriter, 1000);
@@ -228,6 +231,10 @@ onMounted(() => {
       heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
   });
+});
+
+onUnmounted(() => {
+  ctx.revert();
 });
 </script>
 
@@ -377,7 +384,6 @@ onMounted(() => {
 
       &:hover {
         transform: translateY(-2px);
-        // box-shadow: var(--shadow-primary-md);
       }
     }
 
@@ -441,7 +447,6 @@ onMounted(() => {
     background: rgba(22, 21, 20, 0.95);
     border-radius: 12px;
     overflow: hidden;
-    // box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--primary-opacity-20);
     backdrop-filter: blur(10px);
 

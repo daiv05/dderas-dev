@@ -171,7 +171,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -224,26 +224,34 @@ const interests = [
     { name: 'Mobile Dev', icon: 'mdi-cellphone' }
 ];
 
+let ctx;
+
 onMounted(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    tl.from(label.value, { opacity: 0, y: 30, duration: 0.8 })
-      .from(titleEl.value, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5')
-      .from(subtitle.value, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5')
-      .from(profileSection.value, { opacity: 0, x: -50, duration: 1 }, '-=0.5')
-      .from(detailsSection.value, { opacity: 0, x: 50, duration: 1 }, '-=0.8');
+        tl.from(label.value, { opacity: 0, y: 30, duration: 0.8 })
+          .from(titleEl.value, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5')
+          .from(subtitle.value, { opacity: 0, y: 30, duration: 0.8 }, '-=0.5')
+          .from(profileSection.value, { opacity: 0, x: -50, duration: 1 }, '-=0.5')
+          .from(detailsSection.value, { opacity: 0, x: 50, duration: 1 }, '-=0.8');
 
-    // Animar barras de habilidades
-    gsap.from('.skill-progress', {
-        scrollTrigger: {
-            trigger: '.skills-card',
-            start: 'top 80%',
-        },
-        width: 0,
-        duration: 1.5,
-        stagger: 0.1,
-        ease: 'power2.out'
+        // Animar barras de habilidades
+        gsap.from('.skill-progress', {
+            scrollTrigger: {
+                trigger: '.skills-card',
+                start: 'top 80%',
+            },
+            width: 0,
+            duration: 1.5,
+            stagger: 0.1,
+            ease: 'power2.out'
+        });
     });
+});
+
+onUnmounted(() => {
+    ctx.revert();
 });
 </script>
 
@@ -314,7 +322,6 @@ onMounted(() => {
             border-radius: 20px;
             display: block;
             z-index: 1;
-            // box-shadow: var(--shadow-xl);
         }
 
         .status-badge {

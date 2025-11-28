@@ -232,7 +232,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import project_list from '@/projects.js';
@@ -242,6 +242,7 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = ref(project_list);
 const dialog = ref(false);
 const selectedProject = ref(null);
+let ctx;
 
 const openProject = (project) => {
     selectedProject.value = project;
@@ -256,37 +257,41 @@ const closeProject = () => {
 };
 
 onMounted(() => {
-    // Forzar estado visible inicial
-    gsap.set(['.projects-header', '.project-card'], {
-        opacity: 1,
-        y: 0
-    });
+    ctx = gsap.context(() => {
+        // Animaciones con GSAP y ScrollTrigger
+        gsap.from('.projects-header', {
+            scrollTrigger: {
+                trigger: '.projects-section',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: 'power3.out'
+        });
 
-    // Animaciones con GSAP y ScrollTrigger
-    gsap.from('.projects-header', {
-        scrollTrigger: {
-            trigger: '.projects-section',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: 'power3.out'
-    });
+        // Usar batch para animar las tarjetas individualmente a medida que aparecen
+        ScrollTrigger.batch('.project-card', {
+            start: 'top 90%',
+            onEnter: batch => gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: 'power3.out',
+                overwrite: true
+            }),
+            once: true
+        });
 
-    gsap.from('.project-card', {
-        scrollTrigger: {
-            trigger: '.projects-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-        },
-        opacity: 0,
-        y: 40,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'power3.out'
+        // Establecer estado inicial oculto
+        gsap.set('.project-card', { opacity: 0, y: 50 });
     });
+});
+
+onUnmounted(() => {
+    ctx.revert();
 });
 </script>
 
@@ -347,14 +352,14 @@ onMounted(() => {
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
-    transition: all var(--transition-base);
+    /* Quitamos transition: all para evitar conflictos con GSAP en opacity/transform */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     border: 1px solid var(--primary-opacity-20);
     box-shadow: 0 4px 20px var(--primary-opacity-10);
 
     &:hover {
         transform: translateY(-8px);
         border-color: var(--primary-opacity-40);
-        // box-shadow: 0 20px 60px var(--primary-opacity-20);
 
         .project-image img {
             transform: scale(1.1);

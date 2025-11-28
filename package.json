@@ -6,9 +6,11 @@
     "dev": "vite",
     "preview": "vite preview",
     "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/manifest-icon-512.maskable.png"
-  },  
+  },
   "dependencies": {
     "@mdi/font": "7.4.47",
+    "@vercel/analytics": "^1.5.0",
+    "@vueuse/core": "^14.1.0",
     "gsap": "^3.13.0",
     "pinia": "^3.0.4",
     "register-service-worker": "^1.7.2",

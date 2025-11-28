@@ -1,6 +1,8 @@
 ﻿<template>
-  <landing-window />
-  <description />
+  <div>
+    <landing-window />
+    <description />
+  </div>
 </template>
 
 <script setup>
@@ -9,4 +11,6 @@ import Description from '@/components/Description.vue';
 
 </script>
 
-<style></style>
+<style scoped>
+/* -- */
+</style>

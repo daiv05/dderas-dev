@@ -18,6 +18,6 @@ setTimeout(() => {
 
 </script>
 
-  <style>
-
-  </style>
+<style scoped>
+/* -- */
+</style>

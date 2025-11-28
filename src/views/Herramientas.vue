@@ -4,24 +4,17 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import Pixedai from '../components/Pixedai.vue'
-export default {
-    name: 'Herramientas',
-    components: {
-        Pixedai
-    },
-    data() {
-        return {
-            title: 'Herramientas',
-            description: 'Herramientas para el desarrollo de la aplicación.',
-        }
-    },
-    methods: {
 
-    }
-}
+defineOptions({
+  name: 'Herramientas'
+})
+
+const title = 'Herramientas'
+const description = 'Herramientas para el desarrollo de la aplicación.'
 </script>
 
 <style scoped>
+/* -- */
 </style>

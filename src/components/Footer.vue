@@ -195,7 +195,6 @@ const currentYear = computed(() => new Date().getFullYear());
                 background: var(--gradient-primary);
                 color: white;
                 transform: translateY(-4px);
-                // box-shadow: 0 8px 16px var(--primary-opacity-40);
             }
         }
     }

@@ -11,7 +11,7 @@
           <router-link to="/inicio" class="logo-link">
             <div class="logo">
               <span class="logo-bracket">&lt;</span>
-              <span class="logo-text">DD</span>
+              <span class="logo-text">DDeras</span>
               <span class="logo-bracket">/&gt;</span>
             </div>
           </router-link>
@@ -37,7 +37,7 @@
             class="theme-toggle"
             @click="toggleTheme"
           >
-            <v-icon :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-weather-night'"></v-icon>
+            <v-icon :icon="appStore.theme === 'dark' ? 'mdi-weather-night' : 'mdi-white-balance-sunny'"></v-icon>
           </v-btn>
 
           <v-app-bar-nav-icon
@@ -98,7 +98,7 @@
             icon="mdi-linkedin"
             variant="text"
             size="small"
-            href="https://linkedin.com"
+            href="https://linkedin.com/in/dderas"
             target="_blank"
           ></v-btn>
           <v-btn
@@ -133,17 +133,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useTheme } from 'vuetify';
+import { useAppStore } from '@/store/app';
 import Footer from '@/components/Footer.vue';
 import sidebar_items from '@/sidebar-items.js';
 
 const theme = useTheme();
+const appStore = useAppStore();
 const drawer = ref(false);
 const scrolled = ref(false);
 const showScrollTop = ref(false);
 const showHeader = ref(true);
-const isDark = ref(true);
 const items = sidebar_items;
 
 let lastScrollY = 0;
@@ -171,13 +172,16 @@ const scrollToTop = () => {
 };
 
 const toggleTheme = () => {
-  isDark.value = !isDark.value;
-  isDark.value ? theme.change('dark') : theme.change('light');
+  appStore.theme = appStore.theme === 'dark' ? 'light' : 'dark';
 };
+
+// Sincronizar tema de Vuetify con el store
+watch(() => appStore.theme, (val) => {
+  theme.change(val);
+}, { immediate: true });
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  theme.change('dark');
 });
 
 onUnmounted(() => {
@@ -194,7 +198,6 @@ onUnmounted(() => {
 
   &.scrolled {
     background: rgba(var(--v-theme-background), 0.95) !important;
-    // box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   }
 
   &.hidden {
@@ -382,12 +385,10 @@ onUnmounted(() => {
   z-index: 100;
   background: rgb(var(--v-theme-primary)) !important;
   color: white !important;
-  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: all var(--transition-base);
 
   &:hover {
     transform: translateY(-2px);
-    // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   }
 }
 

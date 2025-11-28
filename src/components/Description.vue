@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -133,51 +133,52 @@ const card1 = ref(null);
 const card2 = ref(null);
 const card3 = ref(null);
 const ctaSection = ref(null);
+let ctx;
 
 const navigateTo = (path) => {
     router.push(path);
 };
 
 onMounted(() => {
-    // Asegurar que los elementos sean visibles desde el inicio
-    gsap.set([titleEl.value, descriptionEl.value, card1.value, card2.value, card3.value, ctaSection.value], {
-        opacity: 1,
-        y: 0
-    });
+    // Pequeño delay para asegurar que el DOM esté listo y el layout estabilizado
+    setTimeout(() => {
+        ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.features-section',
+                    start: 'top 90%', // Disparar antes
+                    toggleActions: 'play none none none'
+                }
+            });
 
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.features-section',
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-        }
-    });
+            // Usar fromTo para asegurar el estado final
+            tl.fromTo(titleEl.value,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+            )
+            .fromTo(descriptionEl.value,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+                '-=0.4'
+            )
+            .fromTo([card1.value, card2.value, card3.value],
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power2.out' },
+                '-=0.2'
+            )
+            .fromTo(ctaSection.value,
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+                '-=0.4'
+            );
+        });
 
-    tl.from(titleEl.value, {
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        ease: 'power2.out'
-    })
-    .from(descriptionEl.value, {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        ease: 'power2.out'
-    }, '-=0.3')
-    .from([card1.value, card2.value, card3.value], {
-        opacity: 0,
-        y: 40,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: 'power2.out'
-    }, '-=0.2')
-    .from(ctaSection.value, {
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        ease: 'power2.out'
-    }, '-=0.3');
+        ScrollTrigger.refresh();
+    }, 100);
+});
+
+onUnmounted(() => {
+    ctx.revert();
 });
 </script>
 
@@ -221,7 +222,6 @@ onMounted(() => {
     border-radius: 20px;
     padding: 2.5rem;
     border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: all var(--transition-base);
     overflow: hidden;
@@ -242,7 +242,6 @@ onMounted(() => {
     &:hover {
         transform: translateY(-12px);
         border-color: var(--primary-opacity-40);
-        // box-shadow: 0 24px 60px var(--primary-opacity-30);
 
         &::before {
             transform: scaleX(1);
@@ -349,7 +348,6 @@ onMounted(() => {
     background: rgb(var(--v-theme-surface));
     border-radius: 24px;
     border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
 
@@ -403,12 +401,10 @@ onMounted(() => {
             font-weight: 600;
             text-transform: none;
             padding: 0 3rem;
-            // box-shadow: 0 8px 24px var(--primary-opacity-40);
             transition: all var(--transition-base);
 
             &:hover {
                 transform: translateY(-4px);
-                // box-shadow: var(--shadow-primary-lg);
             }
         }
     }
