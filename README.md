@@ -53,14 +53,14 @@ npm run preview
 ### Paleta de Colores
 
 #### Tema Oscuro (Default)
+
 ```css
---color-primary: #E85D04    /* Naranja quemado */
---color-secondary: #DC2F02  /* Rojo fuego */
---color-accent: #F48C06     /* Naranja brillante */
---color-bg-dark: #0A0908    /* Negro profundo */
+--color-primary: #e85d04 /* Naranja quemado */ --color-secondary: #dc2f02 /* Rojo fuego */
+  --color-accent: #f48c06 /* Naranja brillante */ --color-bg-dark: #0a0908 /* Negro profundo */;
 ```
 
 ### Tipografía
+
 - **Display**: Epilogue (300-900)
 - **Body**: Crimson Pro (300-900)
 - **Monospace**: JetBrains Mono (300-700)

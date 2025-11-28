@@ -5,12 +5,12 @@
  */
 
 // Styles
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css';
+import 'vuetify/styles';
 
 // Composables
-import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { createVuetify } from 'vuetify';
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
@@ -94,7 +94,6 @@ export default createVuetify({
       },
       dark: {
         colors: {
-
           // ═══════════════════════════════════════════════════════════════
           // PALETA ACTUAL: Naranja/Rojo Quemado
           // ═══════════════════════════════════════════════════════════════
@@ -176,4 +175,4 @@ export default createVuetify({
       mdi,
     },
   },
-})
+});

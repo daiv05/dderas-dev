@@ -4,5 +4,5 @@
 </template>
 
 <script setup>
-  import { Analytics } from '@vercel/analytics/vue';
+import { Analytics } from '@vercel/analytics/vue';
 </script>

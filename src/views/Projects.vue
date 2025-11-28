@@ -1,686 +1,469 @@
-﻿<template>
-    <section class="projects-section">
-        <div class="projects-header">
-            <div class="section-label" data-aos="fade-up">
-                <v-icon icon="mdi-briefcase-variant" size="20"></v-icon>
-                <span>Portfolio</span>
-            </div>
-            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
-                Proyectos Destacados
-            </h2>
-            <p class="section-description" data-aos="fade-up" data-aos-delay="200">
-                Una selección de trabajos que demuestran mi experiencia en desarrollo fullstack,
-                desde aplicaciones empresariales hasta proyectos de data visualization.
-            </p>
-        </div>
+<template>
+  <section class="projects-section">
+    <div class="projects-header">
+      <p ref="label" class="eyebrow">Selección de trabajo</p>
+      <h2 ref="titleEl" class="section-title">Proyectos que combinan negocio y UX</h2>
+      <p ref="descriptionEl" class="section-lead">
+        Casos construidos con equipos pequeños, procesos claros y entregables iterativos. Cada
+        dossier detalla retos técnicos y decisiones de producto.
+      </p>
+    </div>
 
-        <div class="projects-grid">
-            <div
-                v-for="(project, index) in projects"
-                :key="project.id"
-                class="project-card"
-                :class="`card-${index % 3}`"
-                data-aos="fade-up"
-                :data-aos-delay="index * 100"
-                @click="openProject(project)"
+    <v-expansion-panels variant="accordion" class="projects-ledger">
+      <v-expansion-panel v-for="project in projects" :key="project.id" ref="setPanelRef">
+        <v-expansion-panel-title>
+          <div class="panel-title">
+            <div class="panel-heading">
+              <span class="mono">{{ project.date }}</span>
+              <strong>{{ project.name }}</strong>
+            </div>
+            <div class="panel-meta">
+              <span class="badge">{{ project.category }}</span>
+              <span v-if="project.client" class="client-tag">{{ project.client }}</span>
+            </div>
+          </div>
+          <span v-if="project.online" class="status">En línea</span>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <div class="project-layout">
+            <div class="project-main">
+              <article class="summary-card">
+                <h4>Resumen</h4>
+                <p>
+                  {{ project.longDescription || project.description }}
+                </p>
+              </article>
+
+              <article class="feature-card">
+                <h4>Entregables destacados</h4>
+                <ul>
+                  <li v-for="feature in project.features" :key="feature">
+                    {{ feature }}
+                  </li>
+                </ul>
+              </article>
+            </div>
+
+            <aside class="project-aside">
+              <div v-if="project.client" class="info-sheet">
+                <p class="label">Cliente</p>
+                <p>{{ project.client }}</p>
+              </div>
+              <div class="info-sheet">
+                <p class="label">Tecnologías</p>
+                <p>{{ project.technologies || tagsAsText(project) }}</p>
+              </div>
+              <div class="chip-stack">
+                <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+              </div>
+            </aside>
+          </div>
+
+          <div v-if="media(project).length" class="media-strip">
+            <div class="media-header">
+              <p>Capturas</p>
+              <v-btn variant="text" size="small" @click="openGallery(project)">
+                Ver en pantalla completa
+              </v-btn>
+            </div>
+            <v-slide-group show-arrows class="thumbs-group">
+              <v-slide-group-item v-for="(image, idx) in media(project)" :key="idx">
+                <v-img
+                  :src="image"
+                  :alt="project.name"
+                  class="media-thumb"
+                  cover
+                  @click="openGallery(project, idx)"
+                ></v-img>
+              </v-slide-group-item>
+            </v-slide-group>
+          </div>
+
+          <div class="project-links">
+            <v-btn
+              v-if="project.online && project.link && project.link !== '#'"
+              variant="flat"
+              color="primary"
+              rounded="pill"
+              :href="project.link"
+              target="_blank"
             >
-                <div class="project-image-wrapper">
-                    <div class="project-image">
-                        <img :src="project.images[0]" :alt="project.name" />
-                        <div class="image-overlay">
-                            <v-btn
-                                icon="mdi-arrow-expand"
-                                size="large"
-                                class="expand-btn"
-                            ></v-btn>
-                        </div>
-                    </div>
-                    <div class="project-category">{{ project.category }}</div>
-                </div>
+              Ver en producción
+            </v-btn>
+            <v-btn
+              v-if="project.repo && project.link_repo && project.link_repo !== '#'"
+              variant="outlined"
+              rounded="pill"
+              :href="project.link_repo"
+              target="_blank"
+            >
+              Revisar código
+            </v-btn>
+          </div>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
 
-                <div class="project-content">
-                    <div class="project-meta">
-                        <span class="project-date">{{ project.date }}</span>
-                        <div class="project-status">
-                            <v-chip
-                                v-if="project.online"
-                                size="small"
-                                color="success"
-                                variant="flat"
-                            >
-                                <v-icon start icon="mdi-circle" size="8"></v-icon>
-                                Online
-                            </v-chip>
-                        </div>
-                    </div>
-
-                    <h3 class="project-title">{{ project.name }}</h3>
-                    <p class="project-description">{{ project.description }}</p>
-
-                    <div class="project-tags">
-                        <span v-for="tag in project.tags.slice(0, 3)" :key="tag" class="tag">
-                            {{ tag }}
-                        </span>
-                        <span v-if="project.tags.length > 3" class="tag-more">
-                            +{{ project.tags.length - 3 }}
-                        </span>
-                    </div>
-
-                    <div class="project-actions">
-                        <v-btn
-                            variant="text"
-                            class="view-details"
-                            @click.stop="openProject(project)"
-                        >
-                            Ver detalles
-                            <v-icon end icon="mdi-arrow-right"></v-icon>
-                        </v-btn>
-
-                        <div class="project-links">
-                            <v-btn
-                                v-if="project.online"
-                                icon
-                                size="small"
-                                variant="text"
-                                :href="project.link"
-                                target="_blank"
-                                @click.stop
-                            >
-                                <v-icon icon="mdi-open-in-new"></v-icon>
-                            </v-btn>
-                            <v-btn
-                                v-if="project.repo"
-                                icon
-                                size="small"
-                                variant="text"
-                                :href="project.link_repo"
-                                target="_blank"
-                                @click.stop
-                            >
-                                <v-icon icon="mdi-github"></v-icon>
-                            </v-btn>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <v-dialog v-model="gallery.open" fullscreen transition="dialog-bottom-transition">
+      <div class="lightbox">
+        <div class="lightbox-bar">
+          <div>
+            <p class="eyebrow">{{ gallery.project?.category }}</p>
+            <h3>{{ gallery.project?.name }}</h3>
+          </div>
+          <v-btn icon="mdi-close" variant="text" @click="closeGallery"></v-btn>
         </div>
 
-        <!-- Modal de detalles del proyecto -->
-        <v-dialog
-            v-model="dialog"
-            max-width="1200"
-            :scrim="true"
-            transition="dialog-bottom-transition"
-            class="project-dialog"
-        >
-            <v-card class="project-modal" v-if="selectedProject">
-                <v-btn
-                    icon="mdi-close"
-                    class="close-btn"
-                    @click="closeProject"
-                    size="large"
-                ></v-btn>
+        <v-slide-group v-model="gallery.index" show-arrows center-active class="lightbox-group">
+          <v-slide-group-item v-for="(image, idx) in gallery.images" :key="idx" :value="idx">
+            <div
+              class="lightbox-frame"
+              :class="{ 'lightbox-frame--active': gallery.index === idx }"
+            >
+              <v-img :src="image" :alt="gallery.project?.name" class="lightbox-image" cover></v-img>
+            </div>
+          </v-slide-group-item>
+        </v-slide-group>
 
-                <div class="modal-content">
-                    <div class="modal-gallery">
-                        <v-carousel
-                            height="500"
-                            hide-delimiters
-                            show-arrows="hover"
-                            cycle
-                        >
-                            <v-carousel-item
-                                v-for="(image, i) in selectedProject.images"
-                                :key="i"
-                                :src="image"
-                                cover
-                            ></v-carousel-item>
-                        </v-carousel>
-                    </div>
-
-                    <div class="modal-details">
-                        <div class="modal-header">
-                            <div class="project-category-badge">
-                                {{ selectedProject.category }}
-                            </div>
-                            <h2 class="modal-title">{{ selectedProject.name }}</h2>
-                            <p class="modal-client">{{ selectedProject.client }} · {{ selectedProject.date }}</p>
-                        </div>
-
-                        <div class="modal-description">
-                            <p>{{ selectedProject.longDescription || selectedProject.description }}</p>
-                        </div>
-
-                        <div v-if="selectedProject.features" class="modal-section">
-                            <h3 class="section-subtitle">
-                                <v-icon icon="mdi-star-outline" size="20"></v-icon>
-                                Características principales
-                            </h3>
-                            <ul class="features-list">
-                                <li v-for="feature in selectedProject.features" :key="feature">
-                                    <v-icon icon="mdi-check-circle" size="16" color="success"></v-icon>
-                                    {{ feature }}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div v-if="selectedProject.challenges" class="modal-section">
-                            <h3 class="section-subtitle">
-                                <v-icon icon="mdi-lightbulb-outline" size="20"></v-icon>
-                                Desafíos técnicos
-                            </h3>
-                            <ul class="challenges-list">
-                                <li v-for="challenge in selectedProject.challenges" :key="challenge">
-                                    {{ challenge }}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div v-if="selectedProject.impact" class="modal-section impact-section">
-                            <h3 class="section-subtitle">
-                                <v-icon icon="mdi-chart-line" size="20"></v-icon>
-                                Impacto
-                            </h3>
-                            <p class="impact-text">{{ selectedProject.impact }}</p>
-                        </div>
-
-                        <div class="modal-section">
-                            <h3 class="section-subtitle">
-                                <v-icon icon="mdi-hammer-wrench" size="20"></v-icon>
-                                Tecnologías
-                            </h3>
-                            <div class="tech-tags">
-                                <v-chip
-                                    v-for="tag in selectedProject.tags"
-                                    :key="tag"
-                                    class="tech-chip"
-                                    variant="outlined"
-                                >
-                                    {{ tag }}
-                                </v-chip>
-                            </div>
-                        </div>
-
-                        <div class="modal-actions">
-                            <v-btn
-                                v-if="selectedProject.online"
-                                size="large"
-                                class="action-btn primary-action"
-                                :href="selectedProject.link"
-                                target="_blank"
-                            >
-                                <v-icon start icon="mdi-web"></v-icon>
-                                Ver proyecto en vivo
-                            </v-btn>
-                            <v-btn
-                                v-if="selectedProject.repo"
-                                size="large"
-                                variant="outlined"
-                                class="action-btn"
-                                :href="selectedProject.link_repo"
-                                target="_blank"
-                            >
-                                <v-icon start icon="mdi-github"></v-icon>
-                                Ver código fuente
-                            </v-btn>
-                        </div>
-                    </div>
-                </div>
-            </v-card>
-        </v-dialog>
-    </section>
+        <div class="lightbox-controls">
+          <v-btn icon="mdi-chevron-left" variant="tonal" @click="stepGallery(-1)"></v-btn>
+          <span class="mono">{{ gallery.index + 1 }} / {{ gallery.images.length }}</span>
+          <v-btn icon="mdi-chevron-right" variant="tonal" @click="stepGallery(1)"></v-btn>
+        </div>
+      </div>
+    </v-dialog>
+  </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ref, onMounted, onUnmounted } from 'vue';
+
 import project_list from '@/projects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = ref(project_list);
-const dialog = ref(false);
-const selectedProject = ref(null);
+const label = ref(null);
+const titleEl = ref(null);
+const descriptionEl = ref(null);
+const panelRefs = ref([]);
+const gallery = ref({ open: false, images: [], project: null, index: 0 });
 let ctx;
 
-const openProject = (project) => {
-    selectedProject.value = project;
-    dialog.value = true;
+const setPanelRef = (el) => {
+  if (el && !panelRefs.value.includes(el)) {
+    panelRefs.value.push(el);
+  }
 };
 
-const closeProject = () => {
-    dialog.value = false;
-    setTimeout(() => {
-        selectedProject.value = null;
-    }, 300);
+const media = (project) => {
+  if (!project.images) return [];
+  return Object.values(project.images);
+};
+
+const tagsAsText = (project) => {
+  return project.tags?.length ? project.tags.join(', ') : '—';
+};
+
+const openGallery = (project, idx = 0) => {
+  gallery.value = {
+    open: true,
+    images: media(project),
+    project,
+    index: idx,
+  };
+};
+
+const closeGallery = () => {
+  gallery.value.open = false;
+  gallery.value.index = 0;
+};
+
+const stepGallery = (direction) => {
+  if (!gallery.value.images.length) return;
+  const total = gallery.value.images.length;
+  gallery.value.index = (gallery.value.index + direction + total) % total;
 };
 
 onMounted(() => {
-    ctx = gsap.context(() => {
-        // Animaciones con GSAP y ScrollTrigger
-        gsap.from('.projects-header', {
-            scrollTrigger: {
-                trigger: '.projects-section',
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            ease: 'power3.out'
-        });
-
-        // Usar batch para animar las tarjetas individualmente a medida que aparecen
-        ScrollTrigger.batch('.project-card', {
-            start: 'top 90%',
-            onEnter: batch => gsap.to(batch, {
-                opacity: 1,
-                y: 0,
-                stagger: 0.15,
-                duration: 0.8,
-                ease: 'power3.out',
-                overwrite: true
-            }),
-            once: true
-        });
-
-        // Establecer estado inicial oculto
-        gsap.set('.project-card', { opacity: 0, y: 50 });
+  ctx = gsap.context(() => {
+    gsap.from([label.value, titleEl.value, descriptionEl.value], {
+      opacity: 0,
+      y: 24,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
     });
+
+    gsap.from(panelRefs.value, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.projects-ledger',
+        start: 'top 80%',
+        once: true,
+      },
+    });
+  });
 });
 
 onUnmounted(() => {
-    ctx.revert();
+  ctx?.revert();
 });
 </script>
 
 <style scoped lang="scss">
 .projects-section {
-    padding: 120px 5%;
-    min-height: 100vh;
-    background: rgb(var(--v-theme-background));
+  padding: var(--section-gap) var(--shell-padding);
 }
 
 .projects-header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 80px;
-
-    .section-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: var(--primary-opacity-10);
-        border-radius: 20px;
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        color: rgb(var(--v-theme-primary));
-        margin-bottom: 1.5rem;
-        font-weight: 500;
-    }
-
-    .section-title {
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
-        font-weight: 900;
-        margin-bottom: 1.5rem;
-        background: rgb(var(--v-theme-primary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .section-description {
-        font-size: 1.125rem;
-        line-height: 1.8;
-        color: rgb(var(--v-theme-on-surface));
-        opacity: 0.7;
-    }
+  max-width: 820px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
 }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+.projects-ledger {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  background: rgba(var(--v-theme-surface), 0.7);
 }
 
-.project-card {
-    background: rgb(var(--v-theme-surface));
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-    /* Quitamos transition: all para evitar conflictos con GSAP en opacity/transform */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    border: 1px solid var(--primary-opacity-20);
-    box-shadow: 0 4px 20px var(--primary-opacity-10);
-
-    &:hover {
-        transform: translateY(-8px);
-        border-color: var(--primary-opacity-40);
-
-        .project-image img {
-            transform: scale(1.1);
-        }
-
-        .image-overlay {
-            opacity: 1;
-        }
-
-        .view-details {
-            color: rgb(var(--v-theme-primary));
-        }
-    }
+.panel-title {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.project-image-wrapper {
-    position: relative;
-
-    .project-image {
-        position: relative;
-        height: 300px;
-        overflow: hidden;
-        background: rgb(var(--v-theme-surface-variant));
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition-slow);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-opacity-90);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity var(--transition-base);
-
-            .expand-btn {
-                background: white;
-                color: rgb(var(--v-theme-primary));
-            }
-        }
-    }
-
-    .project-category {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        padding: 0.5rem 1rem;
-        background: rgb(var(--v-theme-surface));
-        backdrop-filter: blur(10px);
-        border-radius: 8px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: rgb(var(--v-theme-primary));
-        border: 1px solid var(--primary-opacity-30);
-    }
+.panel-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-.project-content {
-    padding: 2rem;
-
-    .project-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-
-        .project-date {
-            font-family: var(--font-mono);
-            font-size: 0.875rem;
-            opacity: 0.6;
-        }
-    }
-
-    .project-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: rgb(var(--v-theme-on-surface));
-    }
-
-    .project-description {
-        font-size: 0.9375rem;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        color: rgb(var(--v-theme-on-surface));
-        opacity: 0.7;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .project-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-
-        .tag {
-            padding: 0.375rem 0.75rem;
-            background: var(--primary-opacity-15);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-family: var(--font-mono);
-            color: var(--color-accent);
-            font-weight: 500;
-        }
-
-        .tag-more {
-            padding: 0.375rem 0.75rem;
-            background: var(--primary-opacity-10);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-family: var(--font-mono);
-            opacity: 0.6;
-        }
-    }
-
-    .project-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1rem;
-        border-top: 1px solid var(--primary-opacity-10);
-
-        .view-details {
-            color: rgb(var(--v-theme-on-surface));
-            opacity: 0.7;
-            font-weight: 600;
-            text-transform: none;
-            transition: all var(--transition-base);
-        }
-
-        .project-links {
-            display: flex;
-            gap: 0.5rem;
-        }
-    }
+.panel-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.project-modal {
-    background: rgb(var(--v-theme-surface)) !important;
-    border: 1px solid var(--primary-opacity-20);
-    max-height: 90vh;
-    overflow-y: auto;
-
-    .close-btn {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        z-index: 10;
-        background: rgb(var(--v-theme-surface-variant));
-    }
-
-    .modal-content {
-        padding: 2rem;
-    }
-
-    .modal-gallery {
-        margin-bottom: 2rem;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    .modal-details {
-        .modal-header {
-            margin-bottom: 2rem;
-
-            .project-category-badge {
-                display: inline-block;
-                padding: 0.5rem 1rem;
-                background: var(--primary-opacity-15);
-                border-radius: 8px;
-                font-size: 0.875rem;
-                font-weight: 600;
-                color: rgb(var(--v-theme-primary));
-                margin-bottom: 1rem;
-            }
-
-            .modal-title {
-                font-size: 2.5rem;
-                font-weight: 900;
-                margin-bottom: 0.5rem;
-            }
-
-            .modal-client {
-                font-family: var(--font-mono);
-                font-size: 1rem;
-                opacity: 0.6;
-            }
-        }
-
-        .modal-description {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            margin-bottom: 2.5rem;
-            opacity: 0.8;
-        }
-
-        .modal-section {
-            margin-bottom: 2rem;
-
-            .section-subtitle {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                font-size: 1.25rem;
-                font-weight: 700;
-                margin-bottom: 1rem;
-                color: rgb(var(--v-theme-primary));
-            }
-
-            .features-list,
-            .challenges-list {
-                list-style: none;
-                padding: 0;
-
-                li {
-                    padding: 0.75rem 0;
-                    padding-left: 2rem;
-                    position: relative;
-                    line-height: 1.6;
-                    opacity: 0.8;
-
-                    .v-icon {
-                        position: absolute;
-                        left: 0;
-                        top: 0.75rem;
-                    }
-                }
-            }
-
-            &.impact-section {
-                padding: 1.5rem;
-                background: var(--primary-opacity-10);
-                border-left: 4px solid var(--color-primary);
-                border-radius: 8px;
-
-                .impact-text {
-                    font-size: 1.125rem;
-                    font-weight: 600;
-                    color: rgb(var(--v-theme-primary));
-                    margin: 0;
-                }
-            }
-
-            .tech-tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.75rem;
-
-                .tech-chip {
-                    border-color: var(--primary-opacity-30);
-                    color: var(--color-accent);
-                }
-            }
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--primary-opacity-10);
-
-            .action-btn {
-                flex: 1;
-                min-width: 200px;
-                text-transform: none;
-                font-weight: 600;
-
-                &.primary-action {
-                    background: rgb(var(--v-theme-primary)) !important;
-                    color: white !important;
-                }
-            }
-        }
-    }
+.badge {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 0.15rem 0.85rem;
+  font-size: 0.8rem;
 }
 
-@media (max-width: 768px) {
-    .projects-section {
-        padding: 60px 5%;
-    }
+.client-tag {
+  font-size: 0.8rem;
+  color: var(--text-subtle);
+}
 
-    .projects-header {
-        margin-bottom: 40px;
-    }
+.status {
+  font-size: 0.85rem;
+  color: rgb(var(--v-theme-success));
+}
 
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
 
-    .modal-content {
-        padding: 1rem;
-    }
+.project-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 
-    .modal-details .modal-header .modal-title {
-        font-size: 1.75rem;
-    }
+.summary-card,
+.feature-card,
+.info-sheet {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  background: rgba(var(--v-theme-surface), 0.65);
+}
 
-    .modal-actions {
-        flex-direction: column;
+.summary-card p {
+  color: var(--text-subtle);
+  margin: 0;
+}
 
-        .action-btn {
-            width: 100%;
-        }
-    }
+.feature-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.project-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-sheet .label {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 0.2rem;
+}
+
+.chip-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip-stack span {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 0.15rem 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-subtle);
+}
+
+.media-strip {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.media-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-subtle);
+}
+
+.thumbs-group :deep(.v-slide-group__content) {
+  gap: 1rem;
+}
+
+.media-thumb {
+  width: 220px;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.media-thumb:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+.lightbox {
+  width: 100%;
+  height: 100%;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: rgba(7, 7, 12, 0.92);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lightbox-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lightbox-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-group :deep(.v-slide-group__content) {
+  gap: 2rem;
+  align-items: center;
+}
+
+.lightbox-frame {
+  width: min(960px, 80vw);
+  height: min(620px, 75vh);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(12, 12, 18, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.15;
+  transform: scale(0.9);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.lightbox-frame--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lightbox-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lightbox-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 900px) {
+  .project-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .media-thumb {
+    width: 100%;
+  }
+
+  .lightbox-frame {
+    width: 100%;
+    height: 60vh;
+  }
+}
+
+:deep(.v-expansion-panel-title) {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+:deep(.v-expansion-panel:last-of-type .v-expansion-panel-title) {
+  border-bottom: none;
 }
 </style>

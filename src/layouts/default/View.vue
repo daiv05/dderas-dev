@@ -1,184 +1,186 @@
 ﻿<template>
   <v-app>
-    <v-app-bar
-      :elevation="scrolled ? 4 : 0"
-      :class="['app-header', { 'scrolled': scrolled, 'hidden': !showHeader }]"
-      app
-      fixed
-    >
-      <div class="header-content">
-        <div class="logo-section">
-          <router-link to="/inicio" class="logo-link">
-            <div class="logo">
-              <span class="logo-bracket">&lt;</span>
-              <span class="logo-text">DDeras</span>
-              <span class="logo-bracket">/&gt;</span>
-            </div>
-          </router-link>
-        </div>
-
-        <nav class="desktop-nav">
-          <router-link
-            v-for="item in items"
-            :key="item.value"
-            :to="item.to"
-            class="nav-link"
-            active-class="active"
-          >
-            <v-icon :icon="item.icon" size="20"></v-icon>
-            <span>{{ item.title }}</span>
-          </router-link>
-        </nav>
-
-        <div class="header-actions">
-          <v-btn
-            icon
-            variant="text"
-            class="theme-toggle"
-            @click="toggleTheme"
-          >
-            <v-icon :icon="appStore.theme === 'dark' ? 'mdi-weather-night' : 'mdi-white-balance-sunny'"></v-icon>
-          </v-btn>
-
-          <v-app-bar-nav-icon
-            variant="text"
-            @click.stop="drawer = !drawer"
-            class="mobile-menu-btn"
-          ></v-app-bar-nav-icon>
-        </div>
-      </div>
-    </v-app-bar>
-
     <v-navigation-drawer
       v-model="drawer"
-      location="right"
-      temporary
-      class="mobile-drawer"
-      width="320"
+      app
+      :permanent="isDesktop"
+      :scrim="!isDesktop"
+      class="shell-nav"
+      width="280"
     >
-      <div class="drawer-header">
-        <div class="drawer-logo">
-          <span class="logo-bracket">&lt;</span>
-          <span class="logo-text">David Deras</span>
-          <span class="logo-bracket">/&gt;</span>
-        </div>
-        <v-btn
-          icon="mdi-close"
-          variant="text"
-          @click="drawer = false"
-        ></v-btn>
-      </div>
+      <div class="nav-root">
+        <router-link to="/inicio" class="brand-mark">
+          <span class="brand-initial">David Deras</span>
+          <span class="brand-tag">Fullstack & producto</span>
+        </router-link>
 
-      <v-divider></v-divider>
+        <v-divider class="nav-divider" thickness="1"></v-divider>
 
-      <v-list nav class="drawer-nav">
-        <v-list-item
-          v-for="item in items"
-          :key="item.value"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          :value="item.value"
-          :to="item.to"
-          @click="drawer = false"
-          class="drawer-nav-item"
-        ></v-list-item>
-      </v-list>
+        <v-list density="compact" nav class="nav-list">
+          <v-list-item
+            v-for="item in items"
+            :key="item.value"
+            :class="['nav-link', { 'nav-link--active': isActive(item) }]"
+            @click="goTo(item)"
+          >
+            <template #prepend>
+              <span class="nav-dot" :class="{ 'nav-dot--active': isActive(item) }"></span>
+            </template>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
 
-      <div class="drawer-footer">
-        <p class="footer-text">Hecho con ❤️ usando Vue.js</p>
-        <div class="social-links">
-          <v-btn
-            icon="mdi-github"
-            variant="text"
-            size="small"
-            href="https://github.com/daiv05"
-            target="_blank"
-          ></v-btn>
-          <v-btn
-            icon="mdi-linkedin"
-            variant="text"
-            size="small"
-            href="https://linkedin.com/in/dderas"
-            target="_blank"
-          ></v-btn>
-          <v-btn
-            icon="mdi-email"
-            variant="text"
-            size="small"
-            href="mailto:davidderas50@gmail.com"
-          ></v-btn>
+        <div class="nav-bottom">
+          <v-btn class="theme-toggle" variant="outlined" block rounded="pill" @click="toggleTheme">
+            {{ appStore.theme === 'dark' ? 'Modo claro' : 'Modo oscuro' }}
+          </v-btn>
+
+          <div class="nav-links">
+            <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
+              GH
+            </a>
+            <a
+              href="https://linkedin.com/in/dderas"
+              target="_blank"
+              rel="noopener"
+              aria-label="LinkedIn"
+            >
+              IN
+            </a>
+            <a href="mailto:davidderas50@gmail.com" aria-label="Email">Mail</a>
+          </div>
         </div>
       </div>
     </v-navigation-drawer>
 
-    <v-main class="main-wrapper">
-      <div class="page-background"></div>
-      <router-view v-slot="{ Component }">
-        <transition name="page-fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </v-main>
+    <v-main class="shell-main">
+      <div class="shell-main-inner">
+        <div v-if="!isDesktop" class="mobile-top">
+          <v-btn icon variant="text" @click="drawer = true">
+            <v-icon icon="mdi-menu"></v-icon>
+          </v-btn>
+          <p class="mobile-title">David Deras</p>
+          <v-btn
+            variant="text"
+            class="mobile-theme"
+            rounded="pill"
+            size="small"
+            @click="toggleTheme"
+          >
+            {{ appStore.theme === 'dark' ? 'Oscuro' : 'Claro' }}
+          </v-btn>
+        </div>
 
-    <Footer />
+        <div v-if="!isDesktop" class="mobile-nav">
+          <v-slide-group v-model="mobileSection" show-arrows>
+            <v-slide-group-item v-for="item in items" :key="item.value" :value="item.value">
+              <v-btn
+                variant="text"
+                rounded="pill"
+                size="small"
+                class="nav-chip"
+                :class="{ 'nav-chip--active': mobileSection === item.value }"
+                @click="handleMobileNav(item)"
+              >
+                {{ item.title }}
+              </v-btn>
+            </v-slide-group-item>
+          </v-slide-group>
+        </div>
+
+        <div class="page-frame shell-content">
+          <router-view v-slot="{ Component }">
+            <transition name="page-fade" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </div>
+
+        <div class="footer-frame">
+          <Footer />
+        </div>
+      </div>
+    </v-main>
 
     <v-btn
       v-show="showScrollTop"
-      icon="mdi-chevron-up"
+      icon="mdi-arrow-up"
       class="scroll-to-top"
-      @click="scrollToTop"
       size="large"
+      @click="scrollToTop"
     ></v-btn>
   </v-app>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
-import { useTheme } from 'vuetify';
-import { useAppStore } from '@/store/app';
+import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useTheme, useDisplay } from 'vuetify';
+
 import Footer from '@/components/Footer.vue';
 import sidebar_items from '@/sidebar-items.js';
+import { useAppStore } from '@/store/app';
 
 const theme = useTheme();
+const display = useDisplay();
+const router = useRouter();
+const route = useRoute();
 const appStore = useAppStore();
-const drawer = ref(false);
-const scrolled = ref(false);
-const showScrollTop = ref(false);
-const showHeader = ref(true);
 const items = sidebar_items;
 
-let lastScrollY = 0;
+const drawer = ref(false);
+const showScrollTop = ref(false);
+const mobileSection = ref(items[0]?.value ?? null);
 
-const handleScroll = () => {
-  const currentScrollY = window.scrollY;
+const isDesktop = computed(() => display.mdAndUp.value);
 
-  // Mostrar header al hacer scroll hacia arriba o en el tope
-  if (currentScrollY < lastScrollY || currentScrollY < 100) {
-    showHeader.value = true;
-  } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-    showHeader.value = false;
+watchEffect(() => {
+  drawer.value = isDesktop.value;
+});
+
+watch(
+  () => appStore.theme,
+  (val) => {
+    theme.change(val);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => route.path,
+  (path) => {
+    const active = items.find((item) => item.to === path);
+    if (active) {
+      mobileSection.value = active.value;
+    }
   }
-
-  scrolled.value = currentScrollY > 50;
-  showScrollTop.value = currentScrollY > 500;
-  lastScrollY = currentScrollY;
-};
-
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
+);
 
 const toggleTheme = () => {
   appStore.theme = appStore.theme === 'dark' ? 'light' : 'dark';
 };
 
-// Sincronizar tema de Vuetify con el store
-watch(() => appStore.theme, (val) => {
-  theme.change(val);
-}, { immediate: true });
+const goTo = (item) => {
+  router.push(item.to);
+  if (!isDesktop.value) {
+    drawer.value = false;
+  }
+};
+
+const handleMobileNav = (item) => {
+  mobileSection.value = item.value;
+  router.push(item.to);
+};
+
+const isActive = (item) => route.path === item.to;
+
+const handleScroll = () => {
+  showScrollTop.value = window.scrollY > 500;
+};
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
@@ -190,231 +192,173 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-.app-header {
-  background: rgba(var(--v-theme-background), 0.8) !important;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease;
-
-  &.scrolled {
-    background: rgba(var(--v-theme-background), 0.95) !important;
-  }
-
-  &.hidden {
-    transform: translateY(-100%);
-  }
-
-  :deep(.v-toolbar__content) {
-    padding: 0 3%;
-  }
+.shell-nav {
+  border-right: 1px solid var(--line-soft) !important;
+  background: rgb(var(--v-theme-background)) !important;
 }
 
-.header-content {
-  width: 100%;
+.nav-root {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  min-height: 0;
 }
 
-.logo-section {
-  .logo-link {
-    text-decoration: none;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 1.25rem;
-      transition: all var(--transition-base);
-
-      .logo-bracket {
-        color: rgb(var(--v-theme-primary));
-        font-size: 1.5rem;
-        font-weight: 700;
-      }
-
-      .logo-text {
-        color: rgb(var(--v-theme-on-surface));
-        letter-spacing: -0.02em;
-        font-weight: 700;
-      }
-
-      &:hover {
-        transform: translateY(-2px);
-
-        .logo-bracket {
-          color: var(--color-accent);
-        }
-      }
-    }
-  }
+.brand-mark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.06em;
 }
 
-.desktop-nav {
+.brand-initial {
+  font-size: 1.1rem;
+}
+
+.brand-tag {
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+}
+
+.nav-divider {
+  border-color: var(--line-soft) !important;
+}
+
+.nav-list {
+  flex: 1;
+  padding: 0;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+:deep(.v-list-item__content) {
+  gap: 0.35rem;
+}
+
+.nav-link {
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+  padding-inline: 0.75rem;
+}
+
+.nav-link--active {
+  border-color: var(--line-strong);
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  margin-right: 0.85rem;
+}
+
+.nav-dot--active {
+  border-color: rgb(var(--v-theme-primary));
+  background: rgb(var(--v-theme-primary));
+}
+
+.nav-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.theme-toggle {
+  border-color: var(--line-soft) !important;
+}
+
+.nav-links {
   display: flex;
   gap: 0.5rem;
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    color: rgb(var(--v-theme-on-surface));
-    opacity: 0.8;
-    font-weight: 500;
-    font-size: 0.9375rem;
-    transition: all var(--transition-fast);
-
-    &:hover {
-      opacity: 1;
-      background: rgba(var(--v-theme-on-surface), 0.05);
-    }
-
-    &.active {
-      opacity: 1;
-      color: rgb(var(--v-theme-primary));
-      background: var(--primary-opacity-10);
-      font-weight: 600;
-    }
-  }
+  font-size: 0.85rem;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  .theme-toggle {
-    transition: all var(--transition-base);
-
-    &:hover {
-      transform: rotate(20deg);
-    }
-  }
-
-  .mobile-menu-btn {
-    display: none;
-  }
+.nav-links a {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
 }
 
-.mobile-drawer {
-  background: rgba(10, 9, 8, 0.98) !important;
-  backdrop-filter: blur(20px);
-
-.drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;    .drawer-logo {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 1.125rem;
-
-      .logo-bracket {
-        color: rgb(var(--v-theme-primary));
-      }
-    }
-  }
-
-  .drawer-nav {
-    padding: 1rem 0;
-
-    .drawer-nav-item {
-      margin: 0.25rem 1rem;
-      border-radius: 8px;
-      transition: all var(--transition-base);
-
-      &:hover {
-        background: var(--primary-opacity-10);
-      }
-
-      :deep(.v-list-item-title) {
-        font-weight: 500;
-      }
-    }
-  }
-
-  .drawer-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 1rem;
-    border-top: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-
-    .footer-text {
-      font-size: 0.875rem;
-      opacity: 0.6;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-  }
-}
-
-.main-wrapper {
-  position: relative;
+.shell-main {
   min-height: 100vh;
+}
 
-  .page-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(at 0% 0%, var(--primary-opacity-15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, var(--secondary-opacity-10) 0px, transparent 50%);
-  }
+.shell-main-inner {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell-content {
+  flex: 1;
+}
+
+.footer-frame {
+  padding-top: 0;
+}
+
+.mobile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--shell-padding) 0;
+  position: sticky;
+  top: 0;
+  background: rgb(var(--v-theme-background));
+  z-index: 5;
+}
+
+.mobile-title {
+  font-weight: 600;
+}
+
+.mobile-theme {
+  border: 1px solid var(--line-soft);
+}
+
+.mobile-nav {
+  padding: 0.5rem var(--shell-padding);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.nav-chip {
+  border: 1px solid transparent;
+}
+
+.nav-chip--active {
+  border-color: var(--line-strong);
 }
 
 .scroll-to-top {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
-  z-index: 100;
-  background: rgb(var(--v-theme-primary)) !important;
-  color: white !important;
-  transition: all var(--transition-base);
-
-  &:hover {
-    transform: translateY(-2px);
-  }
+  border: 1px solid var(--line-strong);
+  background: rgb(var(--v-theme-background));
 }
 
 .page-fade-enter-active,
 .page-fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .page-fade-enter-from {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
 }
 
 .page-fade-leave-to {
   opacity: 0;
-  transform: translateY(-20px);
-}
-
-@media (max-width: 960px) {
-  .desktop-nav {
-    display: none;
-  }
-
-  .header-actions .mobile-menu-btn {
-    display: flex;
-  }
+  transform: translateY(-16px);
 }
 
 @media (max-width: 600px) {

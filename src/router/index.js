@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
@@ -38,24 +38,22 @@ const routes = [
       },
     ],
   },
-]
-
-
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, _from) => {
   // Si el path es '/' redirecciona a '/inicio'
   if (to.path === '/') {
-    return { path: '/inicio' }
+    return { path: '/inicio' };
   }
   // Si no se encuentra la ruta redirecciona a '/inicio'
   if (!to.matched.length) {
-    return { path: '/inicio' }
+    return { path: '/inicio' };
   }
-})
+});
 
-export default router
+export default router;

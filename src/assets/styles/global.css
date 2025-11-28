@@ -1,7 +1,6 @@
-/* Importar fuentes únicas de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Crimson+Pro:wght@300;400;600;700;900&display=swap');
+/* Importar fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* Reset y configuración global */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,142 +8,209 @@
 }
 
 :root {
-  /* Fuentes */
   --font-display: 'Epilogue', sans-serif;
-  --font-body: 'Crimson Pro', serif;
+  --font-body: 'Epilogue', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  
-  /* Gradientes usando variables de Vuetify */
-  --gradient-primary: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
-  --gradient-accent: linear-gradient(135deg, rgb(var(--v-theme-accent)) 0%, rgb(var(--v-theme-primary)) 50%, rgb(var(--v-theme-secondary)) 100%);
-  --gradient-dark: linear-gradient(180deg, rgb(var(--v-theme-background)) 0%, rgb(var(--v-theme-surface)) 100%);
-  --gradient-mesh: radial-gradient(at 0% 0%, rgba(var(--v-theme-primary), 0.2) 0px, transparent 50%),
-                   radial-gradient(at 100% 0%, rgba(var(--v-theme-secondary), 0.15) 0px, transparent 50%),
-                   radial-gradient(at 100% 100%, rgba(var(--v-theme-accent), 0.2) 0px, transparent 50%),
-                   radial-gradient(at 0% 100%, rgba(var(--v-theme-primary), 0.15) 0px, transparent 50%);
-  
-  /* Sombras con color primario de Vuetify */
-  --shadow-primary-sm: 0 4px 12px rgba(var(--v-theme-primary), 0.2);
-  --shadow-primary-md: 0 8px 24px rgba(var(--v-theme-primary), 0.3);
-  --shadow-primary-lg: 0 12px 32px rgba(var(--v-theme-primary), 0.4);
-  --shadow-primary-xl: 0 16px 48px rgba(var(--v-theme-primary), 0.6);
-  
-  /* Sombras generales */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
-  --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.24);
-  
-  /* Transiciones */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  
-  /* Opacidades de color primario (usando variables de Vuetify) */
-  --primary-opacity-02: rgba(var(--v-theme-primary), 0.02);
-  --primary-opacity-03: rgba(var(--v-theme-primary), 0.03);
-  --primary-opacity-05: rgba(var(--v-theme-primary), 0.05);
-  --primary-opacity-10: rgba(var(--v-theme-primary), 0.1);
-  --primary-opacity-15: rgba(var(--v-theme-primary), 0.15);
-  --primary-opacity-20: rgba(var(--v-theme-primary), 0.2);
-  --primary-opacity-30: rgba(var(--v-theme-primary), 0.3);
-  --primary-opacity-40: rgba(var(--v-theme-primary), 0.4);
-  --primary-opacity-90: rgba(var(--v-theme-primary), 0.9);
-  
-  /* Opacidades de color secundario (usando variables de Vuetify) */
-  --secondary-opacity-10: rgba(var(--v-theme-secondary), 0.1);
-  --secondary-opacity-15: rgba(var(--v-theme-secondary), 0.15);
-  --secondary-opacity-20: rgba(var(--v-theme-secondary), 0.2);
-  
-  /* Opacidades de color accent (usando variables de Vuetify) */
-  --accent-opacity-10: rgba(var(--v-theme-accent), 0.1);
-  --accent-opacity-20: rgba(var(--v-theme-accent), 0.2);
-  --accent-opacity-30: rgba(var(--v-theme-accent), 0.3);
+
+  --page-max-width: 1200px;
+  --shell-padding: clamp(1.5rem, 2vw, 2.5rem);
+  --section-gap: clamp(4rem, 8vw, 6rem);
+
+  --line-soft: rgba(var(--v-theme-on-surface), 0.12);
+  --line-strong: rgba(var(--v-theme-on-surface), 0.25);
+  --surface-faint: rgba(var(--v-theme-on-surface), 0.04);
+  --surface-mild: rgba(var(--v-theme-on-surface), 0.07);
+  --text-subtle: rgba(var(--v-theme-on-surface), 0.68);
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 10px;
+
+  --transition-fast: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 360ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-body);
+  background-color: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-surface));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  line-height: 1.5;
+  min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
 }
 
-/* Utilidades para animaciones */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--transition-slow), transform var(--transition-slow);
+img,
+picture,
+video {
+  max-width: 100%;
+  display: block;
 }
 
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Efectos glassmorphism */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+ul,
+ol {
+  list-style: none;
 }
 
-/* Gradiente de texto - Solo usar en modo dark o con fondos oscuros */
-.gradient-text {
-  color: rgb(var(--v-theme-primary));
-  font-weight: 700;
+::selection {
+  background: rgba(var(--v-theme-primary), 0.3);
+  color: rgb(var(--v-theme-on-primary));
 }
 
-/* Patrón de fondo geométrico */
-.pattern-dots {
-  background-image: radial-gradient(circle, var(--primary-opacity-15) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-.pattern-grid {
-  background-image: 
-    linear-gradient(var(--primary-opacity-10) 1px, transparent 1px),
-    linear-gradient(90deg, var(--primary-opacity-10) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-/* Scrollbar personalizado */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-dark);
+  background: var(--surface-faint);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gradient-primary);
-  border-radius: 5px;
+  background: rgba(var(--v-theme-primary), 0.6);
+  border-radius: 6px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary);
+.page-frame {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--section-gap) var(--shell-padding);
+  position: relative;
 }
 
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
 }
 
-/* Selection color */
-::selection {
-  background: rgb(var(--v-theme-primary));
-  color: white;
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--text-subtle);
+}
+
+.section-title {
+  font-size: clamp(2.25rem, 6vw, 3.4rem);
+  letter-spacing: -0.02em;
+}
+
+.section-lead {
+  font-size: 1.15rem;
+  color: var(--text-subtle);
+}
+
+.inline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.inline-meta span {
+  color: var(--text-subtle);
+}
+
+.plain-sheet {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  background-color: rgba(var(--v-theme-surface), 0.8);
+  padding: 1.5rem;
+}
+
+.list-rows {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.list-rows li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 0.75rem;
+}
+
+.list-rows li:last-child {
+  border-bottom: none;
+}
+
+.text-muted {
+  color: var(--text-subtle);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.chipline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chipline span {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 0.3rem 0.95rem;
+  font-size: 0.85rem;
+}
+
+.grid-duo {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.sticky-panel {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.no-outline-button {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  transition: background-color var(--transition-base);
+}
+
+.no-outline-button:hover {
+  background-color: var(--surface-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

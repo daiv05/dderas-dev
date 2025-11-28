@@ -1,18 +1,15 @@
 ﻿<template>
-    <div>
-      <pixedai />
-    </div>
+  <div>
+    <pixedai />
+  </div>
 </template>
 
 <script setup>
-import Pixedai from '../components/Pixedai.vue'
+import Pixedai from '../components/Pixedai.vue';
 
 defineOptions({
-  name: 'Herramientas'
-})
-
-const title = 'Herramientas'
-const description = 'Herramientas para el desarrollo de la aplicación.'
+  name: 'Herramientas',
+});
 </script>
 
 <style scoped>

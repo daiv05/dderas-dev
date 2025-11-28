@@ -4,25 +4,24 @@
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
 
+import { registerSW } from 'virtual:pwa-register';
+import { createApp } from 'vue';
+
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from '@/plugins';
 
 // Estilos globales
-import '@/assets/styles/global.css'
+import '@/assets/styles/global.css';
 
 // Components
-import App from './App.vue'
-import { registerSW } from 'virtual:pwa-register'
+import App from './App.vue';
 
 registerSW({
-    immediate: true
-})
+  immediate: true,
+});
 
-// Composables
-import { createApp } from 'vue'
+const app = createApp(App);
 
-const app = createApp(App)
+registerPlugins(app);
 
-registerPlugins(app)
-
-app.mount('#app')
+app.mount('#app');
