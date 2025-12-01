@@ -91,7 +91,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -147,6 +147,10 @@ onMounted(() => {
         once: true,
       },
     });
+  });
+
+  nextTick(() => {
+    ScrollTrigger.refresh();
   });
 });
 

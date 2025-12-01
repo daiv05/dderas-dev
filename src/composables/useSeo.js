@@ -2,7 +2,7 @@ import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
-const SITE_URL = 'https://deras.dev';
+const SITE_URL = 'https://www.deras.dev';
 const SUPPORTED_LOCALES = ['en', 'es'];
 const OG_LOCALE_MAP = {
   en: 'en_US',
@@ -143,7 +143,8 @@ export function useSeo() {
     upsertMetaTag({ name: 'twitter:image', content: ogImage });
     upsertMetaTag({ name: 'twitter:image:alt', content: ogImageAlt });
 
-    const twitterHandle = t('seo.twitterHandle');
+    const rawHandle = t('seo.twitterHandle');
+    const twitterHandle = rawHandle ? `@${String(rawHandle).replace(/^@+/, '')}` : '';
     if (twitterHandle) {
       upsertMetaTag({ name: 'twitter:creator', content: twitterHandle });
       upsertMetaTag({ name: 'twitter:site', content: twitterHandle });

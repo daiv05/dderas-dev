@@ -34,7 +34,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span class="mono">© deras.dev - {{ currentYear }}</span>
+      <span class="mono">© www.deras.dev - {{ currentYear }}</span>
       <span>{{ t('footer.builtWith') }}</span>
     </div>
   </footer>

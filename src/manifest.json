@@ -37,25 +37,25 @@
   ],
   "screenshots": [
     {
-      "src": "https://deras.dev/screenshots/inicio.png",
+      "src": "https://www.deras.dev/screenshots/inicio.png",
       "sizes": "1881x844",
       "type": "image/png",
       "description": "Home page"
     },
     {
-      "src": "https://deras.dev/screenshots/mis-proyectos.png",
+      "src": "https://www.deras.dev/screenshots/mis-proyectos.png",
       "sizes": "1882x844",
       "type": "image/png",
       "description": "Projects overview"
     },
     {
-      "src": "https://deras.dev/screenshots/repositorio-ues.png",
+      "src": "https://www.deras.dev/screenshots/repositorio-ues.png",
       "sizes": "1881x844",
       "type": "image/png",
       "description": "UES shared repository"
     },
     {
-      "src": "https://deras.dev/screenshots/tutoriales.png",
+      "src": "https://www.deras.dev/screenshots/tutoriales.png",
       "sizes": "1884x843",
       "type": "image/png",
       "description": "Tutorials and guides"

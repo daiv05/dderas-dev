@@ -31,7 +31,7 @@ export default {
   },
   seo: {
     siteName: 'David Deras · Full Stack Engineer',
-    twitterHandle: '@daiv_09',
+    twitterHandle: 'daiv_09',
     defaults: {
       title: 'Full Stack engineer shipping Vue, Laravel and TypeScript products',
       description:
@@ -47,7 +47,7 @@ export default {
         'El Salvador',
       ],
       author: 'David Deras',
-      ogImage: 'https://deras.dev/punpun_OG.jpg',
+      ogImage: 'https://www.deras.dev/punpun_OG.jpg',
       ogImageAlt: 'Laptop and mobile mockups showcasing David Deras projects and tutorials',
     },
     pages: {
