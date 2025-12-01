@@ -276,6 +276,7 @@ onUnmounted(() => {
 
 .nav-links {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
   font-size: 0.85rem;
 }

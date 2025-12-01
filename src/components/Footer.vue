@@ -34,7 +34,7 @@
 
     <div class="footer-bottom">
       <span class="mono">© deras.dev - {{ currentYear }}</span>
-      <span>Construido con Vue · Vuetify · GSAP</span>
+      <span>Construido con ❤️ Vue · Vuetify</span>
     </div>
   </footer>
 </template>

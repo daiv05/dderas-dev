@@ -88,13 +88,16 @@
 <script setup>
 import { gsap } from 'gsap';
 import { codeToHtml } from 'shiki';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+
+import { useAppStore } from '@/store/app';
 
 const copyBlock = ref(null);
 const boardBlock = ref(null);
 const ledgerBlock = ref(null);
 const ctaGroup = ref(null);
 const roleTicker = ref(null);
+const appStore = useAppStore();
 let ctx;
 
 const techStack = [
@@ -143,8 +146,8 @@ const highlightSnippet = async () => {
   highlightedSnippet.value = `<pre class="code-pre"><code>${escapeHtml(codeSnippet)}</code></pre>`;
   try {
     highlightedSnippet.value = await codeToHtml(codeSnippet, {
-      lang: 'ts',
-      theme: 'github-dark-default',
+      lang: 'js',
+      theme: appStore.theme === 'dark' ? 'github-dark-default' : 'github-light',
     });
   } catch (error) {
     console.warn('No se pudo cargar Shiki', error);
@@ -229,6 +232,14 @@ onMounted(() => {
 onUnmounted(() => {
   ctx?.revert();
 });
+
+watch(
+  () => appStore.theme,
+  (_val) => {
+    highlightSnippet();
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="scss">
@@ -283,7 +294,7 @@ onUnmounted(() => {
   font-size: 1.5rem;
   border-bottom: 1px solid var(--line-soft);
   padding-bottom: 0.35rem;
-  min-height: 2.2rem;
+  height: 2.2rem;
 }
 
 .hero-lead {
@@ -374,14 +385,12 @@ onUnmounted(() => {
   gap: 1rem;
 }
 
-.code-highlight :deep(pre) {
+.code-highlight {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.6;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line-soft);
-  background: rgba(19, 24, 38, 0.95);
+  border-radius: var(--radius-sm);
   overflow-x: auto;
 }
 
