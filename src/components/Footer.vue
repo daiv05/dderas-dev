@@ -11,12 +11,12 @@
       <div class="footer-links">
         <p class="mono">{{ t('footer.quickMap') }}</p>
         <div class="nav-pills">
-          <router-link to="/inicio">{{ t('footer.links.home') }}</router-link>
-          <router-link to="/proyectos">{{ t('footer.links.projects') }}</router-link>
-          <router-link to="/documentos-y-guias">{{ t('footer.links.ues') }}</router-link>
-          <router-link to="/herramientas">{{ t('footer.links.tools') }}</router-link>
+          <router-link to="/home">{{ t('footer.links.home') }}</router-link>
+          <router-link to="/projects">{{ t('footer.links.projects') }}</router-link>
+          <router-link to="/resources">{{ t('footer.links.ues') }}</router-link>
+          <router-link to="/tools">{{ t('footer.links.tools') }}</router-link>
         </div>
-        <a class="cv-link" href="/David_Deras_Frontend_Engineer.pdf" download>
+        <a class="cv-link" href="/cv/David_Deras_Frontend_Engineer.pdf" download>
           {{ t('footer.downloadCv') }}
         </a>
       </div>

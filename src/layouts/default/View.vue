@@ -1,5 +1,5 @@
 ﻿<template>
-  <v-app>
+  <v-app class="h-screen">
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -9,7 +9,7 @@
       width="280"
     >
       <div class="nav-root">
-        <router-link to="/inicio" class="brand-mark">
+        <router-link to="/home" class="brand-mark">
           <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
           <span class="brand-tag">{{ t('navigation.brand.tagline') }}</span>
         </router-link>
@@ -170,6 +170,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
+import { useSeo } from '@/composables/useSeo';
 import sidebar_items from '@/sidebar-items.js';
 import { useAppStore } from '@/store/app';
 
@@ -180,6 +181,8 @@ const route = useRoute();
 const appStore = useAppStore();
 const items = sidebar_items;
 const { t, locale } = useI18n();
+const supportedLanguages = ['en', 'es'];
+useSeo();
 
 const drawer = ref(false);
 const showScrollTop = ref(false);
@@ -190,6 +193,41 @@ const languageOptions = computed(() => [
 ]);
 
 const isDesktop = computed(() => display.mdAndUp.value);
+
+const normalizeLangQuery = (value) => {
+  if (Array.isArray(value)) {
+    return value[0];
+  }
+  return value;
+};
+
+const applyLanguage = (lang) => {
+  locale.value = lang;
+  document.documentElement.setAttribute('lang', lang);
+};
+
+const setLangQuery = (lang) => {
+  const currentQueryLang = normalizeLangQuery(route.query.lang);
+  if (currentQueryLang !== lang) {
+    router.replace({ query: { ...route.query, lang } });
+  }
+};
+
+const initializeLanguage = () => {
+  const queryLang = normalizeLangQuery(route.query.lang);
+  if (typeof queryLang === 'string' && supportedLanguages.includes(queryLang)) {
+    if (queryLang !== appStore.language) {
+      appStore.language = queryLang;
+    }
+    applyLanguage(queryLang);
+    return;
+  }
+
+  applyLanguage(appStore.language);
+  setLangQuery(appStore.language);
+};
+
+initializeLanguage();
 
 watchEffect(() => {
   drawer.value = isDesktop.value;
@@ -206,10 +244,22 @@ watch(
 watch(
   () => appStore.language,
   (lang) => {
-    locale.value = lang;
-    document.documentElement.setAttribute('lang', lang);
-  },
-  { immediate: true }
+    applyLanguage(lang);
+    setLangQuery(lang);
+  }
+);
+
+watch(
+  () => normalizeLangQuery(route.query.lang),
+  (lang) => {
+    if (
+      typeof lang === 'string' &&
+      supportedLanguages.includes(lang) &&
+      lang !== appStore.language
+    ) {
+      appStore.language = lang;
+    }
+  }
 );
 
 watch(
@@ -258,9 +308,14 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+.h-screen {
+  height: 100vh;
+}
+
 .shell-nav {
   border-right: 1px solid var(--line-soft) !important;
   background: rgb(var(--v-theme-background)) !important;
+  height: 100vh;
 }
 
 .nav-root {
@@ -369,7 +424,8 @@ onUnmounted(() => {
 }
 
 .shell-main {
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .shell-main-inner {

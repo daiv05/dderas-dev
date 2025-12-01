@@ -88,7 +88,7 @@ src/
 
 David Deras - davidderas50@gmail.com
 
-Portfolio: [https://dderas.dev](https://dderas.dev)
+Portfolio: [https://deras.dev](https://deras.dev)
 
 ---
 

@@ -29,6 +29,66 @@ export default {
       email: 'Mail',
     },
   },
+  seo: {
+    siteName: 'David Deras · Ingeniero Full Stack',
+    twitterHandle: '@daiv_09',
+    defaults: {
+      title: 'Ingeniero Full Stack que crea productos con Vue, Laravel y TypeScript',
+      description:
+        'Portafolio, tutoriales y casos GovTech de David Deras. Vue 3, Laravel y despliegues cloud con foco en accesibilidad y UX.',
+      keywords: [
+        'David Deras',
+        'Ingeniero Full Stack',
+        'Vue 3',
+        'Laravel 11',
+        'Vuetify',
+        'TypeScript',
+        'GovTech',
+        'El Salvador',
+      ],
+      author: 'David Deras',
+      ogImage: 'https://deras.dev/punpun_OG.jpg',
+      ogImageAlt: 'Mockups con los proyectos y tutoriales de David Deras',
+    },
+    pages: {
+      home: {
+        title: 'Ingeniero de producto enfocado en Vue 3 y Laravel',
+        description:
+          'Explora la agenda, entregables destacados y áreas de enfoque de David Deras, ingeniero full stack que construye plataformas públicas y tooling interno.',
+        keywords: ['Ingeniería de producto', 'Especialista Vue', 'Experto Laravel'],
+      },
+      me: {
+        title: 'Sobre David Deras',
+        description:
+          'Competencias, línea de tiempo y principios de colaboración basados en accesibilidad, SEO y despliegues cloud.',
+        keywords: ['Sobre David', 'Perfil profesional', 'Experiencia'],
+      },
+      projects: {
+        title: 'Proyectos y casos de estudio',
+        description:
+          'Dossiers detallados de portales GovTech, ERP retail y dashboards analíticos diseñados con Vue 3, Laravel 11 y Vuetify.',
+        keywords: ['Casos de estudio', 'Proyectos GovTech', 'ERP retail'],
+      },
+      tutorials: {
+        title: 'Tutoriales y notas de despliegue',
+        description:
+          'Guías sobre Azure, Railway, despliegues de Vue y automatización para documentar flujos repetibles.',
+        keywords: ['Tutorial Azure', 'Deploy Railway', 'Guía Vue'],
+      },
+      ues: {
+        title: 'Recursos académicos UES',
+        description:
+          'Repositorio colaborativo para Ingeniería de Sistemas: pensum, laboratorios, exámenes y formatos administrativos.',
+        keywords: ['Recursos UES', 'Guías académicas', 'Laboratorios'],
+      },
+      tools: {
+        title: 'Herramientas y experimentos',
+        description:
+          'Utilidades como Pixedai Studio para generar pixel art y otras herramientas internas que acompañan el trabajo diario.',
+        keywords: ['Pixedai', 'Herramienta pixel art', 'Utilidades para desarrolladores'],
+      },
+    },
+  },
   loader: {
     message: 'Cargando…',
   },
@@ -80,7 +140,7 @@ export default {
         body: 'Sistemas empresariales, dashboards y herramientas personales con documentación técnica clara.',
         tags: ['Vue 3', 'Laravel', 'Vuetify'],
         cta: 'Ver dossier',
-        to: '/proyectos',
+        to: '/projects',
       },
       {
         label: '02',
@@ -88,7 +148,7 @@ export default {
         body: 'Guías cortas sobre despliegues, cloud y automatizaciones que uso a diario.',
         tags: ['Azure', 'Railway', 'Automatización'],
         cta: 'Abrir blog',
-        to: '/tutoriales',
+        to: '/tutorials',
       },
       {
         label: '03',
@@ -96,7 +156,7 @@ export default {
         body: 'Repositorio colectivo para la Escuela de Sistemas: pensum, guías, parciales y material de apoyo.',
         tags: ['Documentos', 'Laboratorios', 'Pensum'],
         cta: 'Entrar al drive',
-        to: '/documentos-y-guias',
+        to: '/resources',
       },
     ],
     collaboration: {

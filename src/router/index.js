@@ -7,37 +7,49 @@ const routes = [
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
-        path: '/inicio',
+        path: '/home',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
+        meta: { seoKey: 'home' },
       },
       {
-        path: '/me',
-        name: 'Me',
+        path: '/about',
+        name: 'About',
         component: () => import('@/views/Me.vue'),
+        meta: { seoKey: 'me' },
       },
       {
-        path: '/proyectos',
+        path: '/projects',
         name: 'Projects',
         component: () => import('@/views/Projects.vue'),
+        meta: { seoKey: 'projects' },
       },
       {
-        path: '/documentos-y-guias',
-        name: 'Ues',
+        path: '/resources',
+        name: 'Resources',
         component: () => import('@/views/Ues.vue'),
+        meta: { seoKey: 'ues' },
       },
       {
-        path: '/tutoriales',
-        name: 'Tutos',
+        path: '/tutorials',
+        name: 'Tutorials',
         component: () => import('@/views/Tutos.vue'),
+        meta: { seoKey: 'tutorials' },
       },
       {
-        path: '/herramientas',
-        name: 'Herramientas',
+        path: '/tools',
+        name: 'Tools',
         component: () => import('@/views/Herramientas.vue'),
+        meta: { seoKey: 'tools' },
       },
     ],
   },
+  { path: '/inicio', redirect: '/home' },
+  { path: '/me', redirect: '/about' },
+  { path: '/proyectos', redirect: '/projects' },
+  { path: '/documentos-y-guias', redirect: '/resources' },
+  { path: '/tutoriales', redirect: '/tutorials' },
+  { path: '/herramientas', redirect: '/tools' },
 ];
 
 const router = createRouter({
@@ -46,13 +58,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from) => {
-  // Si el path es '/' redirecciona a '/inicio'
+  // Si el path es '/' redirecciona a '/home'
   if (to.path === '/') {
-    return { path: '/inicio' };
+    return { path: '/home' };
   }
-  // Si no se encuentra la ruta redirecciona a '/inicio'
+  // Si no se encuentra la ruta redirecciona a '/home'
   if (!to.matched.length) {
-    return { path: '/inicio' };
+    return { path: '/home' };
   }
 });
 

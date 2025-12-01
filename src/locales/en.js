@@ -29,6 +29,66 @@ export default {
       email: 'Mail',
     },
   },
+  seo: {
+    siteName: 'David Deras · Full Stack Engineer',
+    twitterHandle: '@daiv_09',
+    defaults: {
+      title: 'Full Stack engineer shipping Vue, Laravel and TypeScript products',
+      description:
+        'Portfolio, tutorials and GovTech case studies from David Deras. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
+      keywords: [
+        'David Deras',
+        'Full Stack Engineer',
+        'Vue 3',
+        'Laravel 11',
+        'Vuetify',
+        'TypeScript',
+        'GovTech',
+        'El Salvador',
+      ],
+      author: 'David Deras',
+      ogImage: 'https://deras.dev/punpun_OG.jpg',
+      ogImageAlt: 'Laptop and mobile mockups showcasing David Deras projects and tutorials',
+    },
+    pages: {
+      home: {
+        title: 'Product engineer focused on Vue 3 and Laravel',
+        description:
+          'Explore the agenda, featured deliveries and focus areas of David Deras, a full stack engineer building public platforms and internal tooling.',
+        keywords: ['Product engineering', 'Vue specialist', 'Laravel expert'],
+      },
+      me: {
+        title: 'About David Deras',
+        description:
+          'Skills, experience timeline and collaboration principles shaped by accessibility, SEO and cloud deployments.',
+        keywords: ['About David', 'Professional profile', 'Experience timeline'],
+      },
+      projects: {
+        title: 'Projects & case studies',
+        description:
+          'Detailed dossiers covering GovTech portals, retail ERPs and analytics dashboards designed with Vue 3, Laravel 11 and Vuetify.',
+        keywords: ['Case studies', 'GovTech projects', 'Retail ERP'],
+      },
+      tutorials: {
+        title: 'Tutorials and deployment notes',
+        description:
+          'Guides about Azure, Railway, Vue deployments and automation that document repeatable workflows.',
+        keywords: ['Azure tutorial', 'Railway deploy', 'Vue guide'],
+      },
+      ues: {
+        title: 'UES academic resources',
+        description:
+          'Collaborative repository for Computer Systems Engineering students: syllabuses, labs, exams and administrative formats.',
+        keywords: ['UES resources', 'Academic guides', 'Labs'],
+      },
+      tools: {
+        title: 'Tools & experiments',
+        description:
+          'Utilities like Pixedai Studio to generate pixel art plus internal tools that support daily workflows.',
+        keywords: ['Pixedai', 'Pixel art tool', 'Developer utilities'],
+      },
+    },
+  },
   loader: {
     message: 'Loading…',
   },
@@ -80,7 +140,7 @@ export default {
         body: 'Business systems, dashboards and personal tooling with clear technical docs.',
         tags: ['Vue 3', 'Laravel', 'Vuetify'],
         cta: 'Open dossier',
-        to: '/proyectos',
+        to: '/projects',
       },
       {
         label: '02',
@@ -88,7 +148,7 @@ export default {
         body: 'Short guides about deployments, cloud and automations I use every day.',
         tags: ['Azure', 'Railway', 'Automation'],
         cta: 'Read entries',
-        to: '/tutoriales',
+        to: '/tutorials',
       },
       {
         label: '03',
@@ -96,7 +156,7 @@ export default {
         body: 'Collective repository for the Systems School: curriculum, guides, exams and support material.',
         tags: ['Documents', 'Labs', 'Curriculum'],
         cta: 'Open drive',
-        to: '/documentos-y-guias',
+        to: '/resources',
       },
     ],
     collaboration: {
