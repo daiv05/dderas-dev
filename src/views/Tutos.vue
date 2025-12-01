@@ -78,7 +78,10 @@
 
 <script setup>
 import { gsap } from 'gsap';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
+
+gsap.registerPlugin(ScrollTrigger);
 import { useI18n } from 'vue-i18n';
 
 import tutos_list from '@/tutos.js';
@@ -130,7 +133,8 @@ const chipClass = (value) => ({
   'chip-btn--active': selectedCategory.value === value,
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   ctx = gsap.context(() => {
     gsap.from([label.value, titleEl.value, descriptionEl.value], {
       opacity: 0,
@@ -138,6 +142,11 @@ onMounted(() => {
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
+      scrollTrigger: {
+        trigger: titleEl.value,
+        start: 'top 80%',
+        once: true,
+      },
     });
   });
 });

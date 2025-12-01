@@ -86,7 +86,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { codeToHtml } from 'shiki';
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { useAppStore } from '@/store/app';
@@ -172,7 +172,8 @@ const scrollToProjects = () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   highlightSnippet();
   ctx = gsap.context(() => {
     const copyTargets = copyBlock.value?.querySelectorAll('[data-animate]') ?? [];

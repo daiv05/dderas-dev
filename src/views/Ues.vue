@@ -8,11 +8,11 @@
       </p>
     </div>
 
-    <div class="ues-grid">
+    <div ref="gridRef" class="ues-grid">
       <v-sheet
         v-for="category in categories"
         :key="category.title"
-        ref="setPanelRef"
+        :ref="setPanelRef"
         class="ues-panel"
         elevation="0"
         rounded="xl"
@@ -50,7 +50,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -58,45 +58,63 @@ gsap.registerPlugin(ScrollTrigger);
 const label = ref(null);
 const titleEl = ref(null);
 const descriptionEl = ref(null);
-const panelRefs = ref([]);
+const gridRef = ref(null);
+let panelRefs = [];
 let ctx;
 
 const { t, tm } = useI18n();
 const categories = computed(() => tm('ues.categories') ?? []);
 
 const setPanelRef = (el) => {
-  if (el && !panelRefs.value.includes(el)) {
-    panelRefs.value.push(el);
+  const target = el?.$el ?? el;
+  if (target && !panelRefs.includes(target)) {
+    panelRefs.push(target);
   }
 };
 
-onMounted(() => {
-  ctx = gsap.context(() => {
-    gsap.from([label.value, titleEl.value, descriptionEl.value], {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
+onBeforeUpdate(() => {
+  panelRefs = [];
+});
 
-    gsap.from(panelRefs.value, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.ues-grid',
-        start: 'top 85%',
-        once: true,
-      },
-    });
+onMounted(async () => {
+  await nextTick();
+
+  const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
+  const panels = panelRefs.filter(Boolean);
+
+  ctx = gsap.context(() => {
+    if (headerTargets.length) {
+      gsap.from(headerTargets, {
+        opacity: 0,
+        y: 24,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+    }
+
+    if (panels.length) {
+      gsap.from(panels, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: gridRef.value,
+          start: 'top 85%',
+          once: true,
+        },
+      });
+    }
   });
+
+  ScrollTrigger.refresh();
 });
 
 onUnmounted(() => {
   ctx?.revert();
+  panelRefs = [];
 });
 </script>
 

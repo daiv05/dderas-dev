@@ -8,8 +8,8 @@
       </p>
     </div>
 
-    <v-expansion-panels variant="accordion" class="projects-ledger">
-      <v-expansion-panel v-for="project in projects" :key="project.id" ref="setPanelRef">
+    <v-expansion-panels ref="ledgerRef" variant="accordion" class="projects-ledger">
+      <v-expansion-panel v-for="project in projects" :key="project.id" :ref="setPanelRef">
         <v-expansion-panel-title>
           <div class="panel-title">
             <div class="panel-heading">
@@ -137,7 +137,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import project_list from '@/projects.js';
@@ -157,15 +157,21 @@ const projects = computed(() =>
 const label = ref(null);
 const titleEl = ref(null);
 const descriptionEl = ref(null);
-const panelRefs = ref([]);
+const ledgerRef = ref(null);
+let panelRefs = [];
 const gallery = ref({ open: false, images: [], project: null, index: 0 });
 let ctx;
 
 const setPanelRef = (el) => {
-  if (el && !panelRefs.value.includes(el)) {
-    panelRefs.value.push(el);
+  const target = el?.$el ?? el;
+  if (target && !panelRefs.includes(target)) {
+    panelRefs.push(target);
   }
 };
+
+onBeforeUpdate(() => {
+  panelRefs = [];
+});
 
 const media = (project) => {
   if (!project.images) return [];
@@ -196,33 +202,45 @@ const stepGallery = (direction) => {
   gallery.value.index = (gallery.value.index + direction + total) % total;
 };
 
-onMounted(() => {
-  ctx = gsap.context(() => {
-    gsap.from([label.value, titleEl.value, descriptionEl.value], {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
+onMounted(async () => {
+  await nextTick();
 
-    gsap.from(panelRefs.value, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.projects-ledger',
-        start: 'top 80%',
-        once: true,
-      },
-    });
+  const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
+  const panels = panelRefs.filter(Boolean);
+
+  ctx = gsap.context(() => {
+    if (headerTargets.length) {
+      gsap.from(headerTargets, {
+        opacity: 0,
+        y: 24,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      });
+    }
+
+    if (panels.length) {
+      gsap.from(panels, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: ledgerRef.value?.$el ?? ledgerRef.value,
+          start: 'top 80%',
+          once: true,
+        },
+      });
+    }
   });
+
+  ScrollTrigger.refresh();
 });
 
 onUnmounted(() => {
   ctx?.revert();
+  panelRefs = [];
 });
 </script>
 

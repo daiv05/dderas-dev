@@ -232,7 +232,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, reactive, watch, computed, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, watch, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';
@@ -245,7 +245,7 @@ defineOptions({
 
 const headerEl = ref(null);
 const contentEl = ref(null);
-const panelRefs = ref([]);
+let panelRefs = [];
 const { t, tm, locale } = useI18n();
 const statusChips = computed(() => {
   locale.value;
@@ -259,10 +259,14 @@ const previewTips = computed(() => {
 const registerPanel = (el) => {
   if (!el) return;
   const target = el.$el ?? el;
-  if (!panelRefs.value.includes(target)) {
-    panelRefs.value.push(target);
+  if (!panelRefs.includes(target)) {
+    panelRefs.push(target);
   }
 };
+
+onBeforeUpdate(() => {
+  panelRefs = [];
+});
 
 const createDefaults = () => ({
   bloque_t: 7,
@@ -577,7 +581,8 @@ watch(paleta_selected, () => {
   }, 400);
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   setTimeout(() => {
     const config = {
       to: document.getElementById('pixelitcanvas'),
@@ -593,9 +598,14 @@ onMounted(() => {
       y: 32,
       duration: 0.9,
       ease: 'power3.out',
+      scrollTrigger: {
+        trigger: headerEl.value,
+        start: 'top 80%',
+        once: true,
+      },
     });
 
-    gsap.from(panelRefs.value, {
+    gsap.from(panelRefs, {
       opacity: 0,
       y: 36,
       duration: 0.9,
@@ -612,7 +622,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   ctx?.revert();
-  panelRefs.value = [];
+  panelRefs = [];
 });
 </script>
 

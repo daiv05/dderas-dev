@@ -1,5 +1,5 @@
 ﻿<template>
-  <section class="overview-section">
+  <section ref="sectionRef" class="overview-section">
     <div class="overview-header">
       <p ref="titleEl" class="eyebrow">{{ t('overview.eyebrow') }}</p>
       <h2 ref="headingEl" class="section-title">{{ t('overview.title') }}</h2>
@@ -8,11 +8,11 @@
       </p>
     </div>
 
-    <div class="overview-grid">
+    <div ref="gridRef" class="overview-grid">
       <v-sheet
         v-for="area in areas"
         :key="area.title"
-        ref="setPanelRef"
+        :ref="setPanelRef"
         class="overview-panel"
         elevation="0"
         rounded="xl"
@@ -50,17 +50,19 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const router = useRouter();
+const sectionRef = ref(null);
+const gridRef = ref(null);
 const titleEl = ref(null);
 const headingEl = ref(null);
 const descriptionEl = ref(null);
-const panelRefs = ref([]);
+let panelRefs = [];
 const ctaSection = ref(null);
 let ctx;
 
@@ -69,59 +71,83 @@ const areas = computed(() => tm('overview.cards') ?? []);
 const collaboration = computed(() => tm('overview.collaboration') ?? {});
 
 const setPanelRef = (el) => {
-  if (el && !panelRefs.value.includes(el)) {
-    panelRefs.value.push(el);
+  const target = el?.$el ?? el;
+  if (target && !panelRefs.includes(target)) {
+    panelRefs.push(target);
   }
 };
+
+onBeforeUpdate(() => {
+  panelRefs = [];
+});
 
 const navigateTo = (path) => {
   router.push(path);
 };
 
-onMounted(() => {
-  ctx = gsap.context(() => {
-    gsap.from([titleEl.value, headingEl.value, descriptionEl.value], {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.overview-section',
-        start: 'top 85%',
-        once: true,
-      },
+onMounted(async () => {
+  try {
+    await nextTick();
+
+    const headerTargets = [titleEl.value, headingEl.value, descriptionEl.value].filter(Boolean);
+    const panels = panelRefs.filter(Boolean);
+    const ctaEl = ctaSection.value?.$el ?? ctaSection.value;
+
+    ctx = gsap.context(() => {
+      if (headerTargets.length) {
+        gsap.from(headerTargets, {
+          opacity: 0,
+          y: 24,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.value,
+            start: 'top 85%',
+            once: true,
+          },
+        });
+      }
+
+      if (panels.length) {
+        gsap.from(panels, {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: gridRef.value,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+      }
+
+      if (ctaEl) {
+        gsap.from(ctaEl, {
+          opacity: 0,
+          y: 24,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: ctaEl,
+            start: 'top 90%',
+            once: true,
+          },
+        });
+      }
     });
 
-    gsap.from(panelRefs.value, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.overview-grid',
-        start: 'top 80%',
-        once: true,
-      },
-    });
-
-    gsap.from(ctaSection.value, {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.collab-panel',
-        start: 'top 90%',
-        once: true,
-      },
-    });
-  });
+    ScrollTrigger.refresh();
+  } catch (error) {
+    console.error('Error during GSAP animation setup:', error);
+  }
 });
 
 onUnmounted(() => {
   ctx?.revert();
+  panelRefs = [];
 });
 </script>
 

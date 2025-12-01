@@ -112,7 +112,8 @@ const experience = computed(() => experienceContent.value.timeline ?? []);
 const interestsContent = computed(() => tm('about.interests') ?? { items: [] });
 const interests = computed(() => interestsContent.value.items ?? []);
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   ctx = gsap.context(() => {
     const headerTargets = [label.value, titleEl.value, subtitle.value];
 
@@ -122,6 +123,11 @@ onMounted(() => {
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
+      scrollTrigger: {
+        trigger: titleEl.value,
+        start: 'top 80%',
+        once: true,
+      },
     });
 
     gsap.from(profileSection.value, {
@@ -149,9 +155,7 @@ onMounted(() => {
     });
   });
 
-  nextTick(() => {
-    ScrollTrigger.refresh();
-  });
+  ScrollTrigger.refresh();
 });
 
 onUnmounted(() => {
