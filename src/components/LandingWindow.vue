@@ -4,21 +4,19 @@
       <v-row class="hero-row" align="stretch">
         <v-col cols="12" md="6">
           <div ref="copyBlock" class="hero-copy">
-            <p class="eyebrow" data-animate>Hola, soy</p>
+            <p class="eyebrow" data-animate>{{ t('hero.eyebrow') }}</p>
             <h1 class="hero-title" data-animate>
-              David Deras
+              {{ t('hero.title') }}
               <span class="hero-emphasis">
-                Full Stack Engineer enfocado en Vue, Laravel y TypeScript
+                {{ t('hero.highlight') }}
               </span>
             </h1>
             <p class="role-line" data-animate>
-              <span class="role-label mono">Rol actual</span>
+              <span class="role-label mono">{{ t('hero.roleLabel') }}</span>
               <span ref="roleTicker" class="role-value">{{ currentRole }}</span>
             </p>
             <p class="hero-lead" data-animate>
-              Más de dos años construyendo sistemas institucionales y plataformas públicas con Vue
-              3, Laravel y despliegues en la nube. Combino arquitectura full stack, research y UX
-              para entregar software accesible y listo para escalar.
+              {{ t('hero.lead') }}
             </p>
 
             <div ref="ctaGroup" class="hero-actions">
@@ -29,7 +27,7 @@
                 size="large"
                 @click="scrollToProjects"
               >
-                Ver proyectos
+                {{ t('hero.ctas.primary') }}
               </v-btn>
               <v-btn
                 variant="outlined"
@@ -37,12 +35,12 @@
                 size="large"
                 href="mailto:davidderas50@gmail.com"
               >
-                Contacto directo
+                {{ t('hero.ctas.secondary') }}
               </v-btn>
             </div>
 
             <div ref="ledgerBlock" class="hero-ledger">
-              <div class="ledger-title">Stack operativo</div>
+              <div class="ledger-title">{{ t('hero.stackTitle') }}</div>
               <div class="ledger-grid">
                 <div v-for="tech in techStack" :key="tech.name" class="ledger-item">
                   <span class="label">{{ tech.name }}</span>
@@ -56,7 +54,7 @@
         <v-col cols="12" md="6">
           <div ref="boardBlock" class="hero-board">
             <div class="board-section" data-animate>
-              <div class="board-label">Agenda inmediata</div>
+              <div class="board-label">{{ t('hero.agendaTitle') }}</div>
               <ul class="board-list">
                 <li v-for="item in agenda" :key="item.title">
                   <span>{{ item.title }}</span>
@@ -66,7 +64,7 @@
             </div>
 
             <div class="board-section" data-animate>
-              <div class="board-label">Snapshot</div>
+              <div class="board-label">{{ t('hero.snapshotTitle') }}</div>
               <div class="chipline">
                 <span v-for="note in focusNotes" :key="note.label">
                   {{ note.label }} · {{ note.value }}
@@ -75,7 +73,7 @@
             </div>
 
             <div class="board-section code-area" data-animate>
-              <div class="board-label">profile.js</div>
+              <div class="board-label">{{ t('hero.codeLabel') }}</div>
               <div class="code-highlight" v-html="highlightedSnippet"></div>
             </div>
           </div>
@@ -88,7 +86,8 @@
 <script setup>
 import { gsap } from 'gsap';
 import { codeToHtml } from 'shiki';
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { useAppStore } from '@/store/app';
 
@@ -98,34 +97,15 @@ const ledgerBlock = ref(null);
 const ctaGroup = ref(null);
 const roleTicker = ref(null);
 const appStore = useAppStore();
+const { t, tm, locale } = useI18n();
 let ctx;
 
-const techStack = [
-  { name: 'Frontend', detail: 'Vue 3 + TS · Vite · Pinia' },
-  { name: 'Backend', detail: 'Laravel 11 · PHP 8 · Node APIs' },
-  { name: 'Infra', detail: 'Vercel · Railway · Azure Static' },
-  { name: 'UX Ops', detail: 'Vuetify · GSAP · Vitest' },
-];
-
-const agenda = [
-  { title: 'Portal clínico DTIC - MINSAL', status: 'Release semanal' },
-  { title: 'ERP Carmencita Store', status: 'Optimización post go-live' },
-  { title: 'MusyCharts OSS', status: 'Feature tracking en TS' },
-];
-
-const focusNotes = [
-  { label: 'Base', value: 'San Salvador, SV' },
-  { label: 'Experiencia', value: '+2 años Full Stack' },
-  { label: 'Sectores', value: 'GovTech · Retail · Analítica' },
-];
+const techStack = computed(() => tm('hero.techStack') ?? []);
+const agenda = computed(() => tm('hero.agenda') ?? []);
+const focusNotes = computed(() => tm('hero.focusNotes') ?? []);
 
 const currentRole = ref('');
-const roles = [
-  'Full Stack Engineer · DTIC - MINSAL',
-  'Vue 3 + Laravel Specialist',
-  'Mentor de habilidades digitales UES',
-  'Facilitador de workshops JS/TS',
-];
+const roles = computed(() => tm('hero.roles') ?? []);
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -155,7 +135,13 @@ const highlightSnippet = async () => {
 };
 
 const typeWriter = () => {
-  const current = roles[roleIndex];
+  const list = roles.value;
+  if (!list.length) {
+    setTimeout(typeWriter, 1500);
+    return;
+  }
+
+  const current = list[roleIndex % list.length] ?? '';
 
   if (isDeleting) {
     currentRole.value = current.substring(0, charIndex - 1);
@@ -172,7 +158,7 @@ const typeWriter = () => {
     isDeleting = true;
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
-    roleIndex = (roleIndex + 1) % roles.length;
+    roleIndex = (roleIndex + 1) % list.length;
     typeSpeed = 500;
   }
 
@@ -239,6 +225,15 @@ watch(
     highlightSnippet();
   },
   { immediate: true }
+);
+
+watch(
+  () => locale.value,
+  () => {
+    roleIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+  }
 );
 </script>
 

@@ -1,36 +1,36 @@
 const sidebar_items = [
   {
-    title: 'Inicio',
+    titleKey: 'navigation.items.home',
     value: 'home',
     icon: 'mdi-home',
     to: '/inicio',
   },
   {
-    title: 'Sobre mi',
+    titleKey: 'navigation.items.about',
     value: 'about',
     icon: 'mdi-account',
     to: '/me',
   },
   {
-    title: 'Proyectos',
+    titleKey: 'navigation.items.projects',
     value: 'projects',
     icon: 'mdi-folder',
     to: '/proyectos',
   },
   {
-    title: 'UES',
+    titleKey: 'navigation.items.ues',
     value: 'ues',
     icon: 'mdi-school',
     to: '/documentos-y-guias',
   },
   {
-    title: 'Tutoriales',
+    titleKey: 'navigation.items.tutorials',
     value: 'tutorials',
     icon: 'mdi-book-open-page-variant',
     to: '/tutoriales',
   },
   {
-    title: 'Herramientas',
+    titleKey: 'navigation.items.tools',
     value: 'herramientas',
     icon: 'mdi-wrench',
     to: '/herramientas',

@@ -10,8 +10,8 @@
     >
       <div class="nav-root">
         <router-link to="/inicio" class="brand-mark">
-          <span class="brand-initial">David Deras</span>
-          <span class="brand-tag">Fullstack & producto</span>
+          <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
+          <span class="brand-tag">{{ t('navigation.brand.tagline') }}</span>
         </router-link>
 
         <v-divider class="nav-divider" thickness="1"></v-divider>
@@ -26,14 +26,40 @@
             <template #prepend>
               <span class="nav-dot" :class="{ 'nav-dot--active': isActive(item) }"></span>
             </template>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ t(item.titleKey) }}</v-list-item-title>
           </v-list-item>
         </v-list>
 
         <div class="nav-bottom">
-          <v-btn class="theme-toggle" variant="outlined" block rounded="pill" @click="toggleTheme">
-            {{ appStore.theme === 'dark' ? 'Modo claro' : 'Modo oscuro' }}
-          </v-btn>
+          <div class="nav-controls">
+            <v-btn class="theme-toggle" variant="outlined" rounded="pill" @click="toggleTheme">
+              {{
+                t(
+                  appStore.theme === 'dark'
+                    ? 'navigation.themeToggle.toLight'
+                    : 'navigation.themeToggle.toDark'
+                )
+              }}
+            </v-btn>
+            <v-btn-toggle
+              v-model="appStore.language"
+              class="language-toggle"
+              density="comfortable"
+              rounded="pill"
+              mandatory
+            >
+              <v-btn
+                v-for="option in languageOptions"
+                :key="option.value"
+                :value="option.value"
+                variant="text"
+                size="small"
+                width="50%"
+              >
+                {{ option.label }}
+              </v-btn>
+            </v-btn-toggle>
+          </div>
 
           <div class="nav-links">
             <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
@@ -59,16 +85,41 @@
           <v-btn icon variant="text" @click="drawer = true">
             <v-icon icon="mdi-menu"></v-icon>
           </v-btn>
-          <p class="mobile-title">David Deras</p>
-          <v-btn
-            variant="text"
-            class="mobile-theme"
-            rounded="pill"
-            size="small"
-            @click="toggleTheme"
-          >
-            {{ appStore.theme === 'dark' ? 'Oscuro' : 'Claro' }}
-          </v-btn>
+          <p class="mobile-title">{{ t('navigation.brand.name') }}</p>
+          <div class="mobile-controls">
+            <v-btn
+              variant="text"
+              class="mobile-theme"
+              rounded="pill"
+              size="small"
+              @click="toggleTheme"
+            >
+              {{
+                t(
+                  appStore.theme === 'dark'
+                    ? 'navigation.themeToggle.lightShort'
+                    : 'navigation.themeToggle.darkShort'
+                )
+              }}
+            </v-btn>
+            <v-btn-toggle
+              v-model="appStore.language"
+              class="mobile-language"
+              density="comfortable"
+              rounded="pill"
+              mandatory
+            >
+              <v-btn
+                v-for="option in languageOptions"
+                :key="`mobile-${option.value}`"
+                :value="option.value"
+                variant="text"
+                size="x-small"
+              >
+                {{ option.label }}
+              </v-btn>
+            </v-btn-toggle>
+          </div>
         </div>
 
         <div v-if="!isDesktop" class="mobile-nav">
@@ -82,7 +133,7 @@
                 :class="{ 'nav-chip--active': mobileSection === item.value }"
                 @click="handleMobileNav(item)"
               >
-                {{ item.title }}
+                {{ t(item.titleKey) }}
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
@@ -114,6 +165,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useTheme, useDisplay } from 'vuetify';
 
@@ -127,10 +179,15 @@ const router = useRouter();
 const route = useRoute();
 const appStore = useAppStore();
 const items = sidebar_items;
+const { t, locale } = useI18n();
 
 const drawer = ref(false);
 const showScrollTop = ref(false);
 const mobileSection = ref(items[0]?.value ?? null);
+const languageOptions = computed(() => [
+  { value: 'en', label: t('navigation.languageToggle.en') },
+  { value: 'es', label: t('navigation.languageToggle.es') },
+]);
 
 const isDesktop = computed(() => display.mdAndUp.value);
 
@@ -142,6 +199,15 @@ watch(
   () => appStore.theme,
   (val) => {
     theme.change(val);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => appStore.language,
+  (lang) => {
+    locale.value = lang;
+    document.documentElement.setAttribute('lang', lang);
   },
   { immediate: true }
 );
@@ -270,8 +336,23 @@ onUnmounted(() => {
   margin-top: auto;
 }
 
+.nav-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .theme-toggle {
   border-color: var(--line-soft) !important;
+}
+
+.language-toggle {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+}
+
+.language-toggle :deep(.v-btn) {
+  min-width: 52px;
 }
 
 .nav-links {
@@ -322,6 +403,17 @@ onUnmounted(() => {
 
 .mobile-theme {
   border: 1px solid var(--line-soft);
+}
+
+.mobile-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mobile-language {
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
 }
 
 .mobile-nav {

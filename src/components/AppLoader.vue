@@ -13,15 +13,21 @@
         box-shadow: 3px 3px 6px rgb(63, 63, 63);
       "
     >
-      <p style="font-size: small; font-weight: bolder; color: rgb(90, 90, 90)">Cargando...</p>
+      <p style="font-size: small; font-weight: bolder; color: rgb(90, 90, 90)">
+        {{ t('loader.message') }}
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n';
+
 defineOptions({
   name: 'AppLoader',
 });
+
+const { t } = useI18n();
 </script>
 
 <style scoped>

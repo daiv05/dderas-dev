@@ -4,23 +4,19 @@
   <section class="page-frame pixedai-shell">
     <header ref="headerEl" class="pixedai-header">
       <div>
-        <p class="eyebrow">Laboratorio visual</p>
-        <h2 class="section-title">Pixedai Studio</h2>
+        <p class="eyebrow">{{ t('tools.pixedai.eyebrow') }}</p>
+        <h2 class="section-title">{{ t('tools.pixedai.title') }}</h2>
         <p class="section-lead">
-          Convierte cualquier imagen en un pixel art consistente, ajustando bloques, escala y
-          paletas en un panel pensado para iterar rápido.
+          {{ t('tools.pixedai.lead') }}
         </p>
       </div>
       <div class="plain-sheet status-card">
-        <span class="mono">Modo beta · experimental</span>
+        <span class="mono">{{ t('tools.pixedai.status.label') }}</span>
         <p class="text-muted">
-          Motor basado en Pixelit con mejoras de accesibilidad y presets listos para documentación,
-          mockups o redes sociales.
+          {{ t('tools.pixedai.status.body') }}
         </p>
         <div class="chipline">
-          <span>Procesamiento local</span>
-          <span>Canvas dinámico</span>
-          <span>Exporta PNG</span>
+          <span v-for="chip in statusChips" :key="chip">{{ chip }}</span>
         </div>
       </div>
     </header>
@@ -35,18 +31,19 @@
       >
         <div class="panel-head">
           <div>
-            <h3>Entrada y presets</h3>
+            <h3>{{ t('tools.pixedai.panels.inputs.title') }}</h3>
             <p class="text-muted">
-              Selecciona la imagen fuente, define el tamaño del bloque y usa atajos para
-              resoluciones comunes.
+              {{ t('tools.pixedai.panels.inputs.body') }}
             </p>
           </div>
-          <v-btn variant="text" size="small" class="mono" @click="resetControls">Reiniciar</v-btn>
+          <v-btn variant="text" size="small" class="mono" @click="resetControls">
+            {{ t('tools.pixedai.panels.inputs.reset') }}
+          </v-btn>
         </div>
 
         <v-file-input
           v-model="img_file"
-          label="Sube una imagen"
+          :label="t('tools.pixedai.panels.inputs.uploadLabel')"
           accept="image/*"
           variant="outlined"
           prepend-inner-icon=""
@@ -58,7 +55,7 @@
         <div class="slider-card plain-sheet">
           <div class="panel-head">
             <div>
-              <span class="mono text-muted">Bloque</span>
+              <span class="mono text-muted">{{ t('tools.pixedai.panels.inputs.blockLabel') }}</span>
               <p class="slider-value">{{ cstm.bloque_t }} px</p>
             </div>
             <span class="resolution-pill">{{ resolutionLabel }}</span>
@@ -83,7 +80,7 @@
         </div>
 
         <div class="preset-row">
-          <span class="mono text-muted">Presets rápidos</span>
+          <span class="mono text-muted">{{ t('tools.pixedai.panels.inputs.presets') }}</span>
           <div class="chipline">
             <v-chip
               v-for="preset in quickPresets"
@@ -101,7 +98,7 @@
           <v-col cols="12" md="4">
             <v-checkbox
               v-model="cstm.greyscale"
-              label="Escala de grises"
+              :label="t('tools.pixedai.panels.inputs.greyscale')"
               density="comfortable"
               hide-details
             />
@@ -109,7 +106,7 @@
           <v-col cols="12" md="4">
             <v-text-field
               v-model.number="cstm.altura_max"
-              label="Altura máx (px)"
+              :label="t('tools.pixedai.panels.inputs.maxHeight')"
               type="number"
               min="0"
               variant="outlined"
@@ -121,7 +118,7 @@
           <v-col cols="12" md="4">
             <v-text-field
               v-model.number="cstm.ancho_max"
-              label="Ancho máx (px)"
+              :label="t('tools.pixedai.panels.inputs.maxWidth')"
               type="number"
               min="0"
               variant="outlined"
@@ -137,12 +134,14 @@
         <div class="palette-block">
           <div class="palette-head">
             <div>
-              <h4>Paleta de color</h4>
-              <p class="text-muted">Activa una librería curada o conserva los tonos originales.</p>
+              <h4>{{ t('tools.pixedai.panels.palette.title') }}</h4>
+              <p class="text-muted">
+                {{ t('tools.pixedai.panels.palette.body') }}
+              </p>
             </div>
             <v-switch
               v-model="paleta"
-              label="Aplicar paleta"
+              :label="t('tools.pixedai.panels.palette.switch')"
               inset
               density="compact"
               hide-details
@@ -153,7 +152,7 @@
             v-model="paleta_selected"
             :items="paleta_rgb_colors"
             item-title="name"
-            label="Biblioteca"
+            :label="t('tools.pixedai.panels.palette.select')"
             variant="outlined"
             density="comfortable"
             :disabled="!paleta"
@@ -200,8 +199,10 @@
       >
         <div class="panel-head">
           <div>
-            <h3>Vista previa</h3>
-            <p class="text-muted">Renderiza en vivo sobre canvas y exporta sin perder nitidez.</p>
+            <h3>{{ t('tools.pixedai.panels.preview.title') }}</h3>
+            <p class="text-muted">
+              {{ t('tools.pixedai.panels.preview.body') }}
+            </p>
           </div>
           <span class="resolution-pill">{{ resolutionLabel }}</span>
         </div>
@@ -209,17 +210,19 @@
         <div class="preview-stage plain-sheet">
           <canvas id="pixelitcanvas"></canvas>
         </div>
-        <img id="img-pixedai" :src="img_src" alt="Referencia base" class="sr-only" />
+        <img id="img-pixedai" :src="img_src" :alt="t('tools.pixedai.imageAlt')" class="sr-only" />
 
         <div class="actions-row">
-          <v-btn color="primary" rounded="pill" @click="pixel">Procesar de nuevo</v-btn>
-          <v-btn variant="outlined" rounded="pill" @click="save">Descargar PNG</v-btn>
+          <v-btn color="primary" rounded="pill" @click="pixel">
+            {{ t('tools.pixedai.panels.preview.actions.process') }}
+          </v-btn>
+          <v-btn variant="outlined" rounded="pill" @click="save">
+            {{ t('tools.pixedai.panels.preview.actions.download') }}
+          </v-btn>
         </div>
 
         <ul class="tips-list">
-          <li>Las imágenes cuadradas dan resultados más uniformes.</li>
-          <li>Usa bloques bajos (≤8) para íconos o stickers.</li>
-          <li>Activa la paleta curada para mantener coherencia entre proyectos.</li>
+          <li v-for="tip in previewTips" :key="tip">{{ tip }}</li>
         </ul>
       </v-sheet>
     </div>
@@ -230,6 +233,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, reactive, watch, computed, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';
 
@@ -242,6 +246,15 @@ defineOptions({
 const headerEl = ref(null);
 const contentEl = ref(null);
 const panelRefs = ref([]);
+const { t, tm, locale } = useI18n();
+const statusChips = computed(() => {
+  locale.value;
+  return tm('tools.pixedai.status.chips') ?? [];
+});
+const previewTips = computed(() => {
+  locale.value;
+  return tm('tools.pixedai.panels.preview.tips') ?? [];
+});
 
 const registerPanel = (el) => {
   if (!el) return;
@@ -441,12 +454,20 @@ const paleta_rgb_colors = [
 const defaultPaletteIndex = 8;
 const paleta_selected = ref(paleta_rgb_colors[defaultPaletteIndex]);
 
-const quickPresets = [
-  { label: 'Sticker', block: 4, width: 128, height: 128 },
-  { label: 'Icono', block: 7, width: 256, height: 256 },
-  { label: 'Poster', block: 12, width: 420, height: 420 },
-  { label: 'Banner', block: 18, width: 640, height: 360 },
+const presetDefinitions = [
+  { key: 'sticker', block: 4, width: 128, height: 128 },
+  { key: 'icon', block: 7, width: 256, height: 256 },
+  { key: 'poster', block: 12, width: 420, height: 420 },
+  { key: 'banner', block: 18, width: 640, height: 360 },
 ];
+
+const quickPresets = computed(() => {
+  locale.value;
+  return presetDefinitions.map((preset) => ({
+    ...preset,
+    label: t(`tools.pixedai.presets.${preset.key}`),
+  }));
+});
 
 const color_bar = computed(() => {
   if (cstm.bloque_t < 6) return 'indigo';
@@ -457,9 +478,11 @@ const color_bar = computed(() => {
 });
 
 const resolutionLabel = computed(() => {
+  locale.value;
+  const block = String(cstm.bloque_t).padStart(2, '0');
   const width = cstm.ancho_max > 0 ? `${cstm.ancho_max}px` : 'auto';
   const height = cstm.altura_max > 0 ? `${cstm.altura_max}px` : 'auto';
-  return `Bloque ${String(cstm.bloque_t).padStart(2, '0')} · ${width} × ${height}`;
+  return t('tools.pixedai.resolution', { block, width, height });
 });
 
 let px = null;

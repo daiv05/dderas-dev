@@ -1,11 +1,10 @@
 <template>
   <section class="projects-section">
     <div class="projects-header">
-      <p ref="label" class="eyebrow">Selección de trabajo</p>
-      <h2 ref="titleEl" class="section-title">Proyectos que combinan negocio y UX</h2>
+      <p ref="label" class="eyebrow">{{ t('projects.eyebrow') }}</p>
+      <h2 ref="titleEl" class="section-title">{{ t('projects.title') }}</h2>
       <p ref="descriptionEl" class="section-lead">
-        Casos construidos con equipos pequeños, procesos claros y entregables iterativos. Cada
-        dossier detalla retos técnicos y decisiones de producto.
+        {{ t('projects.lead') }}
       </p>
     </div>
 
@@ -28,14 +27,14 @@
           <div class="project-layout">
             <div class="project-main">
               <article class="summary-card">
-                <h4>Resumen</h4>
+                <h4>{{ t('projects.labels.summary') }}</h4>
                 <p>
                   {{ project.longDescription || project.description }}
                 </p>
               </article>
 
               <article class="feature-card">
-                <h4>Entregables destacados</h4>
+                <h4>{{ t('projects.labels.deliverables') }}</h4>
                 <ul>
                   <li v-for="feature in project.features" :key="feature">
                     {{ feature }}
@@ -46,11 +45,11 @@
 
             <aside class="project-aside">
               <div v-if="project.client" class="info-sheet">
-                <p class="label">Cliente</p>
+                <p class="label">{{ t('projects.labels.client') }}</p>
                 <p>{{ project.client }}</p>
               </div>
               <div class="info-sheet">
-                <p class="label">Tecnologías</p>
+                <p class="label">{{ t('projects.labels.technologies') }}</p>
                 <p>{{ project.technologies || tagsAsText(project) }}</p>
               </div>
               <div class="chip-stack">
@@ -61,9 +60,9 @@
 
           <div v-if="media(project).length" class="media-strip">
             <div class="media-header">
-              <p>Capturas</p>
+              <p>{{ t('projects.labels.captures') }}</p>
               <v-btn variant="text" size="small" @click="openGallery(project)">
-                Ver en pantalla completa
+                {{ t('projects.labels.viewFullscreen') }}
               </v-btn>
             </div>
             <v-slide-group show-arrows class="thumbs-group">
@@ -88,7 +87,7 @@
               :href="project.link"
               target="_blank"
             >
-              Ver en producción
+              {{ t('projects.labels.viewOnline') }}
             </v-btn>
             <v-btn
               v-if="project.repo && project.link_repo && project.link_repo !== '#'"
@@ -97,7 +96,7 @@
               :href="project.link_repo"
               target="_blank"
             >
-              Revisar código
+              {{ t('projects.labels.viewRepo') }}
             </v-btn>
           </div>
         </v-expansion-panel-text>
@@ -138,13 +137,23 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import project_list from '@/projects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = ref(project_list);
+const { t, locale } = useI18n();
+const projects = computed(() =>
+  project_list.map((project) => {
+    const translation = project.translations?.[locale.value] ?? project.translations?.en ?? {};
+    return {
+      ...project,
+      ...translation,
+    };
+  })
+);
 const label = ref(null);
 const titleEl = ref(null);
 const descriptionEl = ref(null);

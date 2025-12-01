@@ -1,12 +1,10 @@
 <template>
   <section class="about-shell">
     <div class="about-header">
-      <p ref="label" class="eyebrow">Perfil profesional</p>
-      <h2 ref="titleEl" class="section-title">Full Stack orientado a Vue, Laravel y producto</h2>
+      <p ref="label" class="eyebrow">{{ t('about.eyebrow') }}</p>
+      <h2 ref="titleEl" class="section-title">{{ t('about.title') }}</h2>
       <p ref="subtitle" class="section-lead">
-        Ingeniero con más de dos años construyendo sistemas para gobierno, retail y plataformas
-        colaborativas. Me enfoco en accesibilidad, SEO y despliegues cloud que mantienen el ritmo de
-        equipos multidisciplinarios.
+        {{ t('about.lead') }}
       </p>
     </div>
 
@@ -28,10 +26,10 @@
               href="/David_Deras_Frontend_Engineer.pdf"
               download="David_Deras_Frontend_Engineer.pdf"
             >
-              Descargar CV
+              {{ t('about.buttons.downloadCv') }}
             </v-btn>
             <v-btn variant="outlined" rounded="pill" href="mailto:davidderas50@gmail.com">
-              Contactar
+              {{ t('about.buttons.contact') }}
             </v-btn>
           </div>
         </div>
@@ -39,19 +37,16 @@
 
       <div ref="detailsSection" class="details-column">
         <div class="detail-block">
-          <h3>Enfoque</h3>
+          <h3>{{ focusContent.title }}</h3>
           <p>
-            Diseño y programo productos que automatizan procesos institucionales: expedientes
-            clínicos, ERP para retail costero o plataformas de matching. Parto de investigación,
-            defino acuerdos de API y documento para que equipos de diseño, QA y operaciones puedan
-            iterar sin fricción.
+            {{ focusContent.body }}
           </p>
         </div>
 
         <div class="detail-block">
           <div class="block-header">
-            <h3>Competencias principales</h3>
-            <span class="mono">Actualizado 2025</span>
+            <h3>{{ skillsContent.title }}</h3>
+            <span class="mono">{{ skillsContent.updated }}</span>
           </div>
           <div class="skill-list">
             <div v-for="skill in skills" :key="skill.name" class="skill-item">
@@ -67,7 +62,7 @@
         </div>
 
         <div class="detail-block">
-          <h3>Experiencia y entregables</h3>
+          <h3>{{ experienceContent.title }}</h3>
           <ul class="timeline">
             <li v-for="item in experience" :key="item.title">
               <div class="timeline-head">
@@ -83,7 +78,7 @@
         </div>
 
         <div class="detail-block">
-          <h3>Intereses actuales</h3>
+          <h3>{{ interestsContent.title }}</h3>
           <div class="chipline">
             <span v-for="interest in interests" :key="interest">{{ interest }}</span>
           </div>
@@ -96,7 +91,8 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,68 +102,15 @@ const subtitle = ref(null);
 const profileSection = ref(null);
 const detailsSection = ref(null);
 let ctx;
-
-const quickFacts = [
-  { label: 'Ubicación', value: 'San Salvador, El Salvador' },
-  { label: 'Teléfono', value: '+503 7464-1460' },
-  { label: 'Email', value: 'davidderas50@gmail.com' },
-  { label: 'Idiomas', value: 'Español (nativo) · Inglés (A2)' },
-  { label: 'Modalidad', value: 'Remoto · Híbrido' },
-];
-
-const skills = [
-  { name: 'Vue 3 + TypeScript + Vite', level: 93 },
-  { name: 'Laravel 11 · PHP 8 APIs', level: 90 },
-  { name: 'Integración REST / GraphQL', level: 84 },
-  { name: 'Node.js tooling & tests', level: 80 },
-  { name: 'UX / UI & accesibilidad', level: 82 },
-];
-
-const experience = [
-  {
-    date: 'Jan 2024 - Presente',
-    title: 'Full Stack Engineer · DTIC - MINSAL',
-    description:
-      'Desarrollo de plataformas públicas y sistemas internos para el Ministerio de Salud: nuevas funcionalidades, integraciones, monitoreo y mejoras de performance/SEO en Vue 3 y Laravel.',
-    tags: ['Vue 3', 'Laravel', 'GovTech'],
-  },
-  {
-    date: 'Mar 2023 - Jun 2023',
-    title: 'Full Stack Developer · Carmencita Store',
-    description:
-      'Construcción de un ERP para inventario, RRHH y delivery en la zona costera. Planeación SCRUM, interfaces en Figma y despliegues coordinados con el equipo administrativo.',
-    tags: ['Laravel', 'Vue', 'ERP'],
-  },
-  {
-    date: 'Jun 2023 - Dec 2023',
-    title: 'Frontend Intern · Presidencia / CASATIC',
-    description:
-      'Programa de habilidades digitales con enfoque en testing, despliegue y metodologías ágiles para innovación pública.',
-    tags: ['Vue', 'Testing', 'Agile'],
-  },
-  {
-    date: 'Sept 2022 - Dec 2022',
-    title: 'Web Developer · Proyecto CheRooms',
-    description:
-      'Plataforma de roomies con Django + Vue, matching inteligente y chat en tiempo real para estudiantes en San Salvador.',
-    tags: ['Django', 'Vue', 'WebSockets'],
-  },
-  {
-    date: '2019 - Actualidad',
-    title: 'Computer Systems Engineering · UES',
-    description:
-      'Último año de la carrera, reforzando algoritmos, bases de datos y liderazgo estudiantil en comunidades tech.',
-    tags: ['Academia', 'Liderazgo'],
-  },
-];
-
-const interests = [
-  'GovTech & salud digital',
-  'Playbooks JS/TS',
-  'Automation con Node',
-  'Accesibilidad y SEO',
-  'Mentorías y educación abierta',
-];
+const { t, tm } = useI18n();
+const quickFacts = computed(() => tm('about.quickFacts') ?? []);
+const skillsContent = computed(() => tm('about.skills') ?? { items: [] });
+const skills = computed(() => skillsContent.value.items ?? []);
+const focusContent = computed(() => tm('about.focus') ?? {});
+const experienceContent = computed(() => tm('about.experience') ?? { timeline: [] });
+const experience = computed(() => experienceContent.value.timeline ?? []);
+const interestsContent = computed(() => tm('about.interests') ?? { items: [] });
+const interests = computed(() => interestsContent.value.items ?? []);
 
 onMounted(() => {
   ctx = gsap.context(() => {

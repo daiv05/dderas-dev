@@ -1,31 +1,10 @@
 const project_list = [
   {
     id: 1,
-    name: 'MusyCharts',
-    description:
-      'Aplicación web interactiva que transforma tus datos de Spotify en visualizaciones dinámicas y atractivas. Descubre tus patrones de escucha, artistas favoritos y géneros más reproducidos a través de gráficos interactivos.',
-    longDescription:
-      'MusyCharts es una aplicación de análisis de datos musicales que conecta con la API de Spotify para extraer y visualizar estadísticas personalizadas de escucha. Utiliza amCharts 5 para crear visualizaciones dinámicas e interactivas que revelan insights sobre hábitos musicales, géneros predominantes y evolución temporal del gusto musical.',
     date: '2023',
-    client: 'Proyecto Personal',
-    category: 'Data Visualization',
     tags: ['Vue.js', 'Vuetify', 'Spotify API', 'amCharts 5', 'OAuth 2.0'],
     online: true,
     repo: true,
-    technologies: 'Vue.js, Vuetify, Spotify API, amCharts 5, OAuth 2.0',
-    features: [
-      'Autenticación OAuth 2.0 con Spotify',
-      'Visualización de top tracks y artistas por período',
-      'Análisis de géneros musicales con gráficos de distribución',
-      'Dashboard interactivo con múltiples vistas',
-      'Diseño responsive y moderno',
-    ],
-    challenges: [
-      'Implementación de flujo OAuth seguro',
-      'Optimización de consultas a la API de Spotify',
-      'Creación de visualizaciones de datos complejas y performantes',
-    ],
-    impact: 'Más de 500 usuarios activos descubriendo sus estadísticas musicales',
     images: {
       0: '/img/projects/musycharts-pics/0.jpeg',
       1: '/img/projects/musycharts-pics/1.jpeg',
@@ -34,36 +13,49 @@ const project_list = [
     },
     link: 'https://musycharts-dcdv.vercel.app/',
     link_repo: 'https://github.com/daiv05/musycharts-dcdv',
+    translations: {
+      es: {
+        name: 'MusyCharts',
+        description:
+          'Aplicación web interactiva que transforma tus datos de Spotify en visualizaciones dinámicas y atractivas.',
+        longDescription:
+          'MusyCharts conecta con la API de Spotify para extraer estadísticas personalizadas y mostrarlas con amCharts 5 en dashboards interactivos que revelan hábitos musicales y géneros predominantes.',
+        client: 'Proyecto personal',
+        category: 'Visualización de datos',
+        technologies: 'Vue.js, Vuetify, Spotify API, amCharts 5, OAuth 2.0',
+        features: [
+          'Autenticación OAuth 2.0 con Spotify',
+          'Top tracks y artistas por períodos personalizados',
+          'Visualización de géneros con gráficos dinámicos',
+          'Dashboard interactivo con múltiples vistas',
+          'Diseño responsive y moderno',
+        ],
+      },
+      en: {
+        name: 'MusyCharts',
+        description:
+          'Interactive web app that turns your Spotify data into dynamic visualizations.',
+        longDescription:
+          'MusyCharts connects to the Spotify API to fetch personalized listening stats and renders them with amCharts 5 in interactive dashboards that expose habits, favorite genres and yearly trends.',
+        client: 'Personal project',
+        category: 'Data visualization',
+        technologies: 'Vue.js, Vuetify, Spotify API, amCharts 5, OAuth 2.0',
+        features: [
+          'OAuth 2.0 authentication with Spotify',
+          'Top tracks and artists by custom ranges',
+          'Genre analysis with dynamic charts',
+          'Multi-view interactive dashboard',
+          'Responsive, modern UI',
+        ],
+      },
+    },
   },
   {
     id: 2,
-    name: 'Sistema de Gestión Carmencita',
-    description:
-      'Plataforma integral de gestión empresarial diseñada específicamente para pequeñas y medianas tiendas. Sistema completo de inventario, facturación, gestión de empleados, planillas y control de pedidos a domicilio.',
-    longDescription:
-      'Sistema ERP desarrollado a medida para optimizar las operaciones comerciales de una tienda local. Incluye módulos interconectados para gestión de inventario en tiempo real, sistema de punto de venta, administración de recursos humanos con cálculo automático de planillas, y plataforma de gestión de pedidos delivery con seguimiento en tiempo real.',
     date: '2023',
-    client: 'Tienda y Depósito "Carmencita"',
-    category: 'Enterprise Software',
     tags: ['Vue.js', 'Laravel', 'MySQL', 'TailwindCSS', 'REST API', 'JWT'],
     online: false,
     repo: false,
-    technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
-    features: [
-      'Sistema de inventario con alertas de stock bajo',
-      'Punto de venta con impresión de facturas',
-      'Gestión de empleados y cálculo automático de planillas',
-      'Sistema de pedidos a domicilio con seguimiento GPS',
-      'Panel administrativo con reportes y analytics',
-      'Sistema de roles y permisos granulares',
-      'Notificaciones en tiempo real',
-    ],
-    challenges: [
-      'Sincronización de inventario en tiempo real entre múltiples puntos de venta',
-      'Implementación de sistema de caché para optimizar consultas frecuentes',
-      'Desarrollo de módulo de reportes con exportación a Excel/PDF',
-    ],
-    impact: 'Reducción del 40% en tiempo de facturación y mejora del 60% en control de inventario',
     images: {
       0: '/img/projects/carmencita-pics/0.png',
       1: '/img/projects/carmencita-pics/1.jpeg',
@@ -74,35 +66,53 @@ const project_list = [
     },
     link: '#',
     link_repo: '#',
+    translations: {
+      es: {
+        name: 'Sistema de Gestión Carmencita',
+        description:
+          'Plataforma integral para inventario, facturación, RRHH y delivery pensada para tiendas de barrio.',
+        longDescription:
+          'ERP desarrollado a medida con módulos conectados: inventario en tiempo real, POS con facturación, gestión de planillas y control de pedidos a domicilio con seguimiento GPS.',
+        client: 'Tienda y Depósito “Carmencita”',
+        category: 'Software empresarial',
+        technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
+        features: [
+          'Inventario con alertas de stock bajo',
+          'Punto de venta con impresión de facturas',
+          'Planillas automáticas y gestión de RRHH',
+          'Pedidos delivery con tracking en tiempo real',
+          'Panel administrativo con reportes',
+          'Roles y permisos granulares',
+          'Notificaciones en tiempo real',
+        ],
+      },
+      en: {
+        name: 'Carmencita Management System',
+        description:
+          'End-to-end management platform for inventory, invoicing, HR and delivery built for local stores.',
+        longDescription:
+          'Custom ERP with connected modules: real-time inventory, POS with invoicing, payroll automation and delivery tracking with GPS plus an analytics control panel.',
+        client: '“Carmencita” store & depot',
+        category: 'Enterprise software',
+        technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
+        features: [
+          'Inventory with low-stock alerts',
+          'Point of sale with invoice printing',
+          'Automatic payroll and HR records',
+          'Delivery orders with real-time GPS tracking',
+          'Admin dashboard with reporting',
+          'Granular roles and permissions',
+          'Real-time notifications',
+        ],
+      },
+    },
   },
   {
     id: 3,
-    name: 'RatioInsights',
-    description:
-      'Herramienta de análisis financiero empresarial que calcula automáticamente ratios financieros clave y los compara con benchmarks de la industria. Importación directa desde Excel para agilizar el análisis.',
-    longDescription:
-      'Plataforma de análisis financiero que permite a empresas y analistas evaluar la salud financiera mediante el cálculo automático de ratios de liquidez, rentabilidad, endeudamiento y eficiencia. Incluye comparación con estándares de la industria y generación de reportes ejecutivos.',
     date: '2023',
-    client: 'Proyecto Universitario',
-    category: 'FinTech',
     tags: ['Vue.js', 'Laravel', 'MySQL', 'TailwindCSS', 'SheetJS', 'Chart.js'],
     online: false,
     repo: true,
-    technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, SheetJS (xlsx), Chart.js',
-    features: [
-      'Importación de estados financieros desde Excel',
-      'Cálculo automático de 20+ ratios financieros',
-      'Comparación con promedios de la industria',
-      'Visualización de tendencias históricas',
-      'Generación de reportes ejecutivos en PDF',
-      'Dashboard de indicadores clave de rendimiento',
-    ],
-    challenges: [
-      'Procesamiento y validación de archivos Excel complejos',
-      'Implementación de algoritmos de cálculo de ratios financieros',
-      'Diseño de visualizaciones claras para datos financieros complejos',
-    ],
-    impact: 'Reducción de 70% en tiempo de análisis financiero manual',
     images: {
       0: '/img/projects/ratios-pics/1.jpeg',
       1: '/img/projects/ratios-pics/2.jpeg',
@@ -113,36 +123,51 @@ const project_list = [
     },
     link: '#',
     link_repo: 'https://github.com/daiv05/ratios-sis',
+    translations: {
+      es: {
+        name: 'RatioInsights',
+        description:
+          'Herramienta financiera que calcula ratios clave y los compara con benchmarks sectoriales.',
+        longDescription:
+          'Plataforma para importar estados financieros desde Excel, calcular más de 20 indicadores y generar reportes ejecutivos con visualizaciones históricas.',
+        client: 'Proyecto universitario',
+        category: 'FinTech',
+        technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, SheetJS, Chart.js',
+        features: [
+          'Importación de libros contables en Excel',
+          'Cálculo automático de ratios de liquidez y rentabilidad',
+          'Comparación contra promedios de la industria',
+          'Visualización de tendencias históricas',
+          'Reportes ejecutivos en PDF',
+          'Dashboard de KPIs financieros',
+        ],
+      },
+      en: {
+        name: 'RatioInsights',
+        description:
+          'Financial analysis tool that calculates key ratios and benchmarks them against the industry.',
+        longDescription:
+          'Platform to import financial statements from Excel, compute 20+ metrics automatically and produce executive reports with historical visualizations.',
+        client: 'University project',
+        category: 'FinTech',
+        technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, SheetJS, Chart.js',
+        features: [
+          'Excel import for financial statements',
+          'Automatic liquidity and profitability ratios',
+          'Benchmarking against industry averages',
+          'Historical trend visualization',
+          'Executive PDF reports',
+          'Financial KPI dashboard',
+        ],
+      },
+    },
   },
   {
     id: 4,
-    name: 'CheRooms SV',
-    description:
-      'Plataforma social para conectar personas que buscan roommates en San Salvador. Sistema de perfiles, matching por preferencias y chat en tiempo real para facilitar la búsqueda de compañeros de vivienda.',
-    longDescription:
-      'Red social especializada que facilita la búsqueda de compañeros de cuarto en San Salvador. Incluye sistema de perfiles verificados, algoritmo de matching basado en preferencias (presupuesto, ubicación, estilo de vida), chat en tiempo real y sistema de reseñas de usuarios.',
     date: '2022',
-    client: 'Proyecto Universitario',
-    category: 'Social Platform',
     tags: ['Vue.js', 'Django', 'PostgreSQL', 'WebSockets', 'REST Framework'],
     online: false,
     repo: true,
-    technologies: 'Vue.js, Django, PostgreSQL, Django Channels, WebSockets',
-    features: [
-      'Sistema de registro y autenticación con verificación de email',
-      'Perfiles de usuario con preferencias y requisitos',
-      'Algoritmo de matching por compatibilidad',
-      'Chat en tiempo real entre usuarios',
-      'Sistema de búsqueda avanzada con filtros',
-      'Publicación y gestión de anuncios de habitaciones',
-      'Sistema de reseñas y valoraciones',
-    ],
-    challenges: [
-      'Implementación de WebSockets para chat en tiempo real',
-      'Desarrollo de algoritmo de matching efectivo',
-      'Gestión de privacidad y seguridad de datos personales',
-    ],
-    impact: 'Conectó a más de 200 estudiantes en búsqueda de vivienda compartida',
     images: {
       0: '/img/projects/roomies-pics/0.png',
       1: '/img/projects/roomies-pics/1.png',
@@ -151,6 +176,46 @@ const project_list = [
     },
     link: '#',
     link_repo: 'https://github.com/daiv05/cherooms-proy',
+    translations: {
+      es: {
+        name: 'CheRooms SV',
+        description:
+          'Plataforma social para conectar roomies en San Salvador con perfiles verificados y chat en tiempo real.',
+        longDescription:
+          'Red con algoritmo de matching por presupuesto, ubicación y estilo de vida; integra mensajería WebSocket y reseñas para mejorar la confianza.',
+        client: 'Proyecto universitario',
+        category: 'Plataforma social',
+        technologies: 'Vue.js, Django, PostgreSQL, Django Channels, WebSockets',
+        features: [
+          'Registro y autenticación con verificación de email',
+          'Perfiles con preferencias y requisitos',
+          'Matching por compatibilidad',
+          'Chat en tiempo real',
+          'Búsqueda avanzada con filtros',
+          'Gestión de anuncios de habitaciones',
+          'Sistema de reseñas',
+        ],
+      },
+      en: {
+        name: 'CheRooms SV',
+        description:
+          'Social platform that connects roommates in San Salvador with verified profiles and live chat.',
+        longDescription:
+          'Network with a matching algorithm based on budget, location and lifestyle plus WebSocket messaging and reviews to boost trust.',
+        client: 'University project',
+        category: 'Social platform',
+        technologies: 'Vue.js, Django, PostgreSQL, Django Channels, WebSockets',
+        features: [
+          'Onboarding with email verification',
+          'Detailed profiles with requirements',
+          'Compatibility-based matching',
+          'Real-time chat',
+          'Advanced search with filters',
+          'Room listing management',
+          'Review and rating system',
+        ],
+      },
+    },
   },
 ];
 

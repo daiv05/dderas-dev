@@ -1,18 +1,19 @@
 <template>
   <section class="tutorials-section">
     <div class="tutorials-header">
-      <p ref="label" class="eyebrow">Notas y tutoriales</p>
-      <h2 ref="titleEl" class="section-title">Bitácora técnica abierta</h2>
+      <p ref="label" class="eyebrow">{{ t('tutorials.eyebrow') }}</p>
+      <h2 ref="titleEl" class="section-title">{{ t('tutorials.title') }}</h2>
       <p ref="descriptionEl" class="section-lead">
-        Registros prácticos sobre despliegue, cloud y automatización. Son apuntes que uso para
-        repetir procesos sin fricción.
+        {{ t('tutorials.lead') }}
       </p>
     </div>
 
     <div class="filters">
       <v-slide-group v-model="selectedCategory" class="filter-group" center-active show-arrows>
         <v-slide-group-item value="all">
-          <v-btn rounded="pill" size="small" :class="chipClass('all')">Todos</v-btn>
+          <v-btn rounded="pill" size="small" :class="chipClass('all')">
+            {{ t('tutorials.filters.all') }}
+          </v-btn>
         </v-slide-group-item>
         <v-slide-group-item v-for="category in categories" :key="category" :value="category">
           <v-btn rounded="pill" size="small" :class="chipClass(category)">{{ category }}</v-btn>
@@ -24,7 +25,7 @@
         variant="outlined"
         hide-details
         density="comfortable"
-        label="Buscar por tema o etiqueta"
+        :label="t('tutorials.filters.search')"
         rounded="pill"
         clearable
       ></v-text-field>
@@ -34,11 +35,11 @@
       <table class="tutorial-table">
         <thead>
           <tr>
-            <th>Tutorial</th>
-            <th>Área</th>
-            <th>Año</th>
-            <th>Etiquetas</th>
-            <th>Acción</th>
+            <th>{{ t('tutorials.table.tutorial') }}</th>
+            <th>{{ t('tutorials.table.area') }}</th>
+            <th>{{ t('tutorials.table.year') }}</th>
+            <th>{{ t('tutorials.table.tags') }}</th>
+            <th>{{ t('tutorials.table.action') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -62,12 +63,12 @@
                 :href="tutorial.link"
                 target="_blank"
               >
-                Abrir
+                {{ t('tutorials.table.open') }}
               </v-btn>
             </td>
           </tr>
           <tr v-if="!filteredTutorials.length">
-            <td colspan="5" class="empty-state">No hay resultados con los filtros actuales.</td>
+            <td colspan="5" class="empty-state">{{ t('tutorials.table.empty') }}</td>
           </tr>
         </tbody>
       </table>
@@ -78,10 +79,20 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import tutos_list from '@/tutos.js';
 
-const tutorials = ref(tutos_list);
+const { t, locale } = useI18n();
+const tutorials = computed(() =>
+  tutos_list.map((tutorial) => {
+    const translation = tutorial.translations?.[locale.value] ?? tutorial.translations?.en ?? {};
+    return {
+      ...tutorial,
+      ...translation,
+    };
+  })
+);
 const selectedCategory = ref('all');
 const searchQuery = ref('');
 const label = ref(null);

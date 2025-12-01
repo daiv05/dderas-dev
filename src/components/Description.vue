@@ -1,11 +1,10 @@
 ﻿<template>
   <section class="overview-section">
     <div class="overview-header">
-      <p ref="titleEl" class="eyebrow">Mapa de contenidos</p>
-      <h2 ref="headingEl" class="section-title">Espacios en constante iteración</h2>
+      <p ref="titleEl" class="eyebrow">{{ t('overview.eyebrow') }}</p>
+      <h2 ref="headingEl" class="section-title">{{ t('overview.title') }}</h2>
       <p ref="descriptionEl" class="section-lead">
-        Proyectos, guías y recursos que crecen con cada entrega. Todo está dividido en rutas claras
-        para que explores según lo que necesitas.
+        {{ t('overview.lead') }}
       </p>
     </div>
 
@@ -36,14 +35,13 @@
 
     <v-sheet ref="ctaSection" class="collab-panel" elevation="0">
       <div>
-        <h3>¿Construimos algo nuevo?</h3>
+        <h3>{{ collaboration.title }}</h3>
         <p>
-          Busco colaborar con equipos que valoran investigación, documentación y ciclos cortos.
-          Comparte tu idea y diseñamos un plan.
+          {{ collaboration.body }}
         </p>
       </div>
       <v-btn variant="outlined" rounded="pill" size="large" href="mailto:davidderas50@gmail.com">
-        Escribir mensaje
+        {{ collaboration.cta }}
       </v-btn>
     </v-sheet>
   </section>
@@ -52,7 +50,8 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -65,32 +64,9 @@ const panelRefs = ref([]);
 const ctaSection = ref(null);
 let ctx;
 
-const areas = [
-  {
-    label: '01',
-    title: 'Proyectos y casos',
-    body: 'Sistemas empresariales, dashboards y herramientas personales con documentación técnica clara.',
-    tags: ['Vue 3', 'Laravel', 'Vuetify'],
-    cta: 'Ver dossier',
-    to: '/proyectos',
-  },
-  {
-    label: '02',
-    title: 'Tutoriales y notas',
-    body: 'Guías cortas sobre despliegues, cloud y automatizaciones que uso a diario.',
-    tags: ['Azure', 'Railway', 'Automatización'],
-    cta: 'Abrir blog',
-    to: '/tutoriales',
-  },
-  {
-    label: '03',
-    title: 'Recursos UES',
-    body: 'Repositorio colectivo para la Escuela de Sistemas: pensum, guías, parciales y material de apoyo.',
-    tags: ['Documentos', 'Laboratorios', 'Pensum'],
-    cta: 'Entrar al drive',
-    to: '/documentos-y-guias',
-  },
-];
+const { t, tm } = useI18n();
+const areas = computed(() => tm('overview.cards') ?? []);
+const collaboration = computed(() => tm('overview.collaboration') ?? {});
 
 const setPanelRef = (el) => {
   if (el && !panelRefs.value.includes(el)) {

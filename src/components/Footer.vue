@@ -2,26 +2,27 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <p class="eyebrow">David Deras</p>
+        <p class="eyebrow">{{ t('navigation.brand.name') }}</p>
         <p>
-          Full Stack Engineer en San Salvador. Construyo sistemas públicos y ERP con Vue 3,
-          TypeScript y Laravel, documentando cada entrega para que los equipos escalen sin fricción.
+          {{ t('footer.description') }}
         </p>
       </div>
 
       <div class="footer-links">
-        <p class="mono">Mapa rápido</p>
+        <p class="mono">{{ t('footer.quickMap') }}</p>
         <div class="nav-pills">
-          <router-link to="/inicio">Inicio</router-link>
-          <router-link to="/proyectos">Proyectos</router-link>
-          <router-link to="/documentos-y-guias">Recursos UES</router-link>
-          <router-link to="/herramientas">Herramientas</router-link>
+          <router-link to="/inicio">{{ t('footer.links.home') }}</router-link>
+          <router-link to="/proyectos">{{ t('footer.links.projects') }}</router-link>
+          <router-link to="/documentos-y-guias">{{ t('footer.links.ues') }}</router-link>
+          <router-link to="/herramientas">{{ t('footer.links.tools') }}</router-link>
         </div>
-        <a class="cv-link" href="/David_Deras_Frontend_Engineer.pdf" download>Descargar CV</a>
+        <a class="cv-link" href="/David_Deras_Frontend_Engineer.pdf" download>
+          {{ t('footer.downloadCv') }}
+        </a>
       </div>
 
       <div class="footer-contact">
-        <p class="mono">Contacto</p>
+        <p class="mono">{{ t('footer.contact') }}</p>
         <a href="tel:+50374641460">(+503) 7464-1460</a>
         <a href="mailto:davidderas50@gmail.com">davidderas50@gmail.com</a>
         <div class="social-inline">
@@ -34,15 +35,17 @@
 
     <div class="footer-bottom">
       <span class="mono">© deras.dev - {{ currentYear }}</span>
-      <span>Construido con ❤️ Vue · Vuetify</span>
+      <span>{{ t('footer.builtWith') }}</span>
     </div>
   </footer>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const currentYear = computed(() => new Date().getFullYear());
+const { t } = useI18n();
 </script>
 
 <style scoped lang="scss">

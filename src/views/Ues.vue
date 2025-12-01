@@ -1,11 +1,10 @@
 <template>
   <section class="ues-section">
     <div class="ues-header">
-      <p ref="label" class="eyebrow">Recursos UES</p>
-      <h2 ref="titleEl" class="section-title">Repositorio colaborativo</h2>
+      <p ref="label" class="eyebrow">{{ t('ues.eyebrow') }}</p>
+      <h2 ref="titleEl" class="section-title">{{ t('ues.title') }}</h2>
       <p ref="descriptionEl" class="section-lead">
-        Material académico para Ingeniería de Sistemas. Todo organizado por modalidad para que
-        encuentres guías, laboratorios y formatos sin perder tiempo.
+        {{ t('ues.lead') }}
       </p>
     </div>
 
@@ -29,21 +28,20 @@
           </li>
         </ul>
         <v-btn variant="outlined" rounded="pill" :href="category.driveLink" target="_blank">
-          Abrir carpeta
+          {{ t('ues.buttons.openFolder') }}
         </v-btn>
       </v-sheet>
     </div>
 
     <v-sheet class="ues-disclaimer" elevation="0">
       <div>
-        <h3>Notas</h3>
+        <h3>{{ t('ues.noteBlock.title') }}</h3>
         <p>
-          Este repositorio es comunitario y evoluciona con aportes estudiantiles. Si ves enlaces
-          rotos o quieres sumar material, escríbeme.
+          {{ t('ues.noteBlock.body') }}
         </p>
       </div>
       <v-btn variant="text" rounded="pill" href="mailto:davidderas50@gmail.com">
-        Compartir recurso
+        {{ t('ues.buttons.share') }}
       </v-btn>
     </v-sheet>
   </section>
@@ -52,7 +50,8 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,41 +61,8 @@ const descriptionEl = ref(null);
 const panelRefs = ref([]);
 let ctx;
 
-const categories = [
-  {
-    title: 'Modalidad presencial',
-    mode: 'Campus',
-    description: 'Parciales, laboratorios y resúmenes de asignaturas impartidas en aula.',
-    driveLink: 'LINK_A_CARPETA_PRESENCIAL',
-    featured: [
-      { name: 'Matemática I · Guías', link: '#' },
-      { name: 'Programación I · Ejemplos', link: '#' },
-      { name: 'Física I · Laboratorios', link: '#' },
-    ],
-  },
-  {
-    title: 'Modalidad a distancia',
-    mode: 'Virtual',
-    description: 'Tutorías grabadas, guías y material diseñado para autoestudio.',
-    driveLink: 'LINK_A_CARPETA_DISTANCIA',
-    featured: [
-      { name: 'Material didáctico', link: '#' },
-      { name: 'Guías de estudio', link: '#' },
-      { name: 'Tutorías destacadas', link: '#' },
-    ],
-  },
-  {
-    title: 'Extras y utilidades',
-    mode: 'General',
-    description: 'Pensum, formatos administrativos, software recomendado y utilidades.',
-    driveLink: 'LINK_A_CARPETA_EXTRAS',
-    featured: [
-      { name: 'Pensum oficial', link: '#' },
-      { name: 'Formatos UES', link: '#' },
-      { name: 'Herramientas de apoyo', link: '#' },
-    ],
-  },
-];
+const { t, tm } = useI18n();
+const categories = computed(() => tm('ues.categories') ?? []);
 
 const setPanelRef = (el) => {
   if (el && !panelRefs.value.includes(el)) {
