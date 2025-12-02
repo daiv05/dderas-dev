@@ -47,6 +47,42 @@ export function refreshScrollTriggers() {
 }
 
 /**
+ * Verifica si un elemento ya está en el viewport
+ * Útil para decidir si aplicar animación o mostrar directamente
+ */
+export function isElementInViewport(element, scroller = null) {
+  if (!element) return false;
+
+  const rect = element.getBoundingClientRect();
+  const scrollerEl = scroller || getMainScroller() || window;
+
+  if (scrollerEl === window) {
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  const scrollerRect = scrollerEl.getBoundingClientRect();
+  return rect.top >= scrollerRect.top && rect.bottom <= scrollerRect.bottom;
+}
+
+/**
+ * Limpia las propiedades inline de GSAP de un elemento o elementos
+ * Útil para resetear elementos después de cambios de idioma
+ */
+export function clearGSAPProps(elements) {
+  const targets = Array.isArray(elements) ? elements : [elements];
+  targets.forEach((el) => {
+    if (el) {
+      gsap.set(el, { clearProps: 'all' });
+    }
+  });
+}
+
+/**
  * Obtiene el contenedor de scroll principal
  */
 export function getMainScroller() {

@@ -194,14 +194,14 @@ import {
   mdiWeatherSunny,
   mdiWeatherNight,
 } from '@mdi/js';
-import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, watchEffect, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
 import { useSeo } from '@/composables/useSeo';
-import { setupGSAP } from '@/plugins/gsap';
+import { setupGSAP, clearGSAPProps, refreshScrollTriggers } from '@/plugins/gsap';
 import sidebarItems from '@/router/sidebar-items.js';
 import { useAppStore } from '@/store/app';
 
@@ -280,9 +280,24 @@ watch(
 
 watch(
   () => appStore.language,
-  (lang) => {
+  async (lang) => {
     applyLanguage(lang);
     setLangQuery(lang);
+
+    // Después de cambiar el idioma, dar tiempo a que Vue actualice el DOM
+    await nextTick();
+
+    // Luego limpiar propiedades GSAP y refrescar
+    setTimeout(() => {
+      // Limpiar todas las propiedades inline de GSAP en elementos animados
+      const animatedElements = document.querySelectorAll(
+        '[style*="opacity"], [style*="transform"]'
+      );
+      clearGSAPProps(Array.from(animatedElements));
+
+      // Refrescar los ScrollTriggers para recalcular posiciones
+      refreshScrollTriggers();
+    }, 100);
   }
 );
 

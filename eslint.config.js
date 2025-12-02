@@ -7,7 +7,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist', 'public', 'node_modules', 'coverage'],
+    ignores: ['dist', 'public', 'node_modules', 'coverage', 'dev-dist'],
   },
   js.configs.recommended,
   ...vue.configs['flat/recommended'],

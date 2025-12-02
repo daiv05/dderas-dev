@@ -48,11 +48,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
+import {
+  gsap,
+  ScrollTrigger,
+  getMainScroller,
+  gsapDefaults,
+  isElementInViewport,
+} from '@/plugins/gsap';
 
 const router = useRouter();
 const sectionRef = ref(null);
@@ -83,17 +89,18 @@ const navigateTo = (path) => {
   router.push(path);
 };
 
-onMounted(async () => {
-  try {
-    await nextTick();
+const setupAnimations = () => {
+  const scroller = getMainScroller();
+  const headerTargets = [titleEl.value, headingEl.value, descriptionEl.value].filter(Boolean);
+  const panels = panelRefs.filter(Boolean);
+  const ctaEl = ctaSection.value?.$el ?? ctaSection.value;
 
-    const scroller = getMainScroller();
-    const headerTargets = [titleEl.value, headingEl.value, descriptionEl.value].filter(Boolean);
-    const panels = panelRefs.filter(Boolean);
-    const ctaEl = ctaSection.value?.$el ?? ctaSection.value;
-
-    ctx = gsap.context(() => {
-      if (headerTargets.length) {
+  ctx = gsap.context(() => {
+    if (headerTargets.length) {
+      const alreadyVisible = isElementInViewport(sectionRef.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(headerTargets, { clearProps: 'all' });
+      } else {
         gsap.from(headerTargets, {
           ...gsapDefaults,
           opacity: 0,
@@ -107,8 +114,13 @@ onMounted(async () => {
           },
         });
       }
+    }
 
-      if (panels.length) {
+    if (panels.length) {
+      const alreadyVisible = isElementInViewport(gridRef.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(panels, { clearProps: 'all' });
+      } else {
         gsap.from(panels, {
           ...gsapDefaults,
           opacity: 0,
@@ -122,8 +134,13 @@ onMounted(async () => {
           },
         });
       }
+    }
 
-      if (ctaEl) {
+    if (ctaEl) {
+      const alreadyVisible = isElementInViewport(ctaEl, scroller);
+      if (alreadyVisible) {
+        gsap.set(ctaEl, { clearProps: 'all' });
+      } else {
         gsap.from(ctaEl, {
           ...gsapDefaults,
           opacity: 0,
@@ -136,18 +153,35 @@ onMounted(async () => {
           },
         });
       }
-    });
+    }
+  });
 
-    setTimeout(() => ScrollTrigger.refresh(), 100);
+  setTimeout(() => ScrollTrigger.refresh(), 100);
+};
+
+onMounted(async () => {
+  try {
+    await nextTick();
+    setupAnimations();
   } catch (error) {
     console.error('Error during GSAP animation setup:', error);
   }
 });
-
 onUnmounted(() => {
   ctx?.revert();
   panelRefs = [];
 });
+
+// Recargar animaciones cuando cambie el idioma
+watch(
+  () => areas.value,
+  async () => {
+    await nextTick();
+    ctx?.revert();
+    setupAnimations();
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped lang="scss">

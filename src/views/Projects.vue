@@ -140,7 +140,13 @@ import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 
 import { useI18n } from 'vue-i18n';
 
 import { projectList } from '@/data/projects.js';
-import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
+import {
+  gsap,
+  ScrollTrigger,
+  getMainScroller,
+  gsapDefaults,
+  isElementInViewport,
+} from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
 const projects = computed(() =>
@@ -200,42 +206,54 @@ const stepGallery = (direction) => {
   gallery.value.index = (gallery.value.index + direction + total) % total;
 };
 
-onMounted(async () => {
-  await nextTick();
-
+const setupAnimations = () => {
   const scroller = getMainScroller();
   const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
   const panels = panelRefs.filter(Boolean);
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
-      gsap.from(headerTargets, {
-        ...gsapDefaults,
-        opacity: 0,
-        y: 24,
-        stagger: 0.15,
-      });
+      const alreadyVisible = isElementInViewport(titleEl.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(headerTargets, { clearProps: 'all' });
+      } else {
+        gsap.from(headerTargets, {
+          ...gsapDefaults,
+          opacity: 0,
+          y: 24,
+          stagger: 0.15,
+        });
+      }
     }
 
     if (panels.length) {
-      gsap.from(panels, {
-        ...gsapDefaults,
-        opacity: 0,
-        y: 30,
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: ledgerRef.value?.$el ?? ledgerRef.value,
-          start: 'top 80%',
-          once: true,
-          scroller: scroller,
-        },
-      });
+      const alreadyVisible = isElementInViewport(ledgerRef.value?.$el ?? ledgerRef.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(panels, { clearProps: 'all' });
+      } else {
+        gsap.from(panels, {
+          ...gsapDefaults,
+          opacity: 0,
+          y: 30,
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ledgerRef.value?.$el ?? ledgerRef.value,
+            start: 'top 80%',
+            once: true,
+            scroller: scroller,
+          },
+        });
+      }
     }
   });
 
   setTimeout(() => ScrollTrigger.refresh(), 100);
-});
+};
 
+onMounted(async () => {
+  await nextTick();
+  setupAnimations();
+});
 onUnmounted(() => {
   ctx?.revert();
   panelRefs = [];

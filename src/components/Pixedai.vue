@@ -243,7 +243,7 @@ import {
 import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';
-import { gsap, getMainScroller, gsapDefaults } from '@/plugins/gsap';
+import { gsap, getMainScroller, gsapDefaults, isElementInViewport } from '@/plugins/gsap';
 
 defineOptions({
   name: 'Pixedai',
@@ -602,34 +602,44 @@ onMounted(async () => {
 
   ctx = gsap.context(() => {
     if (headerEl.value) {
-      gsap.from(headerEl.value, {
-        ...gsapDefaults,
-        opacity: 0,
-        y: 32,
-        duration: 0.9,
-        scrollTrigger: {
-          trigger: headerEl.value,
-          start: 'top 80%',
-          once: true,
-          scroller: scroller,
-        },
-      });
+      const alreadyVisible = isElementInViewport(headerEl.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(headerEl.value, { clearProps: 'all' });
+      } else {
+        gsap.from(headerEl.value, {
+          ...gsapDefaults,
+          opacity: 0,
+          y: 32,
+          duration: 0.9,
+          scrollTrigger: {
+            trigger: headerEl.value,
+            start: 'top 80%',
+            once: true,
+            scroller: scroller,
+          },
+        });
+      }
     }
 
     if (panelRefs.length) {
-      gsap.from(panelRefs, {
-        ...gsapDefaults,
-        opacity: 0,
-        y: 36,
-        duration: 0.9,
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: contentEl.value,
-          start: 'top 80%',
-          once: true,
-          scroller: scroller,
-        },
-      });
+      const alreadyVisible = isElementInViewport(contentEl.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(panelRefs, { clearProps: 'all' });
+      } else {
+        gsap.from(panelRefs, {
+          ...gsapDefaults,
+          opacity: 0,
+          y: 36,
+          duration: 0.9,
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: contentEl.value,
+            start: 'top 80%',
+            once: true,
+            scroller: scroller,
+          },
+        });
+      }
     }
   });
 });

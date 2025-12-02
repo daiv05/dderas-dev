@@ -81,7 +81,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { tutorialsList } from '@/data/tutorials.js';
-import { gsap, getMainScroller, gsapDefaults } from '@/plugins/gsap';
+import { gsap, getMainScroller, gsapDefaults, isElementInViewport } from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
 const tutorials = computed(() =>
@@ -130,30 +130,37 @@ const chipClass = (value) => ({
   'chip-btn--active': selectedCategory.value === value,
 });
 
-onMounted(async () => {
-  await nextTick();
-
+const setupAnimations = () => {
   const scroller = getMainScroller();
   const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
-      gsap.from(headerTargets, {
-        ...gsapDefaults,
-        opacity: 0,
-        y: 24,
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: titleEl.value,
-          start: 'top 80%',
-          once: true,
-          scroller: scroller,
-        },
-      });
+      const alreadyVisible = isElementInViewport(titleEl.value, scroller);
+      if (alreadyVisible) {
+        gsap.set(headerTargets, { clearProps: 'all' });
+      } else {
+        gsap.from(headerTargets, {
+          ...gsapDefaults,
+          opacity: 0,
+          y: 24,
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: titleEl.value,
+            start: 'top 80%',
+            once: true,
+            scroller: scroller,
+          },
+        });
+      }
     }
   });
-});
+};
 
+onMounted(async () => {
+  await nextTick();
+  setupAnimations();
+});
 onUnmounted(() => {
   ctx?.revert();
 });
