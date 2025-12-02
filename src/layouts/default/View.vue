@@ -123,7 +123,7 @@
                     )
               }}
             </v-btn>
-            <v-btn-toggle
+            <!-- <v-btn-toggle
               v-model="appStore.language"
               class="mobile-language"
               density="comfortable"
@@ -139,7 +139,7 @@
               >
                 {{ option.label }}
               </v-btn>
-            </v-btn-toggle>
+            </v-btn-toggle> -->
           </div>
         </div>
 
