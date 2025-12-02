@@ -110,7 +110,7 @@
             <p class="eyebrow">{{ gallery.project?.category }}</p>
             <h3>{{ gallery.project?.name }}</h3>
           </div>
-          <v-btn icon="mdi-close" variant="text" @click="closeGallery"></v-btn>
+          <v-btn :icon="mdiClose" variant="text" @click="closeGallery"></v-btn>
         </div>
 
         <v-slide-group v-model="gallery.index" show-arrows center-active class="lightbox-group">
@@ -125,9 +125,9 @@
         </v-slide-group>
 
         <div class="lightbox-controls">
-          <v-btn icon="mdi-chevron-left" variant="tonal" @click="stepGallery(-1)"></v-btn>
+          <v-btn :icon="mdiChevronLeft" variant="tonal" @click="stepGallery(-1)"></v-btn>
           <span class="mono">{{ gallery.index + 1 }} / {{ gallery.images.length }}</span>
-          <v-btn icon="mdi-chevron-right" variant="tonal" @click="stepGallery(1)"></v-btn>
+          <v-btn :icon="mdiChevronRight" variant="tonal" @click="stepGallery(1)"></v-btn>
         </div>
       </div>
     </v-dialog>
@@ -135,6 +135,7 @@
 </template>
 
 <script setup>
+import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';

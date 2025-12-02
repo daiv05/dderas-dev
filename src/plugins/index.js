@@ -1,9 +1,3 @@
-/**
- * plugins/index.js
- *
- * Automatically included in `./src/main.js`
- */
-
 // Plugins
 import router from '../router';
 import pinia from '../store';

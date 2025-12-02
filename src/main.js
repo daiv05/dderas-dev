@@ -1,9 +1,3 @@
-/**
- * main.js
- *
- * Bootstraps Vuetify and other plugins then mounts the App`
- */
-
 import { registerSW } from 'virtual:pwa-register';
 import { createApp } from 'vue';
 

@@ -232,7 +232,16 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ref, reactive, watch, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
+import {
+  ref,
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  onUnmounted,
+  onBeforeUpdate,
+  nextTick,
+} from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';

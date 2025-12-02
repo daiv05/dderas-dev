@@ -1,40 +1,49 @@
-const sidebar_items = [
+import {
+  mdiHome,
+  mdiAccount,
+  mdiFolder,
+  mdiSchool,
+  mdiBookOpenPageVariant,
+  mdiWrench,
+} from '@mdi/js';
+
+const sidebarItems = [
   {
     titleKey: 'navigation.items.home',
     value: 'home',
-    icon: 'mdi-home',
+    icon: mdiHome,
     to: '/',
   },
   {
     titleKey: 'navigation.items.about',
     value: 'about',
-    icon: 'mdi-account',
+    icon: mdiAccount,
     to: '/about',
   },
   {
     titleKey: 'navigation.items.projects',
     value: 'projects',
-    icon: 'mdi-folder',
+    icon: mdiFolder,
     to: '/projects',
   },
   {
     titleKey: 'navigation.items.ues',
     value: 'ues',
-    icon: 'mdi-school',
+    icon: mdiSchool,
     to: '/resources',
   },
   {
     titleKey: 'navigation.items.tutorials',
     value: 'tutorials',
-    icon: 'mdi-book-open-page-variant',
+    icon: mdiBookOpenPageVariant,
     to: '/tutorials',
   },
   {
     titleKey: 'navigation.items.tools',
     value: 'tools',
-    icon: 'mdi-wrench',
+    icon: mdiWrench,
     to: '/tools',
   },
 ];
 
-export default sidebar_items;
+export default sidebarItems;

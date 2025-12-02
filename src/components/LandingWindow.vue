@@ -278,6 +278,7 @@ watch(
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  height: 4.4rem;
 }
 
 .role-label {

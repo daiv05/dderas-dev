@@ -24,7 +24,11 @@
             @click="goTo(item)"
           >
             <template #prepend>
-              <span class="nav-dot" :class="{ 'nav-dot--active': isActive(item) }"></span>
+              <v-icon
+                class="nav-dot"
+                :class="{ 'nav-dot--active': isActive(item) }"
+                :icon="item.icon"
+              ></v-icon>
             </template>
             <v-list-item-title>{{ t(item.titleKey) }}</v-list-item-title>
           </v-list-item>
@@ -63,7 +67,7 @@
 
           <div class="nav-links">
             <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
-              GH
+              <v-icon size="18" :icon="mdiGithub"></v-icon>
             </a>
             <a
               href="https://linkedin.com/in/dderas"
@@ -71,9 +75,11 @@
               rel="noopener"
               aria-label="LinkedIn"
             >
-              IN
+              <v-icon size="18" :icon="mdiLinkedin"></v-icon>
             </a>
-            <a href="mailto:davidderas50@gmail.com" aria-label="Email">Mail</a>
+            <a href="mailto:davidderas50@gmail.com" aria-label="Email">
+              <v-icon size="18" :icon="mdiEmail"></v-icon>
+            </a>
           </div>
         </div>
       </div>
@@ -83,7 +89,7 @@
       <div class="shell-main-inner">
         <div v-if="!isDesktop" class="mobile-top">
           <v-btn icon variant="text" title="Open menu" @click="drawer = true">
-            <v-icon icon="mdi-menu"></v-icon>
+            <v-icon :icon="mdiMenu"></v-icon>
           </v-btn>
           <p class="mobile-title">{{ t('navigation.brand.name') }}</p>
           <div class="mobile-controls">
@@ -155,7 +161,7 @@
 
     <v-btn
       v-show="showScrollTop"
-      icon="mdi-arrow-up"
+      :icon="mdiArrowUp"
       class="scroll-to-top"
       size="large"
       @click="scrollToTop"
@@ -164,6 +170,7 @@
 </template>
 
 <script setup>
+import { mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -171,7 +178,7 @@ import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
 import { useSeo } from '@/composables/useSeo';
-import sidebar_items from '@/router/sidebar-items.js';
+import sidebarItems from '@/router/sidebar-items.js';
 import { useAppStore } from '@/store/app';
 
 const theme = useTheme();
@@ -179,7 +186,7 @@ const display = useDisplay();
 const router = useRouter();
 const route = useRoute();
 const appStore = useAppStore();
-const items = sidebar_items;
+const items = sidebarItems;
 const { t, locale } = useI18n();
 const supportedLanguages = ['en', 'es'];
 useSeo();
@@ -372,17 +379,13 @@ onUnmounted(() => {
 }
 
 .nav-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line-soft);
   margin-right: 0.85rem;
 }
 
-.nav-dot--active {
-  border-color: rgb(var(--v-theme-primary));
-  background: rgb(var(--v-theme-primary));
-}
+// .nav-dot--active {
+// border-color: rgb(var(--v-theme-primary));
+// background: rgb(var(--v-theme-primary));
+// }
 
 .nav-bottom {
   display: flex;
