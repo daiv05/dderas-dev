@@ -37,6 +37,11 @@
         <div class="nav-bottom">
           <div class="nav-controls">
             <v-btn class="theme-toggle" variant="outlined" rounded="pill" @click="toggleTheme">
+              <template #prepend>
+                <v-icon
+                  :icon="appStore.theme === 'dark' ? mdiWeatherSunny : mdiWeatherNight"
+                ></v-icon>
+              </template>
               {{
                 t(
                   appStore.theme === 'dark'
@@ -100,6 +105,12 @@
               size="small"
               @click="toggleTheme"
             >
+              <template #prepend>
+                <v-icon
+                  size="18"
+                  :icon="appStore.theme === 'dark' ? mdiWeatherSunny : mdiWeatherNight"
+                ></v-icon>
+              </template>
               {{
                 t(
                   appStore.theme === 'dark'
@@ -170,7 +181,15 @@
 </template>
 
 <script setup>
-import { mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
+import {
+  mdiArrowUp,
+  mdiEmail,
+  mdiGithub,
+  mdiLinkedin,
+  mdiMenu,
+  mdiWeatherSunny,
+  mdiWeatherNight,
+} from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -402,6 +421,10 @@ onUnmounted(() => {
 
 .theme-toggle {
   border-color: var(--line-soft) !important;
+
+  :deep(.v-btn__prepend) {
+    margin-inline-end: 0.5rem;
+  }
 }
 
 .language-toggle {
@@ -462,6 +485,10 @@ onUnmounted(() => {
 
 .mobile-theme {
   border: 1px solid var(--line-soft);
+
+  :deep(.v-btn__prepend) {
+    margin-inline-end: 0.35rem;
+  }
 }
 
 .mobile-controls {
