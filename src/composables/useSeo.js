@@ -151,6 +151,10 @@ export function useSeo() {
     }
 
     upsertLinkTag({ rel: 'canonical', href: localizedUrl });
+    upsertLinkTag({
+      rel: 'canonical',
+      href: buildUrl(route.fullPath, null, false),
+    });
 
     SUPPORTED_LOCALES.forEach((lang) => {
       upsertLinkTag({
