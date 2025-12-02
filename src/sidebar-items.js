@@ -3,7 +3,7 @@ const sidebar_items = [
     titleKey: 'navigation.items.home',
     value: 'home',
     icon: 'mdi-home',
-    to: '/home',
+    to: '/',
   },
   {
     titleKey: 'navigation.items.about',

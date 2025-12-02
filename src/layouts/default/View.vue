@@ -9,7 +9,7 @@
       width="280"
     >
       <div class="nav-root">
-        <router-link to="/home" class="brand-mark">
+        <router-link to="/" class="brand-mark">
           <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
           <span class="brand-tag">{{ t('navigation.brand.tagline') }}</span>
         </router-link>

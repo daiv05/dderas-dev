@@ -7,7 +7,7 @@ const routes = [
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
-        path: '/home',
+        path: '/',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
         meta: { seoKey: 'home' },
@@ -44,12 +44,6 @@ const routes = [
       },
     ],
   },
-  { path: '/inicio', redirect: '/home' },
-  { path: '/me', redirect: '/about' },
-  { path: '/proyectos', redirect: '/projects' },
-  { path: '/documentos-y-guias', redirect: '/resources' },
-  { path: '/tutoriales', redirect: '/tutorials' },
-  { path: '/herramientas', redirect: '/tools' },
 ];
 
 const router = createRouter({
@@ -58,13 +52,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from) => {
-  // Si el path es '/' redirecciona a '/home'
-  if (to.path === '/') {
-    return { path: '/home' };
-  }
-  // Si no se encuentra la ruta redirecciona a '/home'
   if (!to.matched.length) {
-    return { path: '/home' };
+    return { path: '/' };
   }
 });
 

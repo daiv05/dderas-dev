@@ -11,7 +11,7 @@
       <div class="footer-links">
         <p class="mono">{{ t('footer.quickMap') }}</p>
         <div class="nav-pills">
-          <router-link to="/home">{{ t('footer.links.home') }}</router-link>
+          <router-link to="/">{{ t('footer.links.home') }}</router-link>
           <router-link to="/projects">{{ t('footer.links.projects') }}</router-link>
           <router-link to="/resources">{{ t('footer.links.ues') }}</router-link>
           <router-link to="/tools">{{ t('footer.links.tools') }}</router-link>
