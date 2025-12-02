@@ -96,7 +96,9 @@
           <v-btn icon variant="text" title="Open menu" @click="drawer = true">
             <v-icon :icon="mdiMenu"></v-icon>
           </v-btn>
-          <p class="mobile-title">{{ t('navigation.brand.name') }}</p>
+          <p class="mobile-title">
+            {{ !isDesktop ? t('navigation.brand.shortName') : t('navigation.brand.name') }}
+          </p>
           <div class="mobile-controls">
             <v-btn
               variant="text"
@@ -112,11 +114,13 @@
                 ></v-icon>
               </template>
               {{
-                t(
-                  appStore.theme === 'dark'
-                    ? 'navigation.themeToggle.lightShort'
-                    : 'navigation.themeToggle.darkShort'
-                )
+                !isDesktop
+                  ? ''
+                  : t(
+                      appStore.theme === 'dark'
+                        ? 'navigation.themeToggle.lightShort'
+                        : 'navigation.themeToggle.darkShort'
+                    )
               }}
             </v-btn>
             <v-btn-toggle
@@ -156,7 +160,7 @@
           </v-slide-group>
         </div>
 
-        <div class="page-frame shell-content">
+        <div class="shell-content">
           <router-view v-slot="{ Component }">
             <transition name="page-fade" mode="out-in">
               <component :is="Component" />
@@ -215,8 +219,14 @@ const drawer = ref(false);
 const showScrollTop = ref(false);
 const mobileSection = ref(items[0]?.value ?? null);
 const languageOptions = computed(() => [
-  { value: 'en', label: t('navigation.languageToggle.en') },
-  { value: 'es', label: t('navigation.languageToggle.es') },
+  {
+    value: 'en',
+    label: t('navigation.languageToggle.en'),
+  },
+  {
+    value: 'es',
+    label: t('navigation.languageToggle.es'),
+  },
 ]);
 
 const isDesktop = computed(() => display.mdAndUp.value);
@@ -455,6 +465,7 @@ onUnmounted(() => {
 .shell-main {
   height: 100vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .shell-main-inner {

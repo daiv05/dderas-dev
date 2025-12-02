@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/manifest-icon-512.maskable.png"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icons/pwa/manifest-icon-512.maskable.png"
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
@@ -18,19 +18,16 @@
     "@vueuse/core": "^14.1.0",
     "gsap": "^3.13.0",
     "pinia": "^3.0.4",
-    "register-service-worker": "^1.7.2",
     "shiki": "^3.17.0",
     "vue": "^3.5.25",
     "vue-i18n": "^9.14.1",
     "vue-router": "^4.6.3",
-    "vuetify": "^3.11.1",
-    "workbox-precaching": "^7.4.0"
+    "vuetify": "^3.11.1"
   },
   "devDependencies": {
     "@mdi/js": "^7.4.47",
     "@vite-pwa/assets-generator": "^1.0.2",
     "@vitejs/plugin-vue": "^6.0.2",
-    "@vue/cli-plugin-pwa": "~5.0.9",
     "@vue/eslint-config-prettier": "^10.2.0",
     "eslint": "^9.39.1",
     "eslint-import-resolver-alias": "^1.1.2",

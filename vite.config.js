@@ -19,6 +19,7 @@ export default defineConfig({
       autoImport: true,
     }),
     VitePWA({
+      injectRegister: 'auto',
       includeAssets: ['images/*.png', '/favicon.ico'],
       registerType: 'autoUpdate',
       manifest: {
@@ -32,7 +33,7 @@ export default defineConfig({
         dir: 'auto',
         theme_color: '#000000',
         background_color: '#000000',
-        orientation: 'any',
+        orientation: 'landscape',
         icons: [
           {
             src: '/icons/pwa/pwa-192x192.png',
@@ -65,6 +66,7 @@ export default defineConfig({
             sizes: '1881x844',
             type: 'image/png',
             description: 'Home page',
+            form_factor: 'wide',
           },
           {
             src: 'https://www.deras.dev/screenshots/mis-proyectos.png',
@@ -89,21 +91,48 @@ export default defineConfig({
         shortcuts: [
           {
             name: 'Projects',
+            short_name: 'Projects',
             url: '/projects',
             description: 'Featured software projects by deras-dev',
+            icons: [
+              {
+                src: '/icons/pwa/pwa-96x96.png',
+                sizes: '96x96',
+              },
+            ],
           },
           {
             name: 'Resources',
+            short_name: 'Resources',
             url: '/resources',
             description: 'Shared university resources and docs',
+            icons: [
+              {
+                src: '/icons/pwa/pwa-96x96.png',
+                sizes: '96x96',
+              },
+            ],
           },
           {
             name: 'Tutorials',
+            short_name: 'Tutorials',
             url: '/tutorials',
             description: 'Development tutorials and notes',
+            icons: [
+              {
+                src: '/icons/pwa/pwa-96x96.png',
+                sizes: '96x96',
+              },
+            ],
           },
         ],
       },
+      workbox: {
+        cleanupOutdatedCaches: true,
+        sourcemap: true,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+      },
+      // devOptions: { enabled: true },
     }),
   ],
   define: { 'process.env': {} },

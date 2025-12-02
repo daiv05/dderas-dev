@@ -2,6 +2,7 @@ export default {
   navigation: {
     brand: {
       name: 'David Deras',
+      shortName: 'DDeras',
       tagline: 'Fullstack & product',
     },
     themeToggle: {
@@ -12,8 +13,8 @@ export default {
     },
     languageToggle: {
       label: 'Language',
-      en: 'English',
-      es: 'Spanish',
+      en: 'Eng',
+      es: 'Spa',
     },
     items: {
       home: 'Home',
