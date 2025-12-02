@@ -283,19 +283,12 @@ watch(
   async (lang) => {
     applyLanguage(lang);
     setLangQuery(lang);
-
-    // Después de cambiar el idioma, dar tiempo a que Vue actualice el DOM
     await nextTick();
-
-    // Luego limpiar propiedades GSAP y refrescar
     setTimeout(() => {
-      // Limpiar todas las propiedades inline de GSAP en elementos animados
       const animatedElements = document.querySelectorAll(
         '[style*="opacity"], [style*="transform"]'
       );
       clearGSAPProps(Array.from(animatedElements));
-
-      // Refrescar los ScrollTriggers para recalcular posiciones
       refreshScrollTriggers();
     }, 100);
   }
