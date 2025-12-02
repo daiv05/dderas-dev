@@ -89,12 +89,10 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
 const label = ref(null);
 const titleEl = ref(null);
@@ -114,48 +112,61 @@ const interests = computed(() => interestsContent.value.items ?? []);
 
 onMounted(async () => {
   await nextTick();
+
+  // Obtener el scroller personalizado
+  const scroller = getMainScroller();
+
   ctx = gsap.context(() => {
-    const headerTargets = [label.value, titleEl.value, subtitle.value];
+    const headerTargets = [label.value, titleEl.value, subtitle.value].filter(Boolean);
 
-    gsap.from(headerTargets, {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: titleEl.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+    if (headerTargets.length) {
+      gsap.from(headerTargets, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 24,
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: titleEl.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
 
-    gsap.from(profileSection.value, {
-      opacity: 0,
-      x: -40,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: profileSection.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+    if (profileSection.value) {
+      gsap.from(profileSection.value, {
+        ...gsapDefaults,
+        opacity: 0,
+        x: -40,
+        duration: 0.9,
+        scrollTrigger: {
+          trigger: profileSection.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
 
-    gsap.from(detailsSection.value, {
-      opacity: 0,
-      x: 40,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: detailsSection.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+    if (detailsSection.value) {
+      gsap.from(detailsSection.value, {
+        ...gsapDefaults,
+        opacity: 0,
+        x: 40,
+        duration: 0.9,
+        scrollTrigger: {
+          trigger: detailsSection.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
   });
 
-  ScrollTrigger.refresh();
+  // Refrescar después de un pequeño delay para asegurar que el DOM está listo
+  setTimeout(() => ScrollTrigger.refresh(), 100);
 });
 
 onUnmounted(() => {

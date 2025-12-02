@@ -1,4 +1,4 @@
-const project_list = [
+const projectList = [
   {
     id: 1,
     date: '2023',
@@ -219,4 +219,4 @@ const project_list = [
   },
 ];
 
-export default project_list;
+export { projectList };

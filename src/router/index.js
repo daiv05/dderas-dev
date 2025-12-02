@@ -1,6 +1,8 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router';
 
+import { killAllScrollTriggers } from '@/plugins/gsap';
+
 const routes = [
   {
     path: '/',
@@ -63,6 +65,9 @@ router.beforeEach((to, _from) => {
   if (!to.matched.length) {
     return { path: '/' };
   }
+
+  // Limpiar todos los ScrollTriggers antes de cambiar de ruta
+  killAllScrollTriggers();
 });
 
 export default router;

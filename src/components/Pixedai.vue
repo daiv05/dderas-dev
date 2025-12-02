@@ -230,8 +230,6 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ref,
   reactive,
@@ -245,8 +243,7 @@ import {
 import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
 defineOptions({
   name: 'Pixedai',
@@ -601,31 +598,39 @@ onMounted(async () => {
     pixel();
   }, 800);
 
-  ctx = gsap.context(() => {
-    gsap.from(headerEl.value, {
-      opacity: 0,
-      y: 32,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: headerEl.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+  const scroller = getMainScroller();
 
-    gsap.from(panelRefs, {
-      opacity: 0,
-      y: 36,
-      duration: 0.9,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: contentEl.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+  ctx = gsap.context(() => {
+    if (headerEl.value) {
+      gsap.from(headerEl.value, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 32,
+        duration: 0.9,
+        scrollTrigger: {
+          trigger: headerEl.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
+
+    if (panelRefs.length) {
+      gsap.from(panelRefs, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 36,
+        duration: 0.9,
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: contentEl.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
   });
 });
 

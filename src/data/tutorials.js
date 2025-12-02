@@ -1,4 +1,4 @@
-const tutorials_list = [
+const tutorialsList = [
   {
     id: 1,
     date: '2022',
@@ -146,4 +146,4 @@ const tutorials_list = [
   },
 ];
 
-export default tutorials_list;
+export { tutorialsList };

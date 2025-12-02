@@ -48,13 +48,11 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
 const router = useRouter();
 const sectionRef = ref(null);
@@ -89,6 +87,7 @@ onMounted(async () => {
   try {
     await nextTick();
 
+    const scroller = getMainScroller();
     const headerTargets = [titleEl.value, headingEl.value, descriptionEl.value].filter(Boolean);
     const panels = panelRefs.filter(Boolean);
     const ctaEl = ctaSection.value?.$el ?? ctaSection.value;
@@ -96,50 +95,50 @@ onMounted(async () => {
     ctx = gsap.context(() => {
       if (headerTargets.length) {
         gsap.from(headerTargets, {
+          ...gsapDefaults,
           opacity: 0,
           y: 24,
-          duration: 0.8,
           stagger: 0.15,
-          ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.value,
             start: 'top 85%',
             once: true,
+            scroller: scroller,
           },
         });
       }
 
       if (panels.length) {
         gsap.from(panels, {
+          ...gsapDefaults,
           opacity: 0,
           y: 30,
-          duration: 0.8,
           stagger: 0.15,
-          ease: 'power3.out',
           scrollTrigger: {
             trigger: gridRef.value,
             start: 'top 80%',
             once: true,
+            scroller: scroller,
           },
         });
       }
 
       if (ctaEl) {
         gsap.from(ctaEl, {
+          ...gsapDefaults,
           opacity: 0,
           y: 24,
-          duration: 0.8,
-          ease: 'power3.out',
           scrollTrigger: {
             trigger: ctaEl,
             start: 'top 90%',
             once: true,
+            scroller: scroller,
           },
         });
       }
     });
 
-    ScrollTrigger.refresh();
+    setTimeout(() => ScrollTrigger.refresh(), 100);
   } catch (error) {
     console.error('Error during GSAP animation setup:', error);
   }

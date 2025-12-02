@@ -197,6 +197,7 @@ import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
 import { useSeo } from '@/composables/useSeo';
+import { setupGSAP } from '@/plugins/gsap';
 import sidebarItems from '@/router/sidebar-items.js';
 import { useAppStore } from '@/store/app';
 
@@ -326,6 +327,8 @@ const scrollToTop = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  // Inicializar GSAP con el scroller personalizado
+  setupGSAP();
 });
 
 onUnmounted(() => {

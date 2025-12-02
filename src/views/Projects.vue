@@ -136,18 +136,15 @@
 
 <script setup>
 import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import project_list from '@/data/projects.js';
-
-gsap.registerPlugin(ScrollTrigger);
+import { projectList } from '@/data/projects.js';
+import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
 const projects = computed(() =>
-  project_list.map((project) => {
+  projectList.map((project) => {
     const translation = project.translations?.[locale.value] ?? project.translations?.en ?? {};
     return {
       ...project,
@@ -206,37 +203,37 @@ const stepGallery = (direction) => {
 onMounted(async () => {
   await nextTick();
 
+  const scroller = getMainScroller();
   const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
   const panels = panelRefs.filter(Boolean);
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
       gsap.from(headerTargets, {
+        ...gsapDefaults,
         opacity: 0,
         y: 24,
-        duration: 0.8,
         stagger: 0.15,
-        ease: 'power3.out',
       });
     }
 
     if (panels.length) {
       gsap.from(panels, {
+        ...gsapDefaults,
         opacity: 0,
         y: 30,
-        duration: 0.8,
         stagger: 0.1,
-        ease: 'power3.out',
         scrollTrigger: {
           trigger: ledgerRef.value?.$el ?? ledgerRef.value,
           start: 'top 80%',
           once: true,
+          scroller: scroller,
         },
       });
     }
   });
 
-  ScrollTrigger.refresh();
+  setTimeout(() => ScrollTrigger.refresh(), 100);
 });
 
 onUnmounted(() => {

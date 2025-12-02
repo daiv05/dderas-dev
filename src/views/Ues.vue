@@ -48,12 +48,10 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
 const label = ref(null);
 const titleEl = ref(null);
@@ -79,37 +77,37 @@ onBeforeUpdate(() => {
 onMounted(async () => {
   await nextTick();
 
+  const scroller = getMainScroller();
   const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
   const panels = panelRefs.filter(Boolean);
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
       gsap.from(headerTargets, {
+        ...gsapDefaults,
         opacity: 0,
         y: 24,
-        duration: 0.8,
         stagger: 0.15,
-        ease: 'power3.out',
       });
     }
 
     if (panels.length) {
       gsap.from(panels, {
+        ...gsapDefaults,
         opacity: 0,
         y: 30,
-        duration: 0.8,
         stagger: 0.2,
-        ease: 'power3.out',
         scrollTrigger: {
           trigger: gridRef.value,
           start: 'top 85%',
           once: true,
+          scroller: scroller,
         },
       });
     }
   });
 
-  ScrollTrigger.refresh();
+  setTimeout(() => ScrollTrigger.refresh(), 100);
 });
 
 onUnmounted(() => {

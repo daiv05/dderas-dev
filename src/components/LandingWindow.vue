@@ -84,11 +84,11 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
 import { codeToHtml } from 'shiki';
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { gsap, gsapDefaults } from '@/plugins/gsap';
 import { useAppStore } from '@/store/app';
 
 const copyBlock = ref(null);
@@ -175,42 +175,52 @@ const scrollToProjects = () => {
 onMounted(async () => {
   await nextTick();
   highlightSnippet();
+
+  // Asegurar visibilidad inicial
+  gsap.set([copyBlock.value, boardBlock.value, ctaGroup.value, ledgerBlock.value], {
+    clearProps: 'all',
+  });
+
   ctx = gsap.context(() => {
     const copyTargets = copyBlock.value?.querySelectorAll('[data-animate]') ?? [];
     const boardTargets = boardBlock.value?.querySelectorAll('[data-animate]') ?? [];
 
-    gsap.from(copyTargets, {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
+    if (copyTargets.length) {
+      gsap.from(copyTargets, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 24,
+        stagger: 0.15,
+      });
+    }
 
-    gsap.from(ctaGroup.value, {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      delay: 0.4,
-      ease: 'power3.out',
-    });
+    if (ctaGroup.value) {
+      gsap.from(ctaGroup.value, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 24,
+        delay: 0.4,
+      });
+    }
 
-    gsap.from(ledgerBlock.value, {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      delay: 0.5,
-      ease: 'power3.out',
-    });
+    if (ledgerBlock.value) {
+      gsap.from(ledgerBlock.value, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 24,
+        delay: 0.5,
+      });
+    }
 
-    gsap.from(boardTargets, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.2,
-      delay: 0.3,
-      ease: 'power3.out',
-    });
+    if (boardTargets.length) {
+      gsap.from(boardTargets, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 30,
+        stagger: 0.2,
+        delay: 0.3,
+      });
+    }
   });
 
   setTimeout(typeWriter, 600);

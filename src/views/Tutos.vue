@@ -77,17 +77,15 @@
 </template>
 
 <script setup>
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import tutorials_list from '@/data/tutorials.js';
+import { tutorialsList } from '@/data/tutorials.js';
+import { gsap, getMainScroller, gsapDefaults } from '@/plugins/gsap';
 
-gsap.registerPlugin(ScrollTrigger);
 const { t, locale } = useI18n();
 const tutorials = computed(() =>
-  tutorials_list.map((tutorial) => {
+  tutorialsList.map((tutorial) => {
     const translation = tutorial.translations?.[locale.value] ?? tutorial.translations?.en ?? {};
     return {
       ...tutorial,
@@ -134,19 +132,25 @@ const chipClass = (value) => ({
 
 onMounted(async () => {
   await nextTick();
+
+  const scroller = getMainScroller();
+  const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
+
   ctx = gsap.context(() => {
-    gsap.from([label.value, titleEl.value, descriptionEl.value], {
-      opacity: 0,
-      y: 24,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: titleEl.value,
-        start: 'top 80%',
-        once: true,
-      },
-    });
+    if (headerTargets.length) {
+      gsap.from(headerTargets, {
+        ...gsapDefaults,
+        opacity: 0,
+        y: 24,
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: titleEl.value,
+          start: 'top 80%',
+          once: true,
+          scroller: scroller,
+        },
+      });
+    }
   });
 });
 
