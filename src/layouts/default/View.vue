@@ -82,7 +82,7 @@
     <v-main class="shell-main">
       <div class="shell-main-inner">
         <div v-if="!isDesktop" class="mobile-top">
-          <v-btn icon variant="text" @click="drawer = true">
+          <v-btn icon variant="text" title="Open menu" @click="drawer = true">
             <v-icon icon="mdi-menu"></v-icon>
           </v-btn>
           <p class="mobile-title">{{ t('navigation.brand.name') }}</p>
@@ -171,7 +171,7 @@ import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
 import { useSeo } from '@/composables/useSeo';
-import sidebar_items from '@/sidebar-items.js';
+import sidebar_items from '@/router/sidebar-items.js';
 import { useAppStore } from '@/store/app';
 
 const theme = useTheme();

@@ -140,7 +140,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import project_list from '@/projects.js';
+import project_list from '@/data/projects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 

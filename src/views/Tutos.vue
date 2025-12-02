@@ -80,15 +80,14 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
-
-gsap.registerPlugin(ScrollTrigger);
 import { useI18n } from 'vue-i18n';
 
-import tutos_list from '@/tutos.js';
+import tutorials_list from '@/data/tutorials.js';
 
+gsap.registerPlugin(ScrollTrigger);
 const { t, locale } = useI18n();
 const tutorials = computed(() =>
-  tutos_list.map((tutorial) => {
+  tutorials_list.map((tutorial) => {
     const translation = tutorial.translations?.[locale.value] ?? tutorial.translations?.en ?? {};
     return {
       ...tutorial,
