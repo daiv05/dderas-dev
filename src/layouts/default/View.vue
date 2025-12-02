@@ -97,7 +97,7 @@
             <v-icon :icon="mdiMenu"></v-icon>
           </v-btn>
           <p class="mobile-title">
-            {{ !isDesktop ? t('navigation.brand.shortName') : t('navigation.brand.name') }}
+            {{ t('navigation.brand.shortName') }}
           </p>
           <div class="mobile-controls">
             <v-btn
@@ -501,7 +501,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem var(--shell-padding) 0;
+  padding: 1rem var(--shell-padding) 1rem;
   position: sticky;
   top: 0;
   background: rgb(var(--v-theme-background));
