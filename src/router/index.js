@@ -49,6 +49,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    // Scroll del contenedor principal con overflow
+    const mainElement = document.querySelector('.shell-main');
+    if (mainElement) {
+      mainElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    return { top: 0, behavior: 'smooth' };
+  },
 });
 
 router.beforeEach((to, _from) => {
