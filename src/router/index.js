@@ -44,6 +44,18 @@ const routes = [
         component: () => import('@/views/Herramientas.vue'),
         meta: { seoKey: 'tools' },
       },
+      {
+        path: '/blog',
+        name: 'BlogIndex',
+        component: () => import('@/views/Blog.vue'),
+        meta: { seoKey: 'blog' },
+      },
+      {
+        path: '/blog/:slug',
+        name: 'BlogPost',
+        component: () => import('@/views/Blog.vue'),
+        meta: { seoKey: 'blog' },
+      },
     ],
   },
 ];

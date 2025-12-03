@@ -2,6 +2,10 @@
 import { fileURLToPath, URL } from 'node:url';
 
 import vue from '@vitejs/plugin-vue';
+import mdAnchor from 'markdown-it-anchor';
+import mdAttrs from 'markdown-it-attrs';
+import mdToc from 'markdown-it-toc-done-right';
+import Markdown from 'unplugin-vue-markdown/vite';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
@@ -12,7 +16,29 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineConfig({
   plugins: [
     vue({
+      // Permitir que Vite trate archivos Markdown como componentes Vue
+      include: [/\.vue$/, /\.md$/],
       template: { transformAssetUrls },
+    }),
+    // Transformar `.md` a componentes Vue en dev/build
+    Markdown({
+      headEnabled: false,
+      markdownItSetup(md) {
+        md.use(mdAnchor, {
+          permalink: mdAnchor.permalink.linkInsideHeader({
+            symbol: '#',
+            placement: 'before',
+            ariaHidden: true,
+            class: 'md-anchor',
+          }),
+        });
+        md.use(mdAttrs);
+        md.use(mdToc, {
+          placeholder: '\n[toc]\n',
+          listType: 'ul',
+          containerClass: 'md-toc',
+        });
+      },
     }),
     // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     vuetify({

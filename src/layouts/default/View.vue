@@ -16,9 +16,25 @@
 
         <v-divider class="nav-divider" thickness="1"></v-divider>
 
+        <div
+          v-if="route.path.startsWith('/blog')"
+          class="plain-sheet"
+          style="margin-bottom: 0.75rem"
+        >
+          <v-text-field
+            v-model="searchQuery"
+            :label="t('navigation.search') || 'Buscar entradas'"
+            density="compact"
+            variant="outlined"
+            hide-details
+            clearable
+            prepend-inner-icon="mdi-magnify"
+          />
+        </div>
+
         <v-list density="compact" nav class="nav-list">
           <v-list-item
-            v-for="item in items"
+            v-for="item in itemsComputed"
             :key="item.value"
             :class="['nav-link', { 'nav-link--active': isActive(item) }]"
             @click="goTo(item)"
@@ -30,7 +46,7 @@
                 :icon="item.icon"
               ></v-icon>
             </template>
-            <v-list-item-title>{{ t(item.titleKey) }}</v-list-item-title>
+            <v-list-item-title>{{ item.title ?? t(item.titleKey) }}</v-list-item-title>
           </v-list-item>
         </v-list>
 
@@ -145,7 +161,7 @@
 
         <div v-if="!isDesktop" class="mobile-nav">
           <v-slide-group v-model="mobileSection" show-arrows>
-            <v-slide-group-item v-for="item in items" :key="item.value" :value="item.value">
+            <v-slide-group-item v-for="item in itemsComputed" :key="item.value" :value="item.value">
               <v-btn
                 variant="text"
                 rounded="pill"
@@ -154,7 +170,7 @@
                 :class="{ 'nav-chip--active': mobileSection === item.value }"
                 @click="handleMobileNav(item)"
               >
-                {{ t(item.titleKey) }}
+                {{ item.title ?? t(item.titleKey) }}
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
@@ -194,6 +210,7 @@ import {
   mdiWeatherSunny,
   mdiWeatherNight,
 } from '@mdi/js';
+import { mdiArrowLeft, mdiBookOpenPageVariant } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -211,6 +228,46 @@ const router = useRouter();
 const route = useRoute();
 const appStore = useAppStore();
 const items = sidebarItems;
+const searchQuery = ref('');
+const blogModules = import.meta.glob('/blog/*.md', { eager: true });
+const blogPosts = computed(() => {
+  return Object.keys(blogModules)
+    .map((path) => {
+      const mod = blogModules[path];
+      const slug = path.split('/').pop().replace(/\.md$/, '');
+      const fm = mod?.frontmatter || {};
+      return {
+        title: fm.title || slug,
+        date: fm.date || '',
+        to: `/blog/${slug}`,
+        icon: mdiBookOpenPageVariant,
+        value: slug,
+      };
+    })
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    .filter((p) => p.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
+});
+
+const itemsComputed = computed(() => {
+  if (route.path.startsWith('/blog')) {
+    return [
+      {
+        title: t('navigation.backToMain') || 'Volver al menú principal',
+        to: '/',
+        icon: mdiArrowLeft,
+        value: 'back',
+      },
+      {
+        title: t('navigation.viewBlogEntries') || 'Ver entradas de blog',
+        to: '/blog',
+        icon: mdiBookOpenPageVariant,
+        value: 'blog',
+      },
+      ...blogPosts.value,
+    ];
+  }
+  return items;
+});
 const { t, locale } = useI18n();
 const supportedLanguages = new Set(['en', 'es']);
 useSeo();

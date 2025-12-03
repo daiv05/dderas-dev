@@ -24,6 +24,9 @@ export default {
       tutorials: 'Tutoriales',
       tools: 'Herramientas',
     },
+    backToMain: 'Volver al menú principal',
+    viewBlogEntries: 'Ver entradas de blog',
+    search: 'Buscar',
     links: {
       github: 'GitHub',
       linkedin: 'LinkedIn',

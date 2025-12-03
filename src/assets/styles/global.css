@@ -1,5 +1,9 @@
 /* Importar fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'github-markdown-css/github-markdown.css';
+/* Temas de Prism: claro y oscuro según media query */
+@import url('prism-themes/themes/prism-material-light.css') screen and (prefers-color-scheme: light);
+@import url('prism-themes/themes/prism-vsc-dark-plus.css') screen and (prefers-color-scheme: dark);
 
 * {
   box-sizing: border-box;
@@ -104,6 +108,51 @@ ol {
   margin: 0 auto;
   padding: var(--section-gap) var(--shell-padding);
   position: relative;
+}
+
+/* Estilos del cuerpo Markdown tipo GitHub/VitePress */
+.markdown-body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgba(var(--v-theme-surface), 0.8);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+}
+.md-anchor {
+  margin-right: 0.35rem;
+  color: var(--text-subtle);
+  text-decoration: none;
+}
+
+.md-toc {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  background: var(--surface-faint);
+  margin: 1rem 0 2rem;
+}
+
+.md-toc ul {
+  padding-left: 1rem;
+}
+
+.md-toc a {
+  color: inherit;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-family: var(--font-display);
+}
+
+.markdown-body pre,
+.markdown-body code {
+  font-family: var(--font-mono);
 }
 
 .section-stack {
