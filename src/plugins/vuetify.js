@@ -151,6 +151,7 @@ export default createVuetify({
           surface: '#161514',
           'surface-variant': '#1F1D1C',
           'on-surface': '#E8E6E3',
+          'on-background': '#E8E6E3',
           'on-primary': '#0A0908',
           error: '#D00000',
           info: '#0096C7',

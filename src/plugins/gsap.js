@@ -1,47 +1,30 @@
 /**
  * Plugin de configuración global de GSAP
- * Configura ScrollTrigger para trabajar con el scroll personalizado de la app
  */
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Registrar plugins
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Configura GSAP con el scroller personalizado
- * Debe ser llamado después de que el DOM esté montado
- */
 export function setupGSAP() {
   const scroller = document.querySelector('.shell-main');
 
   if (scroller) {
-    // Configurar ScrollTrigger para usar el contenedor de scroll personalizado
     ScrollTrigger.defaults({
       scroller: scroller,
     });
 
-    // Configuración adicional
     ScrollTrigger.config({
-      // Sincronizar con el scroller personalizado
       autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
     });
   }
 }
 
-/**
- * Limpia todos los ScrollTriggers activos
- * Útil antes de cambiar de ruta
- */
 export function killAllScrollTriggers() {
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 }
 
-/**
- * Refresca todos los ScrollTriggers
- * Útil después de cambios en el DOM
- */
 export function refreshScrollTriggers() {
   ScrollTrigger.refresh();
 }
@@ -69,10 +52,6 @@ export function isElementInViewport(element, scroller = null) {
   return rect.top >= scrollerRect.top && rect.bottom <= scrollerRect.bottom;
 }
 
-/**
- * Limpia las propiedades inline de GSAP de un elemento o elementos
- * Útil para resetear elementos después de cambios de idioma
- */
 export function clearGSAPProps(elements) {
   const targets = Array.isArray(elements) ? elements : [elements];
   targets.forEach((el) => {
@@ -105,10 +84,8 @@ export function animateInOnEnter(
     if (!el) return;
     const visible = isElementInViewport(el, scr);
     if (visible) {
-      // Asegurar que elementos visibles no queden ocultos
       gsap.set(el, { clearProps: 'all' });
     } else {
-      // Estado inicial (no lo aplicamos si ya es visible)
       gsap.set(el, { ...from });
     }
 
@@ -131,22 +108,16 @@ if (typeof globalThis !== 'undefined') {
   });
 }
 
-/**
- * Configuración común de animación GSAP
- * Evita duplicar opciones en cada componente
- */
 export const gsapDefaults = {
   ease: 'power3.out',
   duration: 0.8,
-  clearProps: 'all', // Limpia propiedades inline después de la animación
+  clearProps: 'all',
 };
 
-/**
- * Configuración común de ScrollTrigger
- */
 export const scrollTriggerDefaults = {
   start: 'top 80%',
   once: true,
 };
 
-export { gsap, ScrollTrigger };
+export { gsap } from 'gsap';
+export { ScrollTrigger } from 'gsap/ScrollTrigger';
