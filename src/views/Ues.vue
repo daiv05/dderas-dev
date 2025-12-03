@@ -51,74 +51,36 @@
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import {
-  gsap,
-  ScrollTrigger,
-  getMainScroller,
-  gsapDefaults,
-  animateInOnEnter,
-} from '@/plugins/gsap';
+import { useEnterAnimations } from '@/composables/useEnterAnimations.js';
 
-const label = ref(null);
-const titleEl = ref(null);
-const descriptionEl = ref(null);
+const {
+  label,
+  titleEl,
+  descriptionEl,
+  setPanelRef,
+  resetPanelRefs,
+  setupEnterAnimations,
+  cleanupEnterAnimations,
+} = useEnterAnimations();
 const gridRef = ref(null);
-let panelRefs = [];
-let ctx;
-
 const { t, tm } = useI18n();
 const categories = computed(() => tm('ues.categories') ?? []);
 
-const setPanelRef = (el) => {
-  const target = el?.$el ?? el;
-  if (target && !panelRefs.includes(target)) {
-    panelRefs.push(target);
-  }
-};
-
 onBeforeUpdate(() => {
-  panelRefs = [];
+  resetPanelRefs();
 });
-
-const setupAnimations = () => {
-  const scroller = getMainScroller();
-  const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
-  const panels = panelRefs.filter(Boolean);
-
-  ctx = gsap.context(() => {
-    if (headerTargets.length) {
-      animateInOnEnter(headerTargets, {
-        from: { opacity: 0, y: 24 },
-        to: { ...gsapDefaults, opacity: 1, y: 0 },
-        trigger: titleEl.value,
-        scroller,
-        start: 'top 80%',
-        once: true,
-      });
-    }
-
-    if (panels.length) {
-      animateInOnEnter(panels, {
-        from: { opacity: 0, y: 30 },
-        to: { ...gsapDefaults, opacity: 1, y: 0 },
-        trigger: gridRef.value,
-        scroller,
-        start: 'top 85%',
-        once: true,
-      });
-    }
-  });
-
-  setTimeout(() => ScrollTrigger.refresh(), 100);
-};
 
 onMounted(async () => {
   await nextTick();
-  setupAnimations();
+  setupEnterAnimations({
+    headerStart: 'top 80%',
+    panelsStart: 'top 85%',
+    headerTrigger: titleEl.value,
+    panelsTrigger: gridRef.value,
+  });
 });
 onUnmounted(() => {
-  ctx?.revert();
-  panelRefs = [];
+  cleanupEnterAnimations();
 });
 </script>
 

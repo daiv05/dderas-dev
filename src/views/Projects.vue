@@ -139,14 +139,8 @@ import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { useEnterAnimations } from '@/composables/useEnterAnimations.js';
 import { projectList } from '@/data/projects.js';
-import {
-  gsap,
-  ScrollTrigger,
-  getMainScroller,
-  gsapDefaults,
-  animateInOnEnter,
-} from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
 const projects = computed(() =>
@@ -158,23 +152,20 @@ const projects = computed(() =>
     };
   })
 );
-const label = ref(null);
-const titleEl = ref(null);
-const descriptionEl = ref(null);
+const {
+  label,
+  titleEl,
+  descriptionEl,
+  setPanelRef,
+  resetPanelRefs,
+  setupEnterAnimations,
+  cleanupEnterAnimations,
+} = useEnterAnimations();
 const ledgerRef = ref(null);
-let panelRefs = [];
 const gallery = ref({ open: false, images: [], project: null, index: 0 });
-let ctx;
-
-const setPanelRef = (el) => {
-  const target = el?.$el ?? el;
-  if (target && !panelRefs.includes(target)) {
-    panelRefs.push(target);
-  }
-};
 
 onBeforeUpdate(() => {
-  panelRefs = [];
+  resetPanelRefs();
 });
 
 const media = (project) => {
@@ -206,45 +197,17 @@ const stepGallery = (direction) => {
   gallery.value.index = (gallery.value.index + direction + total) % total;
 };
 
-const setupAnimations = () => {
-  const scroller = getMainScroller();
-  const headerTargets = [label.value, titleEl.value, descriptionEl.value].filter(Boolean);
-  const panels = panelRefs.filter(Boolean);
-
-  ctx = gsap.context(() => {
-    if (headerTargets.length) {
-      animateInOnEnter(headerTargets, {
-        from: { opacity: 0, y: 24 },
-        to: { ...gsapDefaults, opacity: 1, y: 0 },
-        trigger: titleEl.value,
-        scroller,
-        start: 'top 80%',
-        once: true,
-      });
-    }
-
-    if (panels.length) {
-      animateInOnEnter(panels, {
-        from: { opacity: 0, y: 30 },
-        to: { ...gsapDefaults, opacity: 1, y: 0 },
-        trigger: ledgerRef.value?.$el ?? ledgerRef.value,
-        scroller,
-        start: 'top 80%',
-        once: true,
-      });
-    }
-  });
-
-  setTimeout(() => ScrollTrigger.refresh(), 100);
-};
-
 onMounted(async () => {
   await nextTick();
-  setupAnimations();
+  setupEnterAnimations({
+    headerStart: 'top 80%',
+    panelsStart: 'top 80%',
+    headerTrigger: titleEl.value,
+    panelsTrigger: ledgerRef.value?.$el ?? ledgerRef.value,
+  });
 });
 onUnmounted(() => {
-  ctx?.revert();
-  panelRefs = [];
+  cleanupEnterAnimations();
 });
 </script>
 
