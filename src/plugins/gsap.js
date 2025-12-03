@@ -104,12 +104,12 @@ export function animateInOnEnter(
   elems.forEach((el) => {
     if (!el) return;
     const visible = isElementInViewport(el, scr);
-    if (!visible) {
-      // Estado inicial (no lo aplicamos si ya es visible)
-      gsap.set(el, { ...from });
-    } else {
+    if (visible) {
       // Asegurar que elementos visibles no queden ocultos
       gsap.set(el, { clearProps: 'all' });
+    } else {
+      // Estado inicial (no lo aplicamos si ya es visible)
+      gsap.set(el, { ...from });
     }
 
     ScrollTrigger.create({

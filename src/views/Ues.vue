@@ -51,8 +51,13 @@
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
-import { animateInOnEnter } from '@/plugins/gsap';
+import {
+  gsap,
+  ScrollTrigger,
+  getMainScroller,
+  gsapDefaults,
+  animateInOnEnter,
+} from '@/plugins/gsap';
 
 const label = ref(null);
 const titleEl = ref(null);
