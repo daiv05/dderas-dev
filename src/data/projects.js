@@ -73,7 +73,7 @@ const projectList = [
           'Plataforma integral para inventario, facturación, RRHH y delivery pensada para tiendas de barrio.',
         longDescription:
           'ERP desarrollado a medida con módulos conectados: inventario en tiempo real, POS con facturación, gestión de planillas y control de pedidos a domicilio con seguimiento GPS.',
-        client: 'Tienda y Depósito “Carmencita”',
+        client: 'Tienda y Depósito "Carmencita"',
         category: 'Software empresarial',
         technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
         features: [
@@ -92,7 +92,7 @@ const projectList = [
           'End-to-end management platform for inventory, invoicing, HR and delivery built for local stores.',
         longDescription:
           'Custom ERP with connected modules: real-time inventory, POS with invoicing, payroll automation and delivery tracking with GPS plus an analytics control panel.',
-        client: '“Carmencita” store & depot',
+        client: '"Carmencita" store & depot',
         category: 'Enterprise software',
         technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
         features: [
