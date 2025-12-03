@@ -212,7 +212,7 @@ const route = useRoute();
 const appStore = useAppStore();
 const items = sidebarItems;
 const { t, locale } = useI18n();
-const supportedLanguages = ['en', 'es'];
+const supportedLanguages = new Set(['en', 'es']);
 useSeo();
 
 const drawer = ref(false);
@@ -252,7 +252,7 @@ const setLangQuery = (lang) => {
 
 const initializeLanguage = () => {
   const queryLang = normalizeLangQuery(route.query.lang);
-  if (typeof queryLang === 'string' && supportedLanguages.includes(queryLang)) {
+  if (typeof queryLang === 'string' && supportedLanguages.has(queryLang)) {
     if (queryLang !== appStore.language) {
       appStore.language = queryLang;
     }
@@ -285,10 +285,12 @@ watch(
     setLangQuery(lang);
     await nextTick();
     setTimeout(() => {
-      const animatedElements = document.querySelectorAll(
-        '[style*="opacity"], [style*="transform"]'
-      );
-      clearGSAPProps(Array.from(animatedElements));
+      const root = document.querySelector('.shell-content');
+      if (root) {
+        const animatedElements = root.querySelectorAll('[style*="opacity"], [style*="transform"]');
+        clearGSAPProps(Array.from(animatedElements));
+      }
+      // Recalcular ScrollTriggers tras los cambios de layout/texto
       refreshScrollTriggers();
     }, 100);
   }
@@ -297,11 +299,7 @@ watch(
 watch(
   () => normalizeLangQuery(route.query.lang),
   (lang) => {
-    if (
-      typeof lang === 'string' &&
-      supportedLanguages.includes(lang) &&
-      lang !== appStore.language
-    ) {
+    if (typeof lang === 'string' && supportedLanguages.has(lang) && lang !== appStore.language) {
       appStore.language = lang;
     }
   }
@@ -421,11 +419,6 @@ onUnmounted(() => {
 .nav-dot {
   margin-right: 0.85rem;
 }
-
-// .nav-dot--active {
-// border-color: rgb(var(--v-theme-primary));
-// background: rgb(var(--v-theme-primary));
-// }
 
 .nav-bottom {
   display: flex;

@@ -98,6 +98,7 @@ import {
   getMainScroller,
   gsapDefaults,
   isElementInViewport,
+  animateInOnEnter,
 } from '@/plugins/gsap';
 
 const label = ref(null);
@@ -144,43 +145,25 @@ const setupAnimations = () => {
     }
 
     if (profileSection.value) {
-      const alreadyVisible = isElementInViewport(profileSection.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(profileSection.value, { clearProps: 'all' });
-      } else {
-        gsap.from(profileSection.value, {
-          ...gsapDefaults,
-          opacity: 0,
-          x: -40,
-          duration: 0.9,
-          scrollTrigger: {
-            trigger: profileSection.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(profileSection.value, {
+        from: { opacity: 0, x: -40 },
+        to: { ...gsapDefaults, opacity: 1, x: 0, duration: 0.9 },
+        trigger: profileSection.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
 
     if (detailsSection.value) {
-      const alreadyVisible = isElementInViewport(detailsSection.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(detailsSection.value, { clearProps: 'all' });
-      } else {
-        gsap.from(detailsSection.value, {
-          ...gsapDefaults,
-          opacity: 0,
-          x: 40,
-          duration: 0.9,
-          scrollTrigger: {
-            trigger: detailsSection.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(detailsSection.value, {
+        from: { opacity: 0, x: 40 },
+        to: { ...gsapDefaults, opacity: 1, x: 0, duration: 0.9 },
+        trigger: detailsSection.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
   });
 

@@ -54,14 +54,14 @@ export function isElementInViewport(element, scroller = null) {
   if (!element) return false;
 
   const rect = element.getBoundingClientRect();
-  const scrollerEl = scroller || getMainScroller() || window;
+  const scrollerEl = scroller || getMainScroller() || globalThis;
 
-  if (scrollerEl === window) {
+  if (scrollerEl === globalThis) {
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      rect.bottom <= (globalThis.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (globalThis.innerWidth || document.documentElement.clientWidth)
     );
   }
 
@@ -87,6 +87,48 @@ export function clearGSAPProps(elements) {
  */
 export function getMainScroller() {
   return document.querySelector('.shell-main');
+}
+
+/**
+ * Anima elementos cuando entran al viewport.
+ * - Establece estado inicial solo si el elemento no está visible.
+ * - Usa ScrollTrigger.onEnter para lanzar la animación.
+ */
+export function animateInOnEnter(
+  targets,
+  { from = {}, to = {}, trigger, scroller, start = 'top 80%', once = true }
+) {
+  const elems = Array.isArray(targets) ? targets : [targets];
+  const scr = scroller || getMainScroller();
+
+  elems.forEach((el) => {
+    if (!el) return;
+    const visible = isElementInViewport(el, scr);
+    if (!visible) {
+      // Estado inicial (no lo aplicamos si ya es visible)
+      gsap.set(el, { ...from });
+    } else {
+      // Asegurar que elementos visibles no queden ocultos
+      gsap.set(el, { clearProps: 'all' });
+    }
+
+    ScrollTrigger.create({
+      trigger: trigger || el,
+      scroller: scr,
+      start,
+      once,
+      onEnter: () => {
+        gsap.to(el, { ...to });
+      },
+    });
+  });
+}
+
+// Refrescar automáticamente tras carga completa de la página
+if (typeof globalThis !== 'undefined') {
+  globalThis.addEventListener('load', () => {
+    setTimeout(() => ScrollTrigger.refresh(), 50);
+  });
 }
 
 /**

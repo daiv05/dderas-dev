@@ -243,7 +243,7 @@ import {
 import { useI18n } from 'vue-i18n';
 
 import AppLoader from '@/components/AppLoader.vue';
-import { gsap, getMainScroller, gsapDefaults, isElementInViewport } from '@/plugins/gsap';
+import { gsap, getMainScroller, gsapDefaults, animateInOnEnter } from '@/plugins/gsap';
 
 defineOptions({
   name: 'Pixedai',
@@ -252,13 +252,11 @@ defineOptions({
 const headerEl = ref(null);
 const contentEl = ref(null);
 let panelRefs = [];
-const { t, tm, locale } = useI18n();
+const { t, tm } = useI18n();
 const statusChips = computed(() => {
-  locale.value;
   return tm('tools.pixedai.status.chips') ?? [];
 });
 const previewTips = computed(() => {
-  locale.value;
   return tm('tools.pixedai.panels.preview.tips') ?? [];
 });
 
@@ -472,7 +470,6 @@ const presetDefinitions = [
 ];
 
 const quickPresets = computed(() => {
-  locale.value;
   return presetDefinitions.map((preset) => ({
     ...preset,
     label: t(`tools.pixedai.presets.${preset.key}`),
@@ -488,7 +485,6 @@ const color_bar = computed(() => {
 });
 
 const resolutionLabel = computed(() => {
-  locale.value;
   const block = String(cstm.bloque_t).padStart(2, '0');
   const width = cstm.ancho_max > 0 ? `${cstm.ancho_max}px` : 'auto';
   const height = cstm.altura_max > 0 ? `${cstm.altura_max}px` : 'auto';
@@ -602,44 +598,25 @@ onMounted(async () => {
 
   ctx = gsap.context(() => {
     if (headerEl.value) {
-      const alreadyVisible = isElementInViewport(headerEl.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(headerEl.value, { clearProps: 'all' });
-      } else {
-        gsap.from(headerEl.value, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 32,
-          duration: 0.9,
-          scrollTrigger: {
-            trigger: headerEl.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(headerEl.value, {
+        from: { opacity: 0, y: 32 },
+        to: { ...gsapDefaults, opacity: 1, y: 0, duration: 0.9 },
+        trigger: headerEl.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
 
     if (panelRefs.length) {
-      const alreadyVisible = isElementInViewport(contentEl.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(panelRefs, { clearProps: 'all' });
-      } else {
-        gsap.from(panelRefs, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 36,
-          duration: 0.9,
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: contentEl.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(panelRefs, {
+        from: { opacity: 0, y: 36 },
+        to: { ...gsapDefaults, opacity: 1, y: 0, duration: 0.9 },
+        trigger: contentEl.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
   });
 });

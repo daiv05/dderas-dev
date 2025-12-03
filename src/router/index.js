@@ -51,13 +51,46 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior() {
-    // Scroll del contenedor principal con overflow
+  // Asegurar el scroll al tope del contenedor de contenido.
+  // Evitamos el scroll del window retornando `false` y usamos una espera corta
+  // para permitir que el DOM y las transiciones se asienten.
+  scrollBehavior(to, from, savedPosition) {
     const mainElement = document.querySelector('.shell-main');
-    if (mainElement) {
-      mainElement.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Restaurar posición en navegación del historial
+    if (savedPosition) return savedPosition;
+
+    // Desplazamiento a anclas dentro del contenedor principal
+    if (to.hash && mainElement) {
+      return new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          const target = document.querySelector(to.hash);
+          if (target) {
+            const y = target.offsetTop || 0;
+            mainElement.scrollTo({ top: y, behavior: 'auto' });
+          }
+          resolve(false);
+        });
+      });
     }
-    return { top: 0, behavior: 'smooth' };
+
+    // Scroll al tope del contenedor principal
+    if (mainElement) {
+      return new Promise((resolve) => {
+        // Reset inmediato para cancelar cualquier animación residual
+        mainElement.scrollTop = 0;
+        // Esperar a que el layout se estabilice
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            mainElement.scrollTo({ top: 0, behavior: 'auto' });
+            resolve(false); // prevenir scroll del window
+          });
+        });
+      });
+    }
+
+    // Fallback: scroll del window
+    return { top: 0 };
   },
 });
 
@@ -68,6 +101,14 @@ router.beforeEach((to, _from) => {
 
   // Limpiar todos los ScrollTriggers antes de cambiar de ruta
   killAllScrollTriggers();
+});
+
+// Refuerzo: asegurar que tras la navegación el contenedor se resetea al tope.
+router.afterEach(() => {
+  const mainElement = document.querySelector('.shell-main');
+  if (mainElement) {
+    mainElement.scrollTop = 0;
+  }
 });
 
 export default router;

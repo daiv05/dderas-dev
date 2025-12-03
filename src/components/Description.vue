@@ -58,6 +58,7 @@ import {
   getMainScroller,
   gsapDefaults,
   isElementInViewport,
+  animateInOnEnter,
 } from '@/plugins/gsap';
 
 const router = useRouter();
@@ -117,23 +118,14 @@ const setupAnimations = () => {
     }
 
     if (panels.length) {
-      const alreadyVisible = isElementInViewport(gridRef.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(panels, { clearProps: 'all' });
-      } else {
-        gsap.from(panels, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 30,
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: gridRef.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(panels, {
+        from: { opacity: 0, y: 30 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: gridRef.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
 
     if (ctaEl) {

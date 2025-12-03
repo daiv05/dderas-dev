@@ -145,7 +145,7 @@ import {
   ScrollTrigger,
   getMainScroller,
   gsapDefaults,
-  isElementInViewport,
+  animateInOnEnter,
 } from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
@@ -213,37 +213,25 @@ const setupAnimations = () => {
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
-      const alreadyVisible = isElementInViewport(titleEl.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(headerTargets, { clearProps: 'all' });
-      } else {
-        gsap.from(headerTargets, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 24,
-          stagger: 0.15,
-        });
-      }
+      animateInOnEnter(headerTargets, {
+        from: { opacity: 0, y: 24 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: titleEl.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
 
     if (panels.length) {
-      const alreadyVisible = isElementInViewport(ledgerRef.value?.$el ?? ledgerRef.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(panels, { clearProps: 'all' });
-      } else {
-        gsap.from(panels, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 30,
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: ledgerRef.value?.$el ?? ledgerRef.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(panels, {
+        from: { opacity: 0, y: 30 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: ledgerRef.value?.$el ?? ledgerRef.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
   });
 

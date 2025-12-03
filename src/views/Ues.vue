@@ -51,13 +51,8 @@
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import {
-  gsap,
-  ScrollTrigger,
-  getMainScroller,
-  gsapDefaults,
-  isElementInViewport,
-} from '@/plugins/gsap';
+import { gsap, ScrollTrigger, getMainScroller, gsapDefaults } from '@/plugins/gsap';
+import { animateInOnEnter } from '@/plugins/gsap';
 
 const label = ref(null);
 const titleEl = ref(null);
@@ -87,37 +82,25 @@ const setupAnimations = () => {
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
-      const alreadyVisible = isElementInViewport(titleEl.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(headerTargets, { clearProps: 'all' });
-      } else {
-        gsap.from(headerTargets, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 24,
-          stagger: 0.15,
-        });
-      }
+      animateInOnEnter(headerTargets, {
+        from: { opacity: 0, y: 24 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: titleEl.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
 
     if (panels.length) {
-      const alreadyVisible = isElementInViewport(gridRef.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(panels, { clearProps: 'all' });
-      } else {
-        gsap.from(panels, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 30,
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: gridRef.value,
-            start: 'top 85%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(panels, {
+        from: { opacity: 0, y: 30 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: gridRef.value,
+        scroller,
+        start: 'top 85%',
+        once: true,
+      });
     }
   });
 

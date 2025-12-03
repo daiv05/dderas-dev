@@ -81,7 +81,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { tutorialsList } from '@/data/tutorials.js';
-import { gsap, getMainScroller, gsapDefaults, isElementInViewport } from '@/plugins/gsap';
+import { gsap, getMainScroller, gsapDefaults, animateInOnEnter } from '@/plugins/gsap';
 
 const { t, locale } = useI18n();
 const tutorials = computed(() =>
@@ -136,23 +136,14 @@ const setupAnimations = () => {
 
   ctx = gsap.context(() => {
     if (headerTargets.length) {
-      const alreadyVisible = isElementInViewport(titleEl.value, scroller);
-      if (alreadyVisible) {
-        gsap.set(headerTargets, { clearProps: 'all' });
-      } else {
-        gsap.from(headerTargets, {
-          ...gsapDefaults,
-          opacity: 0,
-          y: 24,
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: titleEl.value,
-            start: 'top 80%',
-            once: true,
-            scroller: scroller,
-          },
-        });
-      }
+      animateInOnEnter(headerTargets, {
+        from: { opacity: 0, y: 24 },
+        to: { ...gsapDefaults, opacity: 1, y: 0 },
+        trigger: titleEl.value,
+        scroller,
+        start: 'top 80%',
+        once: true,
+      });
     }
   });
 };
