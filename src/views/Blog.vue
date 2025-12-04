@@ -1,7 +1,7 @@
 <template>
   <div class="page-frame">
     <section class="section-stack">
-      <header class="blog-header">
+      <header v-if="!Current" class="blog-header">
         <div class="eyebrow">{{ t('blog.eyebrow') }}</div>
         <h1 class="section-title">{{ t('blog.title') }}</h1>
         <p class="section-lead">{{ t('blog.lead') }}</p>

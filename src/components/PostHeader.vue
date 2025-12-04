@@ -86,6 +86,10 @@ const formatDate = (dateString) => {
   margin-bottom: 2.5rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--line-soft);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+  text-align: center;
 }
 
 .post-hero {
@@ -117,12 +121,17 @@ const formatDate = (dateString) => {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .metadata-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -133,6 +142,7 @@ const formatDate = (dateString) => {
   font-size: 0.95rem;
   color: var(--text-subtle);
   font-family: var(--font-mono);
+  justify-content: center;
 }
 
 .meta-item svg {
@@ -149,6 +159,7 @@ const formatDate = (dateString) => {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  justify-content: center;
 }
 
 .tag {
@@ -180,7 +191,6 @@ const formatDate = (dateString) => {
 
   .metadata-row {
     flex-direction: column;
-    align-items: flex-start;
     gap: 0.5rem;
   }
 

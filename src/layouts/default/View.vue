@@ -243,7 +243,7 @@ const blogPosts = computed(() => {
       return {
         title: fm.title || slug,
         date: fm.date || '',
-        to: withLocalePath(`/blog/${fm.slug || slug}`),
+        to: `/blog/${fm.slug || slug}`,
         icon: mdiBookOpenPageVariant,
         value: fm.slug || slug,
         detectedLocale,
