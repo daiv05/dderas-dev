@@ -33,6 +33,24 @@
   --transition-fast: 160ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 240ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 360ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Mapear variables de la app a tokens Vuetify */
+  --text-primary: rgb(var(--v-theme-on-surface));
+  --bg-soft: rgba(var(--v-theme-surface), 0.75);
+  --bg-muted: rgba(var(--v-theme-surface), 0.5);
+  --bg-elevated: rgb(var(--v-theme-surface));
+  --link: rgb(var(--v-theme-primary));
+  --link-hover: rgb(var(--v-theme-primary));
+
+  /* Paleta para Markdown */
+  --md-text: var(--text-primary);
+  --md-muted: var(--text-subtle);
+  --md-bg: transparent;
+  --md-code-bg: rgba(var(--v-theme-on-surface), 0.06);
+  --md-code-border: var(--line-soft);
+  --md-blockquote-bg: var(--surface-faint);
+  --md-blockquote-border: var(--line-soft);
+  --md-table-border: var(--line-soft);
 }
 
 html {
@@ -110,14 +128,124 @@ ol {
   position: relative;
 }
 
-/* Estilos del cuerpo Markdown tipo GitHub/VitePress */
+/* Estilos del cuerpo Markdown (limpio y temable) */
 .markdown-body {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: rgba(var(--v-theme-surface), 0.8);
-  border: 1px solid var(--line-soft);
+  color: var(--md-text);
+  background: var(--md-bg);
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.markdown-body a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-body a:hover {
+  color: var(--link-hover);
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body blockquote,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body figure {
+  margin: 0 0 1.125rem;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin: 2rem 0 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  scroll-margin-top: 88px; /* evita solapamiento con sticky header */
+}
+
+.markdown-body ul { list-style: disc inside; }
+.markdown-body ol { list-style: decimal inside; }
+.markdown-body li { margin: 0.25rem 0; }
+.markdown-body li > ul,
+.markdown-body li > ol { margin-left: 1.25rem; }
+
+.markdown-body blockquote {
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--md-blockquote-border);
+  background: var(--md-blockquote-bg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--md-text);
+}
+
+.markdown-body code:not(pre code) {
+  background: var(--md-code-bg);
+  border: 1px solid var(--md-code-border);
+  border-radius: 6px;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.9em;
+}
+
+.markdown-body pre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--md-code-border);
   border-radius: var(--radius-md);
+  overflow: auto;
+  padding: 1rem;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-soft);
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--md-table-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.markdown-body thead th {
+  background: var(--bg-muted);
+}
+
+.markdown-body th,
+.markdown-body td {
+  border-bottom: 1px solid var(--md-table-border);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+.markdown-body tr:last-child td {
+  border-bottom: 0;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--line-soft);
+  margin: 2rem 0;
+}
+
+.markdown-body .header-anchor, .md-anchor {
+  opacity: 0.7;
+  color: var(--md-muted);
 }
 .md-anchor {
   margin-right: 0.35rem;
@@ -129,7 +257,7 @@ ol {
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-sm);
   padding: 1rem;
-  background: var(--surface-faint);
+  background: var(--bg-soft);
   margin: 1rem 0 2rem;
 }
 

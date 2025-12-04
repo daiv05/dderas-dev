@@ -103,7 +103,7 @@ const formatDate = (dateString) => {
 }
 
 .post-title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 1rem;
@@ -182,7 +182,7 @@ const formatDate = (dateString) => {
 
 @media (max-width: 768px) {
   .post-title {
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    font-size: clamp(1.5rem, 5vw, 2rem);
   }
 
   .post-summary {

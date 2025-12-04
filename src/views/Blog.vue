@@ -581,11 +581,12 @@ watch(
   width: 260px;
   max-height: 60vh;
   overflow: auto;
-  background: var(--bg-soft);
+  background: var(--bg-elevated);
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-md);
   padding: 1rem;
   z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 .toc-toggle {
@@ -654,18 +655,16 @@ watch(
 .post-nav-link {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.25rem;
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
-  background: var(--bg-soft);
+  gap: 0.35rem;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .post-nav-link:hover {
-  border-color: var(--line-strong);
-  background: var(--bg-muted);
+  background: transparent;
 }
 
 .post-nav-link.next {
@@ -683,6 +682,8 @@ watch(
   font-size: 1.1rem;
   color: var(--text-primary);
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 1200px) {

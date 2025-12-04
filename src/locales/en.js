@@ -117,7 +117,7 @@ export default {
     post: {
       author: 'Author',
       date: 'Date',
-      lastUpdated: 'Last updated',
+      lastUpdated: 'Updated',
       readMore: 'Read more',
       tags: 'Tags',
     },
