@@ -120,7 +120,7 @@ const formatDate = (dateString) => {
 .post-metadata {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.1rem;
   width: 100%;
   max-width: 600px;
   margin-left: auto;
@@ -139,7 +139,7 @@ const formatDate = (dateString) => {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   color: var(--text-subtle);
   font-family: var(--font-mono);
   justify-content: center;
@@ -168,7 +168,7 @@ const formatDate = (dateString) => {
   background: var(--bg-muted);
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-family: var(--font-mono);
   color: var(--text-subtle);
   font-weight: 500;
@@ -191,7 +191,7 @@ const formatDate = (dateString) => {
 
   .metadata-row {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.1rem;
   }
 
   .meta-item {

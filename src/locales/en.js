@@ -1,9 +1,10 @@
 export default {
   navigation: {
     brand: {
-      name: 'David Deras',
+      name: 'DDeras',
       shortName: 'DDeras',
       tagline: 'Fullstack & product',
+      blogTagline: 'Blog & articles',
     },
     themeToggle: {
       toLight: 'Light mode',
@@ -25,7 +26,7 @@ export default {
       tutorials: 'Tutorials',
       tools: 'Tools',
     },
-    backToMain: 'Back to main menu',
+    backToMain: 'Home',
     viewBlogEntries: 'View blog entries',
     search: 'Search',
     links: {
@@ -35,12 +36,12 @@ export default {
     },
   },
   seo: {
-    siteName: 'David Deras · Full Stack Engineer',
+    siteName: 'DDeras',
     twitterHandle: 'daiv_09',
     defaults: {
       title: 'Full Stack engineer shipping Vue, Laravel and TypeScript products',
       description:
-        'Portfolio, tutorials and GovTech case studies from David Deras. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
+        'Portfolio, tutorials and projects from David Deras. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
       keywords: [
         'David Deras',
         'Full Stack Engineer',

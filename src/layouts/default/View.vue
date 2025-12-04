@@ -11,14 +11,20 @@
       <div class="nav-root">
         <router-link to="/" class="brand-mark">
           <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
-          <span class="brand-tag">{{ t('navigation.brand.tagline') }}</span>
+          <span class="brand-tag">
+            {{
+              basePath(route.path).startsWith('/blog')
+                ? t('navigation.brand.blogTagline')
+                : t('navigation.brand.tagline')
+            }}
+          </span>
         </router-link>
 
         <v-divider class="nav-divider" thickness="1"></v-divider>
 
         <v-btn
           v-if="basePath(route.path).startsWith('/blog')"
-          class="back-button"
+          class="back-button text-none"
           variant="outlined"
           rounded="pill"
           @click="goTo({ to: withLocalePath('/'), value: 'back' })"
@@ -26,7 +32,7 @@
           <template #prepend>
             <v-icon :icon="mdiArrowLeft"></v-icon>
           </template>
-          {{ t('navigation.backToMain') || 'Volver al menú principal' }}
+          {{ t('navigation.backToMain') || 'Volver' }}
         </v-btn>
 
         <v-list ref="navList" density="compact" nav class="nav-list" @scroll="handleNavScroll">
