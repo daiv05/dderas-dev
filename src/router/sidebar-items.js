@@ -1,11 +1,4 @@
-import {
-  mdiHome,
-  mdiAccount,
-  mdiFolder,
-  mdiSchool,
-  mdiBookOpenPageVariant,
-  mdiWrench,
-} from '@mdi/js';
+import { mdiHome, mdiAccount, mdiFolder, mdiSchool, mdiWrench, mdiPost } from '@mdi/js';
 
 const sidebarItems = [
   {
@@ -27,16 +20,16 @@ const sidebarItems = [
     to: '/projects',
   },
   {
+    titleKey: 'navigation.items.blog',
+    value: 'blog',
+    icon: mdiPost,
+    to: '/blog',
+  },
+  {
     titleKey: 'navigation.items.ues',
     value: 'ues',
     icon: mdiSchool,
     to: '/resources',
-  },
-  {
-    titleKey: 'navigation.items.tutorials',
-    value: 'tutorials',
-    icon: mdiBookOpenPageVariant,
-    to: '/tutorials',
   },
   {
     titleKey: 'navigation.items.tools',

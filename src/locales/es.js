@@ -20,6 +20,7 @@ export default {
       home: 'Inicio',
       about: 'Sobre mí',
       projects: 'Proyectos',
+      blog: 'Blog',
       ues: 'Recursos UES',
       tutorials: 'Tutoriales',
       tools: 'Herramientas',
@@ -91,6 +92,42 @@ export default {
           'Utilidades como Pixedai Studio para generar pixel art y otras herramientas internas que acompañan el trabajo diario.',
         keywords: ['Pixedai', 'Herramienta pixel art', 'Utilidades para desarrolladores'],
       },
+      blog: {
+        title: 'Blog y artículos técnicos',
+        description:
+          'Publicaciones sobre desarrollo full stack, tutoriales y casos prácticos con Vue, Laravel y cloud deployments.',
+        keywords: ['Blog técnico', 'Tutoriales Vue', 'Guías Laravel', 'Desarrollo web'],
+      },
+    },
+  },
+  blog: {
+    eyebrow: 'Bitácora técnica',
+    title: 'Blog y artículos',
+    lead: 'Publicaciones sobre desarrollo, tutoriales y casos de uso.',
+    backToIndex: 'Volver al índice',
+    search: 'Buscar artículos...',
+    noResults: 'No se encontraron artículos',
+    pagination: {
+      page: 'Página',
+      of: 'de',
+      prev: 'Anterior',
+      next: 'Siguiente',
+    },
+    post: {
+      author: 'Autor',
+      date: 'Fecha',
+      lastUpdated: 'Última actualización',
+      readMore: 'Leer más',
+      tags: 'Etiquetas',
+    },
+    toc: {
+      show: 'Mostrar índice',
+      hide: 'Ocultar índice',
+      title: 'Tabla de contenidos',
+    },
+    nav: {
+      prev: 'Anterior',
+      next: 'Siguiente',
     },
   },
   loader: {
@@ -148,11 +185,11 @@ export default {
       },
       {
         label: '02',
-        title: 'Tutoriales y notas',
+        title: 'Blog y tutoriales',
         body: 'Guías cortas sobre despliegues, cloud y automatizaciones que uso a diario.',
         tags: ['Azure', 'Railway', 'Automatización'],
         cta: 'Abrir blog',
-        to: '/tutorials',
+        to: '/blog',
       },
       {
         label: '03',

@@ -35,7 +35,10 @@ const routes = [
       {
         path: 'tutorials',
         name: 'Tutorials',
-        component: () => import('@/views/Tutos.vue'),
+        redirect: (to) => {
+          const locale = to.params.locale;
+          return locale ? `/es/blog` : `/blog`;
+        },
         meta: { seoKey: 'tutorials' },
       },
       {

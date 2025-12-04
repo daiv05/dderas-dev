@@ -1,39 +1,191 @@
 <template>
   <header class="post-header">
+    <img v-if="image" class="post-hero" :src="image" :alt="title" />
     <h1 class="post-title">{{ title }}</h1>
-    <div class="inline-meta">
-      <span v-if="date">{{ date }}</span>
-      <div v-if="tags?.length" class="chipline">
-        <span v-for="t in tags" :key="t">#{{ t }}</span>
+    <p v-if="summary" class="post-summary">{{ summary }}</p>
+    <div class="post-metadata">
+      <div class="metadata-row">
+        <span v-if="author" class="meta-item author">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+          {{ author }}
+        </span>
+        <span v-if="date" class="meta-item date">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"
+            />
+          </svg>
+          {{ formatDate(date) }}
+        </span>
+        <span v-if="lastmod" class="meta-item lastmod">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="16"
+            height="16"
+          >
+            <path
+              d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"
+            />
+          </svg>
+          {{ $t ? $t('blog.post.lastUpdated') : 'Última actualización' }}: {{ formatDate(lastmod) }}
+        </span>
+      </div>
+      <div v-if="tags?.length" class="tags-row">
+        <span v-for="tag in tags" :key="tag" class="tag">#{{ tag }}</span>
       </div>
     </div>
-    <img v-if="image" class="post-hero" :src="image" :alt="title" />
-    <p v-if="summary" class="section-lead" style="margin-top: 0.5rem">{{ summary }}</p>
   </header>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n';
+
+const { locale } = useI18n();
+
 defineProps({
   title: { type: String, default: '' },
   date: { type: String, default: '' },
+  lastmod: { type: String, default: '' },
+  author: { type: String, default: '' },
   tags: { type: Array, default: () => [] },
   image: { type: String, default: '' },
   summary: { type: String, default: '' },
 });
+
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString(locale.value === 'es' ? 'es-ES' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 </script>
 
 <style scoped>
 .post-header {
-  display: grid;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line-soft);
 }
-.post-title {
-  font-size: clamp(2rem, 5vw, 2.6rem);
-}
+
 .post-hero {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   border-radius: var(--radius-md);
   border: 1px solid var(--line-soft);
-  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.post-summary {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--text-subtle);
+  margin: 0 0 1.25rem;
+}
+
+.post-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.metadata-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+}
+
+.meta-item svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.meta-item.author {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-muted);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--text-subtle);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-soft);
+}
+
+@media (max-width: 768px) {
+  .post-title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .post-summary {
+    font-size: 1rem;
+  }
+
+  .metadata-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .meta-item {
+    font-size: 0.9rem;
+  }
 }
 </style>

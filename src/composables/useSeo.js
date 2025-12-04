@@ -171,7 +171,7 @@ export function useSeo() {
     updateSeoWith(overrides = {}) {
       // Opcional: aplicar overrides desde frontmatter
       if (typeof document === 'undefined') return;
-      const { title, description, ogImage } = overrides;
+      const { title, description, ogImage, lastmod, author } = overrides;
       if (title) {
         document.title = `${title} | ${t('seo.siteName')}`;
         upsertMetaTag({ property: 'og:title', content: title });
@@ -185,6 +185,14 @@ export function useSeo() {
       if (ogImage) {
         upsertMetaTag({ property: 'og:image', content: ogImage });
         upsertMetaTag({ name: 'twitter:image', content: ogImage });
+      }
+      if (author) {
+        upsertMetaTag({ name: 'author', content: author });
+        upsertMetaTag({ name: 'article:author', content: author });
+      }
+      if (lastmod) {
+        upsertMetaTag({ name: 'article:modified_time', content: lastmod });
+        upsertMetaTag({ property: 'og:updated_time', content: lastmod });
       }
     },
   };

@@ -140,10 +140,10 @@ export default defineConfig({
             ],
           },
           {
-            name: 'Tutorials',
-            short_name: 'Tutorials',
-            url: '/tutorials',
-            description: 'Development tutorials and notes',
+            name: 'Blog',
+            short_name: 'Blog',
+            url: '/blog',
+            description: 'Technical articles and posts',
             icons: [
               {
                 src: '/icons/pwa/pwa-96x96.png',

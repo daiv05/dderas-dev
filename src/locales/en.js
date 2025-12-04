@@ -20,6 +20,7 @@ export default {
       home: 'Home',
       about: 'About me',
       projects: 'Projects',
+      blog: 'Blog',
       ues: 'UES resources',
       tutorials: 'Tutorials',
       tools: 'Tools',
@@ -91,6 +92,42 @@ export default {
           'Utilities like Pixedai Studio to generate pixel art plus internal tools that support daily workflows.',
         keywords: ['Pixedai', 'Pixel art tool', 'Developer utilities'],
       },
+      blog: {
+        title: 'Blog & technical articles',
+        description:
+          'Posts about full stack development, tutorials and practical cases with Vue, Laravel and cloud deployments.',
+        keywords: ['Technical blog', 'Vue tutorials', 'Laravel guides', 'Web development'],
+      },
+    },
+  },
+  blog: {
+    eyebrow: 'Technical logbook',
+    title: 'Blog & articles',
+    lead: 'Posts about development, tutorials and use cases.',
+    backToIndex: 'Back to index',
+    search: 'Search articles...',
+    noResults: 'No articles found',
+    pagination: {
+      page: 'Page',
+      of: 'of',
+      prev: 'Previous',
+      next: 'Next',
+    },
+    post: {
+      author: 'Author',
+      date: 'Date',
+      lastUpdated: 'Last updated',
+      readMore: 'Read more',
+      tags: 'Tags',
+    },
+    toc: {
+      show: 'Show index',
+      hide: 'Hide index',
+      title: 'Table of contents',
+    },
+    nav: {
+      prev: 'Previous',
+      next: 'Next',
     },
   },
   loader: {
@@ -148,11 +185,11 @@ export default {
       },
       {
         label: '02',
-        title: 'Tutorials & notes',
+        title: 'Blog & tutorials',
         body: 'Short guides about deployments, cloud and automations I use every day.',
         tags: ['Azure', 'Railway', 'Automation'],
         cta: 'Read entries',
-        to: '/tutorials',
+        to: '/blog',
       },
       {
         label: '03',

@@ -16,19 +16,15 @@
 
         <v-divider class="nav-divider" thickness="1"></v-divider>
 
-        <div
-          v-if="route.path.startsWith('/blog')"
-          class="plain-sheet"
-          style="margin-bottom: 0.75rem"
-        >
+        <div v-if="basePath(route.path).startsWith('/blog')" class="blog-search-container">
           <v-text-field
             v-model="searchQuery"
-            :label="t('navigation.search') || 'Buscar entradas'"
+            :label="t('blog.search') || t('navigation.search')"
             density="compact"
             variant="outlined"
             hide-details
             clearable
-            prepend-inner-icon="mdi-magnify"
+            :prepend-inner-icon="mdiMagnify"
           />
         </div>
 
@@ -209,6 +205,7 @@ import {
   mdiMenu,
   mdiWeatherSunny,
   mdiWeatherNight,
+  mdiMagnify,
 } from '@mdi/js';
 import { mdiArrowLeft, mdiBookOpenPageVariant } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect, nextTick } from 'vue';
@@ -229,23 +226,43 @@ const route = useRoute();
 const appStore = useAppStore();
 const items = sidebarItems;
 const searchQuery = ref('');
-const blogModules = import.meta.glob('/blog/*.md', { eager: true });
+const blogModules = import.meta.glob('/blog/**/*.md', { eager: true });
 const blogPosts = computed(() => {
-  return Object.keys(blogModules)
+  const locale = getLocaleFromPath(route.path);
+  const entries = Object.keys(blogModules)
     .map((path) => {
       const mod = blogModules[path];
-      const slug = path.split('/').pop().replace(/\.md$/, '');
-      const fm = mod?.frontmatter || {};
+      const segments = path.split('/').filter(Boolean);
+      const fileName = segments.pop() || '';
+      const slug = fileName.replace(/\.md$/, '');
+      const detectedLocale = segments.includes('es') ? 'es' : segments.includes('en') ? 'en' : null;
+
+      // El frontmatter puede estar en mod.frontmatter o directamente en mod
+      const fm = mod?.frontmatter || mod || {};
+
       return {
         title: fm.title || slug,
         date: fm.date || '',
-        to: `/blog/${slug}`,
+        to: withLocalePath(`/blog/${fm.slug || slug}`),
         icon: mdiBookOpenPageVariant,
-        value: slug,
+        value: fm.slug || slug,
+        detectedLocale,
+        summary: fm.summary || '',
+        tags: fm.tags || [],
       };
     })
+    .filter((p) => p.detectedLocale === locale)
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
-    .filter((p) => p.title.toLowerCase().includes(searchQuery.value.toLowerCase()));
+    .filter((p) => {
+      if (!searchQuery.value) return true;
+      const query = searchQuery.value.toLowerCase();
+      return (
+        p.title.toLowerCase().includes(query) ||
+        p.summary.toLowerCase().includes(query) ||
+        p.tags.some((tag) => tag.toLowerCase().includes(query))
+      );
+    });
+  return entries;
 });
 
 const itemsComputed = computed(() => {
@@ -442,6 +459,10 @@ onUnmounted(() => {
 
 .nav-divider {
   border-color: var(--line-soft) !important;
+}
+
+.blog-search-container {
+  margin-bottom: 0.75rem;
 }
 
 .nav-list {
