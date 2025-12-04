@@ -115,9 +115,9 @@ export default {
     ],
     agendaTitle: 'Agenda inmediata',
     agenda: [
-      { title: 'Portal clínico DTIC - MINSAL', status: 'Release semanal' },
+      { title: 'Sistema de control de incidencias FIA-UES', status: 'Desarrollo en curso' },
       { title: 'ERP Carmencita Store', status: 'Optimización post go-live' },
-      { title: 'MusyCharts OSS', status: 'Feature tracking en TS' },
+      { title: 'MusyCharts v2', status: 'Rediseño de UI/UX y SEO' },
     ],
     snapshotTitle: 'Snapshot',
     focusNotes: [

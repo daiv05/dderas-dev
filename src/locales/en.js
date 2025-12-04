@@ -115,9 +115,9 @@ export default {
     ],
     agendaTitle: 'Immediate agenda',
     agenda: [
-      { title: 'DTIC - MINSAL clinical portal', status: 'Weekly releases' },
+      { title: 'FIA-UES incident management system', status: 'In development' },
       { title: 'Carmencita Store ERP', status: 'Post go-live optimizations' },
-      { title: 'MusyCharts OSS', status: 'Tracking features in TS' },
+      { title: 'MusyCharts v2', status: 'UI/UX and SEO redesign' },
     ],
     snapshotTitle: 'Snapshot',
     focusNotes: [
