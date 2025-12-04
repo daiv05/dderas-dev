@@ -43,7 +43,8 @@ const upsertLinkTag = ({ rel, href, hreflang }) => {
 
 const ensureLocalePath = (path, lang) => {
   const cleaned = path.replace(/^\/es(?=\/|$)/, '') || '/';
-  return lang === 'es' ? `/es${cleaned === '/' ? '' : cleaned}` : cleaned;
+  const pathCleanedToAdd = cleaned === '/' ? '' : cleaned;
+  return lang === 'es' ? `/es${pathCleanedToAdd}` : cleaned;
 };
 
 const buildUrl = (fullPath, lang) => {

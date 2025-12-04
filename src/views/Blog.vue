@@ -69,7 +69,7 @@
 
       <!-- Post abierto + TOC flotante -->
       <article v-else class="blog-post">
-        <nav class="breadcrumbs">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
           <router-link :to="getLocale() === 'es' ? '/es' : '/'">
             {{ t('navigation.items.home') }}
           </router-link>
@@ -99,7 +99,7 @@
           <button class="toc-toggle" @click="toggleToc">
             {{ tocCollapsed ? t('blog.toc.show') : t('blog.toc.hide') }}
           </button>
-          <nav v-show="!tocCollapsed" class="toc-nav">
+          <nav v-show="!tocCollapsed" class="toc-nav" aria-label="Table of Contents">
             <h3 class="toc-title">{{ t('blog.toc.title') }}</h3>
             <ul class="toc-list">
               <li v-for="item in tocItems" :key="item.id" :class="`toc-${item.level}`">
@@ -109,7 +109,11 @@
           </nav>
         </div>
 
-        <nav v-if="currentIndex !== -1 && (prevPost || nextPost)" class="post-navigation">
+        <nav
+          v-if="currentIndex !== -1 && (prevPost || nextPost)"
+          class="post-navigation"
+          aria-label="Post Navigation"
+        >
           <router-link
             v-if="prevPost"
             class="post-nav-link prev"
@@ -178,7 +182,8 @@ const allPosts = Object.keys(modules).map((path) => {
   const segments = path.split('/').filter(Boolean);
   const fileName = segments.pop() || '';
   const slug = fileName.replace(/\.md$/, '');
-  const detectedLocale = segments.includes('es') ? 'es' : segments.includes('en') ? 'en' : null;
+  const detectedLocaleEn = segments.includes('en') ? 'en' : null;
+  const detectedLocale = segments.includes('es') ? 'es' : detectedLocaleEn;
 
   const fm = mod?.frontmatter || mod || {};
 
@@ -260,8 +265,8 @@ const buildToc = () => {
   }
   const headings = Array.from(container.querySelectorAll('h2, h3'));
   tocItems.value = headings.map((h) => ({
-    id: h.id || h.textContent.trim().toLowerCase().replace(/\s+/g, '-'),
-    href: `#${h.id || h.textContent.trim().toLowerCase().replace(/\s+/g, '-')}`,
+    id: h.id || h.textContent.trim().toLowerCase().replaceAll(/\s+/g, '-'),
+    href: `#${h.id || h.textContent.trim().toLowerCase().replaceAll(/\s+/g, '-')}`,
     text: h.textContent.trim(),
     level: h.tagName.toLowerCase(),
   }));
@@ -326,6 +331,25 @@ watch(
   { immediate: true }
 );
 
+// Helper para normalizar locale
+const normalizeLocale = (locale) => (locale === 'es' ? 'es' : 'en');
+
+// Helper para construir ruta del blog
+const buildBlogPath = (locale, slug) => {
+  return locale === 'es' ? `/es/blog/${slug}` : `/blog/${slug}`;
+};
+
+// Helper para encontrar post equivalente en otro idioma
+const findEquivalentPost = (currentSlug, fromLocale, toLocale) => {
+  const currentPost = allPosts.find(
+    (p) => p.slug === currentSlug && p.detectedLocale === fromLocale
+  );
+
+  if (!currentPost?.id) return null;
+
+  return allPosts.find((p) => p.id === currentPost.id && p.detectedLocale === toLocale);
+};
+
 // Resetear paginación al cambiar idioma y redirigir al post equivalente
 watch(
   () => route.params.locale,
@@ -333,29 +357,16 @@ watch(
     page.value = 1;
 
     const currentSlug = route.params.slug;
-    if (currentSlug && newLocale !== oldLocale) {
-      const currentLocale = oldLocale === 'es' ? 'es' : 'en';
-      const targetLocale = newLocale === 'es' ? 'es' : 'en';
+    if (!currentSlug || newLocale === oldLocale) return;
 
-      const currentPost = allPosts.find(
-        (p) => p.slug === currentSlug && p.detectedLocale === currentLocale
-      );
+    const currentLocale = normalizeLocale(oldLocale);
+    const targetLocale = normalizeLocale(newLocale);
 
-      if (currentPost && currentPost.id) {
-        // Buscar post con el mismo ID en el nuevo idioma
-        const equivalentPost = allPosts.find(
-          (p) => p.id === currentPost.id && p.detectedLocale === targetLocale
-        );
+    const equivalentPost = findEquivalentPost(currentSlug, currentLocale, targetLocale);
 
-        if (equivalentPost && equivalentPost.slug !== currentSlug) {
-          const newPath =
-            targetLocale === 'es'
-              ? `/es/blog/${equivalentPost.slug}`
-              : `/blog/${equivalentPost.slug}`;
-
-          router.replace(newPath);
-        }
-      }
+    if (equivalentPost && equivalentPost.slug !== currentSlug) {
+      const newPath = buildBlogPath(targetLocale, equivalentPost.slug);
+      router.replace(newPath);
     }
   }
 );
