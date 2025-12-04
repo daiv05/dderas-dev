@@ -56,25 +56,25 @@ export default {
     },
     pages: {
       home: {
-        title: 'Ingeniero de producto enfocado en Vue 3 y Laravel',
+        title: 'Producto: Vue y Laravel',
         description:
           'Explora la agenda, entregables destacados y áreas de enfoque de David Deras, ingeniero full stack que construye plataformas públicas y tooling interno.',
         keywords: ['Ingeniería de producto', 'Especialista Vue', 'Experto Laravel'],
       },
       me: {
-        title: 'Sobre David Deras',
+        title: 'Perfil y experiencia',
         description:
           'Competencias, línea de tiempo y principios de colaboración basados en accesibilidad, SEO y despliegues cloud.',
         keywords: ['Sobre David', 'Perfil profesional', 'Experiencia'],
       },
       projects: {
-        title: 'Proyectos y casos de estudio',
+        title: 'Proyectos y casos',
         description:
           'Dossiers detallados de portales GovTech, ERP retail y dashboards analíticos diseñados con Vue 3, Laravel 11 y Vuetify.',
         keywords: ['Casos de estudio', 'Proyectos GovTech', 'ERP retail'],
       },
       tutorials: {
-        title: 'Tutoriales y notas de despliegue',
+        title: 'Tutoriales y notas',
         description:
           'Guías sobre Azure, Railway, despliegues de Vue y automatización para documentar flujos repetibles.',
         keywords: ['Tutorial Azure', 'Deploy Railway', 'Guía Vue'],

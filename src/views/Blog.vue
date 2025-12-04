@@ -29,24 +29,21 @@
         </aside>
 
         <article v-if="Current" class="plain-sheet markdown-body">
-          <header class="post-header">
-            <h1 class="post-title">{{ currentPost?.title }}</h1>
-            <div class="inline-meta">
-              <span v-if="currentPost?.date">{{ currentPost.date }}</span>
-              <div v-if="currentPost?.tags?.length" class="chipline">
-                <span v-for="t in currentPost.tags" :key="t">#{{ t }}</span>
-              </div>
-            </div>
-            <img
-              v-if="currentPost?.image"
-              class="post-hero"
-              :src="currentPost.image"
-              :alt="currentPost.title"
-            />
-            <p v-if="currentPost?.summary" class="section-lead" style="margin-top: 0.5rem">
-              {{ currentPost.summary }}
-            </p>
-          </header>
+          <nav class="breadcrumbs">
+            <router-link to="/">Inicio</router-link>
+            <span>/</span>
+            <router-link to="/blog">Blog</router-link>
+            <span>/</span>
+            <span>{{ currentPost?.title }}</span>
+          </nav>
+
+          <PostHeader
+            :title="currentPost?.title || ''"
+            :date="currentPost?.date || ''"
+            :tags="currentPost?.tags || []"
+            :image="currentPost?.image || ''"
+            :summary="currentPost?.summary || ''"
+          />
 
           <!-- Render del TOC si el post lo incluye via [toc] -->
           <component :is="Current" />
@@ -77,6 +74,7 @@
 import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+import PostHeader from '@/components/PostHeader.vue';
 import { useSeo } from '@/composables/useSeo';
 
 // Cargar todos los posts de /blog como componentes
@@ -100,7 +98,7 @@ const postList = Object.keys(modules)
   .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
 const route = useRoute();
-const { updateSeo } = useSeo();
+const { updateSeo, updateSeoWith } = useSeo();
 
 const Current = computed(() => {
   const slug = route.params.slug;
@@ -138,40 +136,13 @@ watch(
     if (!slug) return;
     const post = postList.find((p) => p.slug === slug);
     if (!post) return;
-    // Ajustar título simple; useSeo actualiza el resto con defaults
-    if (typeof document !== 'undefined') {
-      const siteName = 'deras-dev';
-      const baseTitle = post.title || slug;
-      document.title = `${baseTitle} | ${siteName}`;
-    }
-    // Metadatos enriquecidos desde frontmatter
-    const description = post.summary || '';
-    const ogImage = post.image || '';
-    if (typeof document !== 'undefined') {
-      const upsert = (sel, attr, val) => {
-        if (!val) return;
-        let el = document.head.querySelector(sel);
-        if (!el) {
-          el = document.createElement(sel.startsWith('meta') ? 'meta' : 'link');
-          if (sel.startsWith('meta')) {
-            const m = sel.match(/meta\[(name|property)="([^"]+)"\]/);
-            if (m) el.setAttribute(m[1], m[2]);
-          } else {
-            el.setAttribute('rel', 'canonical');
-          }
-          document.head.appendChild(el);
-        }
-        el.setAttribute(attr, val);
-      };
-      upsert('meta[name="description"]', 'content', description);
-      upsert('meta[property="og:title"]', 'content', post.title || slug);
-      upsert('meta[property="og:description"]', 'content', description);
-      upsert('meta[property="og:image"]', 'content', ogImage);
-      upsert('meta[name="twitter:title"]', 'content', post.title || slug);
-      upsert('meta[name="twitter:description"]', 'content', description);
-      upsert('meta[name="twitter:image"]', 'content', ogImage);
-    }
+    // Primero aplicar SEO general y luego overrides del frontmatter
     updateSeo();
+    updateSeoWith({
+      title: post.title || slug,
+      description: post.summary || '',
+      ogImage: post.image || '',
+    });
   },
   { immediate: true }
 );
@@ -225,5 +196,13 @@ watch(
 .post-nav .prev,
 .post-nav .next {
   font-weight: 600;
+}
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  color: var(--text-subtle);
+  margin-bottom: 0.75rem;
 }
 </style>

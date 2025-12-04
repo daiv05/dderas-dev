@@ -249,17 +249,17 @@ const blogPosts = computed(() => {
 });
 
 const itemsComputed = computed(() => {
-  if (route.path.startsWith('/blog')) {
+  if (basePath(route.path).startsWith('/blog')) {
     return [
       {
         title: t('navigation.backToMain') || 'Volver al menú principal',
-        to: '/',
+        to: withLocalePath('/'),
         icon: mdiArrowLeft,
         value: 'back',
       },
       {
         title: t('navigation.viewBlogEntries') || 'Ver entradas de blog',
-        to: '/blog',
+        to: withLocalePath('/blog'),
         icon: mdiBookOpenPageVariant,
         value: 'blog',
       },
@@ -288,37 +288,27 @@ const languageOptions = computed(() => [
 
 const isDesktop = computed(() => display.mdAndUp.value);
 
-const normalizeLangQuery = (value) => {
-  if (Array.isArray(value)) {
-    return value[0];
-  }
-  return value;
-};
-
 const applyLanguage = (lang) => {
   locale.value = lang;
   document.documentElement.setAttribute('lang', lang);
 };
 
-const setLangQuery = (lang) => {
-  const currentQueryLang = normalizeLangQuery(route.query.lang);
-  if (currentQueryLang !== lang) {
-    router.replace({ query: { ...route.query, lang } });
-  }
+const getLocaleFromPath = (path) => {
+  const seg = (path || '/').split('/')[1];
+  return seg === 'es' ? 'es' : 'en';
+};
+
+const basePath = (path) => path.replace(/^\/es(?=\/|$)/, '') || '/';
+
+const withLocalePath = (path) => {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  return appStore.language === 'es' ? `/es${p === '/' ? '' : p}` : p;
 };
 
 const initializeLanguage = () => {
-  const queryLang = normalizeLangQuery(route.query.lang);
-  if (typeof queryLang === 'string' && supportedLanguages.has(queryLang)) {
-    if (queryLang !== appStore.language) {
-      appStore.language = queryLang;
-    }
-    applyLanguage(queryLang);
-    return;
-  }
-
-  applyLanguage(appStore.language);
-  setLangQuery(appStore.language);
+  const lang = getLocaleFromPath(route.path);
+  appStore.language = lang;
+  applyLanguage(lang);
 };
 
 initializeLanguage();
@@ -339,7 +329,10 @@ watch(
   () => appStore.language,
   async (lang) => {
     applyLanguage(lang);
-    setLangQuery(lang);
+    const target = withLocalePath(basePath(route.path));
+    if (target !== route.path) {
+      router.replace(target);
+    }
     await nextTick();
     setTimeout(() => {
       const root = document.querySelector('.shell-content');
@@ -347,16 +340,16 @@ watch(
         const animatedElements = root.querySelectorAll('[style*="opacity"], [style*="transform"]');
         clearGSAPProps(Array.from(animatedElements));
       }
-      // Recalcular ScrollTriggers tras los cambios de layout/texto
       refreshScrollTriggers();
     }, 100);
   }
 );
 
 watch(
-  () => normalizeLangQuery(route.query.lang),
-  (lang) => {
-    if (typeof lang === 'string' && supportedLanguages.has(lang) && lang !== appStore.language) {
+  () => route.path,
+  (p) => {
+    const lang = getLocaleFromPath(p);
+    if (supportedLanguages.has(lang) && lang !== appStore.language) {
       appStore.language = lang;
     }
   }
@@ -377,7 +370,7 @@ const toggleTheme = () => {
 };
 
 const goTo = (item) => {
-  router.push(item.to);
+  router.push(withLocalePath(item.to));
   if (!isDesktop.value) {
     drawer.value = false;
   }
@@ -385,10 +378,10 @@ const goTo = (item) => {
 
 const handleMobileNav = (item) => {
   mobileSection.value = item.value;
-  router.push(item.to);
+  router.push(withLocalePath(item.to));
 };
 
-const isActive = (item) => route.path === item.to;
+const isActive = (item) => route.path === withLocalePath(item.to);
 
 const handleScroll = () => {
   showScrollTop.value = window.scrollY > 500;

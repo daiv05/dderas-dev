@@ -5,53 +5,53 @@ import { killAllScrollTriggers } from '@/plugins/gsap';
 
 const routes = [
   {
-    path: '/',
+    path: '/:locale(es)?',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
-        path: '/',
+        path: '',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
         meta: { seoKey: 'home' },
       },
       {
-        path: '/about',
+        path: 'about',
         name: 'About',
         component: () => import('@/views/Me.vue'),
         meta: { seoKey: 'me' },
       },
       {
-        path: '/projects',
+        path: 'projects',
         name: 'Projects',
         component: () => import('@/views/Projects.vue'),
         meta: { seoKey: 'projects' },
       },
       {
-        path: '/resources',
+        path: 'resources',
         name: 'Resources',
         component: () => import('@/views/Ues.vue'),
         meta: { seoKey: 'ues' },
       },
       {
-        path: '/tutorials',
+        path: 'tutorials',
         name: 'Tutorials',
         component: () => import('@/views/Tutos.vue'),
         meta: { seoKey: 'tutorials' },
       },
       {
-        path: '/tools',
+        path: 'tools',
         name: 'Tools',
         component: () => import('@/views/Herramientas.vue'),
         meta: { seoKey: 'tools' },
       },
       {
-        path: '/blog',
+        path: 'blog',
         name: 'BlogIndex',
         component: () => import('@/views/Blog.vue'),
         meta: { seoKey: 'blog' },
       },
       {
-        path: '/blog/:slug',
+        path: 'blog/:slug',
         name: 'BlogPost',
         component: () => import('@/views/Blog.vue'),
         meta: { seoKey: 'blog' },

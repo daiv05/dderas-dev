@@ -41,17 +41,14 @@ const upsertLinkTag = ({ rel, href, hreflang }) => {
   tag.setAttribute('href', href);
 };
 
-const buildUrl = (fullPath, lang, includeLangParam = true) => {
-  const url = new URL(fullPath, SITE_URL);
-  if (!includeLangParam) {
-    url.searchParams.delete('lang');
-    return url.toString();
-  }
+const ensureLocalePath = (path, lang) => {
+  const cleaned = path.replace(/^\/es(?=\/|$)/, '') || '/';
+  return lang === 'es' ? `/es${cleaned === '/' ? '' : cleaned}` : cleaned;
+};
 
-  if (lang) {
-    url.searchParams.set('lang', lang);
-  }
-
+const buildUrl = (fullPath, lang) => {
+  const localizedPath = ensureLocalePath(fullPath, lang);
+  const url = new URL(localizedPath, SITE_URL);
   return url.toString();
 };
 
@@ -151,24 +148,12 @@ export function useSeo() {
     }
 
     upsertLinkTag({ rel: 'canonical', href: localizedUrl });
-    upsertLinkTag({
-      rel: 'canonical',
-      href: buildUrl(route.fullPath, null, false),
-    });
 
     SUPPORTED_LOCALES.forEach((lang) => {
-      upsertLinkTag({
-        rel: 'alternate',
-        hreflang: lang,
-        href: buildUrl(route.fullPath, lang),
-      });
+      upsertLinkTag({ rel: 'alternate', hreflang: lang, href: buildUrl(route.fullPath, lang) });
     });
 
-    upsertLinkTag({
-      rel: 'alternate',
-      hreflang: 'x-default',
-      href: buildUrl(route.fullPath, null, false),
-    });
+    upsertLinkTag({ rel: 'alternate', hreflang: 'x-default', href: buildUrl(route.fullPath) });
 
     upsertStructuredData(description, keywords, ogImage);
   };
@@ -183,5 +168,24 @@ export function useSeo() {
 
   return {
     updateSeo: applySeo,
+    updateSeoWith(overrides = {}) {
+      // Opcional: aplicar overrides desde frontmatter
+      if (typeof document === 'undefined') return;
+      const { title, description, ogImage } = overrides;
+      if (title) {
+        document.title = `${title} | ${t('seo.siteName')}`;
+        upsertMetaTag({ property: 'og:title', content: title });
+        upsertMetaTag({ name: 'twitter:title', content: title });
+      }
+      if (description) {
+        upsertMetaTag({ name: 'description', content: description });
+        upsertMetaTag({ property: 'og:description', content: description });
+        upsertMetaTag({ name: 'twitter:description', content: description });
+      }
+      if (ogImage) {
+        upsertMetaTag({ property: 'og:image', content: ogImage });
+        upsertMetaTag({ name: 'twitter:image', content: ogImage });
+      }
+    },
   };
 }

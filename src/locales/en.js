@@ -56,19 +56,19 @@ export default {
     },
     pages: {
       home: {
-        title: 'Product engineer focused on Vue 3 and Laravel',
+        title: 'Product with Vue and Laravel',
         description:
           'Explore the agenda, featured deliveries and focus areas of David Deras, a full stack engineer building public platforms and internal tooling.',
         keywords: ['Product engineering', 'Vue specialist', 'Laravel expert'],
       },
       me: {
-        title: 'About David Deras',
+        title: 'Profile and experience',
         description:
           'Skills, experience timeline and collaboration principles shaped by accessibility, SEO and cloud deployments.',
         keywords: ['About David', 'Professional profile', 'Experience timeline'],
       },
       projects: {
-        title: 'Projects & case studies',
+        title: 'Projects and case studies',
         description:
           'Detailed dossiers covering GovTech portals, retail ERPs and analytics dashboards designed with Vue 3, Laravel 11 and Vuetify.',
         keywords: ['Case studies', 'GovTech projects', 'Retail ERP'],
@@ -86,7 +86,7 @@ export default {
         keywords: ['UES resources', 'Academic guides', 'Labs'],
       },
       tools: {
-        title: 'Tools & experiments',
+        title: 'Tools and experiments',
         description:
           'Utilities like Pixedai Studio to generate pixel art plus internal tools that support daily workflows.',
         keywords: ['Pixedai', 'Pixel art tool', 'Developer utilities'],
