@@ -1,33 +1,244 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-		<loc>https://www.deras.dev/</loc>
-		<lastmod>2025-12-01T22:21:09+01:00</lastmod>
-		<priority>1.0</priority>
-	</url>
-	<url>
-		<loc>https://www.deras.dev/about</loc>
-		<lastmod>2025-12-01T22:21:09+01:00</lastmod>
-		<priority>0.9</priority>
-	</url>
-	<url>
-		<loc>https://www.deras.dev/projects</loc>
-		<lastmod>2025-12-01T22:21:09+01:00</lastmod>
-		<priority>0.9</priority>
-	</url>
-	<url>
-		<loc>https://www.deras.dev/resources</loc>
-		<lastmod>2025-12-01T22:21:09+01:00</lastmod>
-		<priority>0.9</priority>
-	</url>
-	<url>
-		<loc>https://www.deras.dev/blog</loc>
-		<lastmod>2025-12-04T10:00:09+01:00</lastmod>
-		<priority>0.9</priority>
-	</url>
-	<url>
-		<loc>https://www.deras.dev/tools</loc>
-		<lastmod>2025-12-01T22:21:09+01:00</lastmod>
-		<priority>0.9</priority>
-	</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://deras.dev/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/about"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/about"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/about"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/about"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/projects</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/projects"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/projects"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/projects</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/projects"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/projects"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/tutos</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tutos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tutos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tutos"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/tutos</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tutos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tutos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tutos"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/herramientas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/herramientas"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/herramientas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/herramientas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/herramientas"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/me</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/me"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/me"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/me</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/me"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/me"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/me"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/ues</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/ues"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/ues"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/ues"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/ues</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/ues"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/ues"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/ues"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/deploying-a-laravel-api</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/deploying-a-laravel-api"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/desplegando-una-api-laravel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/deploying-a-laravel-api"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/desplegando-una-api-laravel</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/deploying-a-laravel-api"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/desplegando-una-api-laravel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/deploying-a-laravel-api"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/deploying-a-vuejs-app</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/deploying-a-vuejs-app"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/desplegando-vuejs-app"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/deploying-a-vuejs-app"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/desplegando-vuejs-app</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/deploying-a-vuejs-app"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/desplegando-vuejs-app"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/deploying-a-vuejs-app"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/edu-account-on-azure</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/edu-account-on-azure"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/cuenta-edu-en-azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/edu-account-on-azure"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/cuenta-edu-en-azure</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/edu-account-on-azure"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/cuenta-edu-en-azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/edu-account-on-azure"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/getting-started-vue-vite</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/getting-started-vue-vite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/comenzando-vue-vite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/getting-started-vue-vite"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/comenzando-vue-vite</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/getting-started-vue-vite"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/comenzando-vue-vite"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/getting-started-vue-vite"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/hdp-tools-guide-v5-2</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/hdp-tools-guide-v5-2"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/guia-herramientas-hdp-v5-2"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/hdp-tools-guide-v5-2"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/guia-herramientas-hdp-v5-2</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/hdp-tools-guide-v5-2"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/guia-herramientas-hdp-v5-2"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/hdp-tools-guide-v5-2"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/lampp-5-on-rhel-7</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/lampp-5-on-rhel-7"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/lampp-5-en-rhel-7"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/lampp-5-on-rhel-7"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/lampp-5-en-rhel-7</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/lampp-5-on-rhel-7"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/lampp-5-en-rhel-7"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/lampp-5-on-rhel-7"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/blog/linux-vm-on-azure</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/linux-vm-on-azure"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/vm-linux-en-azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/linux-vm-on-azure"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deras.dev/es/blog/vm-linux-en-azure</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog/linux-vm-on-azure"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog/vm-linux-en-azure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog/linux-vm-on-azure"/>
+    <lastmod>2025-12-04</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>

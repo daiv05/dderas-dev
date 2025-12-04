@@ -1,7 +1,13 @@
 {
-  "name": "deras-dev",
+  "name": "deras.dev",
   "version": "1.0.0",
   "type": "module",
+  "author": {
+    "name": "David Deras",
+    "email": "davidderas50@gmail.com",
+    "url": "https://deras.dev"
+  },
+  "siteUrl": "https://deras.dev",
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -10,12 +16,14 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icons/pwa/manifest-icon-512.maskable.png"
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icons/pwa/manifest-icon-512.maskable.png",
+    "sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@mdi/font": "7.4.47",
     "@vercel/analytics": "^1.5.0",
     "@vueuse/core": "^14.1.0",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.13.0",
     "pinia": "^3.0.4",
     "shiki": "^3.17.0",
