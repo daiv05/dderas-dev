@@ -241,13 +241,7 @@ export default {
     },
     interests: {
       title: 'Intereses actuales',
-      items: [
-        'GovTech & salud digital',
-        'Playbooks JS/TS',
-        'Automation con Node',
-        'Accesibilidad y SEO',
-        'Mentorías y educación abierta',
-      ],
+      items: ['Playbooks JS/TS', 'Accesibilidad y SEO', 'Despliegues cloud', 'UX Ops'],
     },
   },
   projects: {
