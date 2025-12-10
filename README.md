@@ -1,95 +1,67 @@
-# David Deras - Portfolio & Blog
+# David Deras - Prtfolio & Blog
 
-> Portfolio personal y blog de desarrollo fullstack construido con Vue.js 3 y Vuetify 3
+> Personal portfolio and full-stack development blog built with Vue.js 3 and Vuetify 3
 
 [![Vue.js](https://img.shields.io/badge/Vue.js-3.4-4FC08D?style=for-the-badge&logo=vue.js)](https://vuejs.org/)
 [![Vuetify](https://img.shields.io/badge/Vuetify-3.5-1867C0?style=for-the-badge&logo=vuetify)](https://vuetifyjs.com/)
 [![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02?style=for-the-badge&logo=greensock)](https://greensock.com/gsap/)
 
-## ✨ Características
+## ✨ Features
 
-- 🎨 **Diseño Único**: Paleta de colores distintiva (naranja quemado #E85D04) evitando el "AI slop aesthetic"
-- 🌗 **Tema Oscuro/Claro**: Sistema de temas dinámico con transiciones suaves
-- ⚡ **Animaciones GSAP**: Micro-interacciones fluidas y efectos de parallax
-- 📱 **Responsive Design**: Optimizado para todos los dispositivos
-- 🚀 **Performance**: Lazy loading, code splitting y optimización de assets
+- 🌗 **Dark/Light Theme**: Dynamic theme system with smooth transitions
+- ⚡ **GSAP Animations**: Fluid micro-interactions and parallax effects
+- 📱 **Responsive Design**: Optimized for all devices
+- 🚀 **Performance**: Lazy loading, code splitting, and asset optimization
 
-## 🛠️ Stack Tecnológico
+## 🛠️ Technology Stack
 
-- **Vue.js 3** - Framework progresivo de JavaScript
-- **Vuetify 3** - Framework de componentes Material Design
-- **GSAP 3** - Biblioteca de animaciones profesionales
-- **Vite 5** - Build tool rápido
+- **Vue.js 3** - Progressive JavaScript framework
+- **Vuetify 3** - Material Design component framework
+- **GSAP 3** - Professional animation library
+- **Vite 5** - Fast build tool
 - **Pinia 2** - State management
 
-## 🚀 Instalación y Desarrollo
+## 🚀 Installation and Development
 
-### Instalar dependencias
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-### Desarrollo local
+### Local development
 
 ```bash
 npm run dev
 ```
 
-### Build para producción
+### Build for production
 
 ```bash
 npm run build
 ```
 
-### Preview de producción
+### Preview for production
 
 ```bash
 npm run preview
 ```
 
-## 🎨 Sistema de Diseño
+## 📄 Sections
 
-### Paleta de Colores
+- **Home**: Hero section with GSAP animations and typewriter effect
+- **About Me**: Personal introduction and skills
+- **Projects**: Showcase of projects with detailed descriptions
+- **Blog**: Full-stack development articles and tutorials
+- **UES Resources**: Resources for University of El Salvador students
+- **Tools**: Experimental web tools and utilities
 
-#### Tema Oscuro (Default)
-
-```css
---color-primary: #e85d04 /* Naranja quemado */ --color-secondary: #dc2f02 /* Rojo fuego */
-  --color-accent: #f48c06 /* Naranja brillante */ --color-bg-dark: #0a0908 /* Negro profundo */;
-```
-
-### Tipografía
-
-- **Display**: Epilogue (300-900)
-- **Body**: Crimson Pro (300-900)
-- **Monospace**: JetBrains Mono (300-700)
-
-## 📁 Estructura
-
-```
-src/
-├── assets/styles/        # Estilos globales
-├── components/           # Componentes reutilizables
-├── views/               # Páginas/Vistas
-├── layouts/             # Layouts de aplicación
-├── router/              # Configuración de rutas
-└── plugins/             # Plugins (Vuetify)
-```
-
-## 📄 Secciones
-
-- **Home**: Hero section con animaciones GSAP y typewriter effect
-- **Proyectos**: Portfolio con modal detallado y filtros
-- **Sobre Mí**: Skills animadas, timeline de experiencia
-- **Blog**: Tutoriales con búsqueda y categorización
-
-## 📧 Contacto
+## 📧 Contact
 
 David Deras - davidderas50@gmail.com
 
-Portfolio: [https://www.deras.dev](https://www.deras.dev)
+Prtfolio: [https://deras.dev](https://deras.dev)
 
 ---
 
-Hecho con ❤️ por [David Deras](https://github.com/daiv05)
+Made with ❤️ by [David Deras](https://github.com/daiv05)

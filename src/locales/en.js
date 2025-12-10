@@ -53,7 +53,7 @@ export default {
         'El Salvador',
       ],
       author: 'David Deras',
-      ogImage: 'https://www.deras.dev/punpun_OG.jpg',
+      ogImage: 'https://deras.dev/punpun_OG.jpg',
       ogImageAlt: 'Laptop and mobile mockups showcasing David Deras projects and tutorials',
     },
     pages: {

@@ -48,6 +48,7 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['images/*.png', '/favicon.ico'],
       registerType: 'autoUpdate',
+      filename: 'service-worker.js',
       manifest: {
         name: 'deras-dev',
         short_name: 'deras-dev',
@@ -88,26 +89,26 @@ export default defineConfig({
         ],
         screenshots: [
           {
-            src: 'https://www.deras.dev/screenshots/inicio.png',
+            src: 'https://deras.dev/screenshots/inicio.png',
             sizes: '1881x844',
             type: 'image/png',
             description: 'Home page',
             form_factor: 'wide',
           },
           {
-            src: 'https://www.deras.dev/screenshots/mis-proyectos.png',
+            src: 'https://deras.dev/screenshots/mis-proyectos.png',
             sizes: '1882x844',
             type: 'image/png',
             description: 'Projects overview',
           },
           {
-            src: 'https://www.deras.dev/screenshots/repositorio-ues.png',
+            src: 'https://deras.dev/screenshots/repositorio-ues.png',
             sizes: '1881x844',
             type: 'image/png',
             description: 'UES shared repository',
           },
           {
-            src: 'https://www.deras.dev/screenshots/tutoriales.png',
+            src: 'https://deras.dev/screenshots/tutoriales.png',
             sizes: '1884x843',
             type: 'image/png',
             description: 'Tutorials and guides',
@@ -155,6 +156,10 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+      },
+      devOptions: {
         sourcemap: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },

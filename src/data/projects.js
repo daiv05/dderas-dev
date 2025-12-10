@@ -1,6 +1,74 @@
 const projectList = [
   {
-    id: 1,
+    id: 'reportfia',
+    date: '2024',
+    tags: [
+      'Laravel',
+      'TailwindCSS',
+      'Chart.js',
+      'PWA',
+      'MySQL',
+      'Spatie Permission',
+      'Audits',
+      'Reports',
+      'Excel',
+    ],
+    online: true,
+    repo: false,
+    images: {
+      0: '/img/projects/reportfia-pics/1.png',
+    },
+    link: null,
+    link_repo: null,
+    translations: {
+      es: {
+        name: 'Sistema para el control de incidencias FIA - UES',
+        description:
+          'Sistema integral de gestión de incidencias y mantenimiento para la Facultad de Ingeniería y Arquitectura de la Universidad de El Salvador.',
+        longDescription:
+          'ReportFIA es una aplicación PWA desarrollada en Laravel que permite crear, asignar, seguir y resolver reportes de incidencias, gestionar personal y recursos, auditar operaciones y visualizar métricas para la toma de decisiones.',
+        client: 'Facultad de Ingeniería y Arquitectura - UES',
+        category: 'Gestión de incidencias / Mantenimiento',
+        technologies:
+          'Laravel 10.x, TailwindCSS, Chart.js, MySQL, PWA, Spatie Permission, Audits, Reports, Excel',
+        features: [
+          'Creación y seguimiento completo del ciclo de vida de reportes',
+          'Gestión de personal, puestos y asignaciones',
+          'Control de inventario y bienes patrimoniales',
+          'Registro y consulta de auditoría completa',
+          'Dashboard de estadísticas con exportación a varios formatos',
+          'Autenticación y control de acceso por roles (RBAC)',
+          'PWA con assets y capturas para experiencia móvil',
+          'Importación masiva desde Excel y validaciones',
+          'Notificaciones y experiencia responsive',
+        ],
+      },
+      en: {
+        name: 'FIA Incident Management System - UES',
+        description:
+          'Comprehensive incident and maintenance management system for the Faculty of Engineering and Architecture (University of El Salvador).',
+        longDescription:
+          'ReportFIA is a Laravel-based PWA that enables creating, assigning, tracking and resolving incident reports, managing staff and resources, auditing operations, and visualizing metrics for decision making.',
+        client: 'Faculty of Engineering and Architecture - UES',
+        category: 'Incident management / Maintenance',
+        technologies:
+          'Laravel 10.x, TailwindCSS, Chart.js, MySQL, PWA, Spatie Permission, Audits, Reports, Excel',
+        features: [
+          'Full lifecycle incident reporting and tracking',
+          'Personnel and position management with assignments',
+          'Inventory and institutional asset control',
+          'Comprehensive audit logging and traceability',
+          'Analytics dashboard with export capabilities',
+          'Authentication and RBAC access control',
+          'PWA-ready with mobile screenshots and icons',
+          'Bulk import from Excel with validation',
+          'Responsive, modern UI and real-time notifications',
+        ],
+      },
+    },
+  },
+  {
+    id: 'musycharts',
     date: '2023',
     tags: ['Vue.js', 'Vuetify', 'Spotify API', 'amCharts 5', 'OAuth 2.0'],
     online: true,
@@ -51,7 +119,7 @@ const projectList = [
     },
   },
   {
-    id: 2,
+    id: 'carmencita',
     date: '2023',
     tags: ['Vue.js', 'Laravel', 'MySQL', 'TailwindCSS', 'REST API', 'JWT'],
     online: false,
@@ -108,7 +176,7 @@ const projectList = [
     },
   },
   {
-    id: 3,
+    id: 'ratiosinsights',
     date: '2023',
     tags: ['Vue.js', 'Laravel', 'MySQL', 'TailwindCSS', 'SheetJS', 'Chart.js'],
     online: false,
@@ -163,7 +231,7 @@ const projectList = [
     },
   },
   {
-    id: 4,
+    id: 'cheroomsv',
     date: '2022',
     tags: ['Vue.js', 'Django', 'PostgreSQL', 'WebSockets', 'REST Framework'],
     online: false,
