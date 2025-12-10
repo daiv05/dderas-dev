@@ -3,7 +3,7 @@ export default {
     brand: {
       name: 'DDeras',
       shortName: 'DDeras',
-      tagline: 'Fullstack & producto',
+      tagline: 'Desarrollador Fullstack',
       blogTagline: 'Blog y artículos',
     },
     themeToggle: {
@@ -39,28 +39,28 @@ export default {
     siteName: 'DDeras',
     twitterHandle: 'daiv_09',
     defaults: {
-      title: 'Ingeniero Full Stack que crea productos con Vue, Laravel y TypeScript',
+      title: 'Desarrollador Full Stack que crea productos con Vue, Laravel y TypeScript',
       description:
         'Portafolio, tutoriales y proyectos de David Deras. Vue 3, Laravel y despliegues cloud con foco en accesibilidad y UX.',
       keywords: [
         'David Deras',
-        'Ingeniero Full Stack',
+        'Desarrollador Full Stack',
         'Vue 3',
         'Laravel 11',
         'Vuetify',
+        'PrimeVue',
         'TypeScript',
-        'GovTech',
         'El Salvador',
       ],
       author: 'David Deras',
       ogImage: 'https://deras.dev/punpun_OG.jpg',
-      ogImageAlt: 'Mockups con los proyectos y tutoriales de David Deras',
+      ogImageAlt: 'Proyectos y tutoriales',
     },
     pages: {
       home: {
-        title: 'Producto: Vue y Laravel',
+        title: 'Productos con Vue y Laravel',
         description:
-          'Explora la agenda, entregables destacados y áreas de enfoque de David Deras, ingeniero full stack que construye plataformas públicas y tooling interno.',
+          'Explora la agenda, entregables destacados y áreas de enfoque de David Deras, desarrollador full stack que construye plataformas públicas y tooling interno.',
         keywords: ['Ingeniería de producto', 'Especialista Vue', 'Experto Laravel'],
       },
       me: {
@@ -75,11 +75,11 @@ export default {
           'Dossiers detallados de portales GovTech, ERP retail y dashboards analíticos diseñados con Vue 3, Laravel 11 y Vuetify.',
         keywords: ['Casos de estudio', 'Proyectos GovTech', 'ERP retail'],
       },
-      tutorials: {
-        title: 'Tutoriales y notas',
+      blog: {
+        title: 'Blog y artículos técnicos',
         description:
-          'Guías sobre Azure, Railway, despliegues de Vue y automatización para documentar flujos repetibles.',
-        keywords: ['Tutorial Azure', 'Deploy Railway', 'Guía Vue'],
+          'Publicaciones sobre desarrollo full stack, tutoriales y casos prácticos con Vue, Laravel y cloud deployments.',
+        keywords: ['Blog técnico', 'Tutoriales Vue', 'Guías Laravel', 'Desarrollo web'],
       },
       ues: {
         title: 'Recursos académicos UES',
@@ -89,15 +89,8 @@ export default {
       },
       tools: {
         title: 'Herramientas y experimentos',
-        description:
-          'Utilidades como Pixedai Studio para generar pixel art y otras herramientas internas que acompañan el trabajo diario.',
+        description: 'Solo experimentos',
         keywords: ['Pixedai', 'Herramienta pixel art', 'Utilidades para desarrolladores'],
-      },
-      blog: {
-        title: 'Blog y artículos técnicos',
-        description:
-          'Publicaciones sobre desarrollo full stack, tutoriales y casos prácticos con Vue, Laravel y cloud deployments.',
-        keywords: ['Blog técnico', 'Tutoriales Vue', 'Guías Laravel', 'Desarrollo web'],
       },
     },
   },
@@ -130,6 +123,7 @@ export default {
       prev: 'Anterior',
       next: 'Siguiente',
     },
+    constructionNotice: 'Esta página está en construcción. Pronto habrá contenido real disponible.',
   },
   loader: {
     message: 'Cargando…',
@@ -137,7 +131,7 @@ export default {
   hero: {
     eyebrow: 'Hola, soy',
     title: 'David Deras',
-    highlight: 'Full Stack Engineer enfocado en Vue, Laravel y TypeScript',
+    highlight: 'Desarrollador Full Stack enfocado en Vue, Laravel y TypeScript',
     roleLabel: 'Rol actual',
     lead: 'Más de dos años construyendo sistemas institucionales y plataformas públicas con Vue 3, Laravel y despliegues en la nube. Combino arquitectura full stack, research y UX para entregar software accesible y listo para escalar.',
     ctas: {
@@ -148,14 +142,15 @@ export default {
     techStack: [
       { name: 'Frontend', detail: 'Vue 3 + TS · Vite · Pinia' },
       { name: 'Backend', detail: 'Laravel 11 · PHP 8 · Node APIs' },
-      { name: 'Infra', detail: 'Vercel · Railway · Azure Static' },
-      { name: 'UX Ops', detail: 'Vuetify · GSAP · Vitest' },
+      { name: 'Infra', detail: 'Vercel · Railway · GCP · Azure' },
+      { name: 'UX Ops', detail: 'Vuetify · PrimeVue · Vitest' },
+      { name: 'UI', detail: 'Figma' },
     ],
     agendaTitle: 'Agenda inmediata',
     agenda: [
       { title: 'Sistema de control de incidencias FIA-UES', status: 'Desarrollo en curso' },
-      { title: 'ERP Carmencita Store', status: 'Optimización post go-live' },
       { title: 'MusyCharts v2', status: 'Rediseño de UI/UX y SEO' },
+      { title: 'Aprender React', status: 'En progreso' },
     ],
     snapshotTitle: 'Snapshot',
     focusNotes: [
@@ -164,12 +159,7 @@ export default {
       { label: 'Sectores', value: 'GovTech · Retail · Analítica' },
     ],
     codeLabel: 'profile.js',
-    roles: [
-      'Full Stack Engineer · DTIC - MINSAL',
-      'Especialista Vue 3 + Laravel',
-      'Mentor de habilidades digitales UES',
-      'Facilitador de workshops JS/TS',
-    ],
+    roles: ['Full Stack Developer · DTIC - MINSAL', 'Especialista Vue 3 + Laravel'],
   },
   overview: {
     eyebrow: 'Mapa de contenidos',
@@ -179,7 +169,7 @@ export default {
       {
         label: '01',
         title: 'Proyectos y casos',
-        body: 'Sistemas empresariales, dashboards y herramientas personales con documentación técnica clara.',
+        body: 'Proyectos en los que he trabajado, con detalles técnicos y decisiones de producto.',
         tags: ['Vue 3', 'Laravel', 'Vuetify'],
         cta: 'Ver dossier',
         to: '/projects',
@@ -187,8 +177,8 @@ export default {
       {
         label: '02',
         title: 'Blog y tutoriales',
-        body: 'Guías cortas sobre despliegues, cloud y automatizaciones que uso a diario.',
-        tags: ['Azure', 'Railway', 'Automatización'],
+        body: 'Guías cortas sobre despliegues, cloud, automatizaciones y casos prácticos que uso a diario.',
+        tags: ['Vue 3', 'Laravel', 'TypeScript', 'Vercel', 'Railway', 'GCP'],
         cta: 'Abrir blog',
         to: '/blog',
       },
@@ -209,14 +199,14 @@ export default {
   },
   about: {
     eyebrow: 'Perfil profesional',
-    title: 'Full Stack orientado a Vue, Laravel y producto',
-    lead: 'Ingeniero con más de dos años construyendo sistemas para gobierno, retail y plataformas colaborativas. Me enfoco en accesibilidad, SEO y despliegues cloud que mantienen el ritmo de equipos multidisciplinarios.',
+    title: 'Full Stack orientado a Vue y Laravel',
+    lead: 'Desarrollador con más de dos años construyendo sistemas para gobierno, retail y plataformas colaborativas. Me enfoco en accesibilidad, SEO y despliegues cloud que mantienen el ritmo de equipos multidisciplinarios.',
     quickFacts: [
       { label: 'Ubicación', value: 'San Salvador, El Salvador' },
       { label: 'Teléfono', value: '+503 7464-1460' },
       { label: 'Email', value: 'davidderas50@gmail.com' },
       { label: 'Idiomas', value: 'Español (nativo) · Inglés (A2)' },
-      { label: 'Modalidad', value: 'Remoto · Híbrido' },
+      { label: 'Modalidad', value: 'Remoto · Híbrido · Presencial' },
     ],
     buttons: {
       downloadCv: 'Descargar CV',
@@ -224,16 +214,15 @@ export default {
     },
     focus: {
       title: 'Enfoque',
-      body: 'Diseño y programo productos que automatizan procesos institucionales: expedientes clínicos, ERP para retail costero o plataformas de matching. Parto de investigación, defino acuerdos de API y documento para que equipos de diseño, QA y operaciones puedan iterar sin fricción.',
+      body: 'La accesibilidad, el SEO y los despliegues en la nube son los pilares que moldean mi proceso de desarrollo. Priorizo la documentación clara y las entregas iterativas para asegurar que los productos no solo cumplan con las necesidades actuales, sino que también se adapten sin problemas a futuros desafíos.',
     },
     skills: {
       title: 'Competencias principales',
       updated: 'Actualizado 2025',
       items: [
         { name: 'Vue 3 + TypeScript + Vite', level: 93 },
-        { name: 'Laravel 11 · PHP 8 APIs', level: 90 },
-        { name: 'Integración REST / GraphQL', level: 84 },
-        { name: 'Node.js tooling & tests', level: 80 },
+        { name: 'Laravel 10/11/12 · PHP 8 APIs', level: 90 },
+        { name: 'Integración REST', level: 84 },
         { name: 'UX / UI & accesibilidad', level: 82 },
       ],
     },
@@ -242,14 +231,14 @@ export default {
       timeline: [
         {
           date: 'Jan 2024 - Presente',
-          title: 'Full Stack Engineer · DTIC - MINSAL',
+          title: 'Desarrollador Full Stack · DTIC - MINSAL',
           description:
-            'Desarrollo de plataformas públicas y sistemas internos para el Ministerio de Salud: nuevas funcionalidades, integraciones, monitoreo y mejoras de performance/SEO en Vue 3 y Laravel.',
+            'Desarrollo de plataformas públicas y sistemas internos para el Ministerio de Salud: nuevas funcionalidades, integraciones, monitoreo y mejoras de performance en Vue 3 y Laravel.',
           tags: ['Vue 3', 'Laravel', 'GovTech'],
         },
         {
           date: 'Mar 2023 - Jun 2023',
-          title: 'Full Stack Developer · Carmencita Store',
+          title: 'Desarrollador Full Stack · Carmencita Store',
           description:
             'Construcción de un ERP para inventario, RRHH y delivery en la zona costera. Planeación SCRUM, interfaces en Figma y despliegues coordinados con el equipo administrativo.',
           tags: ['Laravel', 'Vue', 'ERP'],
@@ -284,8 +273,8 @@ export default {
   },
   projects: {
     eyebrow: 'Selección de trabajo',
-    title: 'Proyectos que combinan negocio y UX',
-    lead: 'Casos construidos con equipos pequeños, procesos claros y entregables iterativos. Cada dossier detalla retos técnicos y decisiones de producto.',
+    title: 'Proyectos y casos',
+    lead: 'Dossiers construidos con procesos claros y entregables iterativos. Cada caso detalla desafíos técnicos y decisiones de producto.',
     labels: {
       summary: 'Resumen',
       deliverables: 'Entregables destacados',
@@ -297,24 +286,6 @@ export default {
       viewRepo: 'Revisar código',
     },
   },
-  tutorials: {
-    eyebrow: 'Notas y tutoriales',
-    title: 'Bitácora técnica abierta',
-    lead: 'Registros prácticos sobre despliegue, cloud y automatización. Son apuntes que uso para repetir procesos sin fricción.',
-    filters: {
-      all: 'Todos',
-      search: 'Buscar por tema o etiqueta',
-    },
-    table: {
-      tutorial: 'Tutorial',
-      area: 'Área',
-      year: 'Año',
-      tags: 'Etiquetas',
-      action: 'Acción',
-      open: 'Abrir',
-      empty: 'No hay resultados con los filtros actuales.',
-    },
-  },
   ues: {
     eyebrow: 'Recursos UES',
     title: 'Repositorio colaborativo',
@@ -323,34 +294,66 @@ export default {
       {
         title: 'Modalidad presencial',
         mode: 'Campus',
-        description: 'Parciales, laboratorios y resúmenes de asignaturas impartidas en aula.',
-        driveLink: 'LINK_A_CARPETA_PRESENCIAL',
+        description:
+          "Parciales, laboratorios y resúmenes de asignaturas impartidas en aula (ver materias sin '- D' al final).",
+        driveLink:
+          'https://drive.google.com/drive/folders/1w7WfrEShtjBharxYq_qDqs4lXH1Ao00h?usp=drive_link',
         featured: [
-          { name: 'Matemática I · Guías', link: '#' },
-          { name: 'Programación I · Ejemplos', link: '#' },
-          { name: 'Física I · Laboratorios', link: '#' },
+          {
+            name: 'Estructura de Datos (ESD115) · Material',
+            link: 'https://drive.google.com/drive/folders/1_Wk8OUpedalm-nH1Hgzh4sVXz4bxP6hz?usp=drive_link',
+          },
+          {
+            name: 'Herramientas de Productividad (HDP115) · Clases',
+            link: 'https://drive.google.com/drive/folders/1KAQVYhFv5-3MWxEref72lUzQc-sOhFZn?usp=drive_link',
+          },
+          {
+            name: 'Diseño de Sistemas I (DSI115) · Material',
+            link: 'https://drive.google.com/drive/folders/1IG_0YzshQNSIfTUo3Zu_yH0GyrXOgwPw?usp=drive_link',
+          },
         ],
       },
       {
         title: 'Modalidad a distancia',
         mode: 'Virtual',
-        description: 'Tutorías grabadas, guías y material diseñado para autoestudio.',
-        driveLink: 'LINK_A_CARPETA_DISTANCIA',
+        description:
+          "Tutorías grabadas, guías y material diseñado para autoestudio (materias con '- D')",
+        driveLink:
+          'https://drive.google.com/drive/folders/1w7WfrEShtjBharxYq_qDqs4lXH1Ao00h?usp=drive_link',
         featured: [
-          { name: 'Material didáctico', link: '#' },
-          { name: 'Guías de estudio', link: '#' },
-          { name: 'Tutorías destacadas', link: '#' },
+          {
+            name: 'Sistemas Operativos (SIO115 -D)',
+            link: 'https://drive.google.com/drive/folders/1AqxsN-dWjaTkj7tI9WuEt6kgwglLip4I?usp=drive_link',
+          },
+          {
+            name: 'Comercio Electrónico (CET115 -D)',
+            link: 'https://drive.google.com/drive/folders/1DTjafl8XO2Ri__3DrA6BxQHV-WFtCvj1?usp=drive_link',
+          },
+          {
+            name: 'Comunicaciones I (COS115 -D)',
+            link: 'https://drive.google.com/drive/folders/1XAwcZE0ViAKgri47RQPtRicYSWbua1L3?usp=drive_link',
+          },
         ],
       },
       {
         title: 'Extras y utilidades',
         mode: 'General',
-        description: 'Pensum, formatos administrativos, software recomendado y utilidades.',
-        driveLink: 'LINK_A_CARPETA_EXTRAS',
+        description: 'Recursos adicionales: libros, formatos y guías sobre diversos temas.',
+        driveLink:
+          'https://drive.google.com/drive/folders/1jXPLOqIRuX-uvDZsgJUQJAujQY7NwMvL?usp=drive_link',
         featured: [
-          { name: 'Pensum oficial', link: '#' },
-          { name: 'Formatos UES', link: '#' },
-          { name: 'Herramientas de apoyo', link: '#' },
+          {
+            name: 'System Design Interview',
+            link: 'https://drive.google.com/file/d/1c9iUwAf2KMpd7mvWbp7kJNDkscLAl0c2/view?usp=drive_link',
+          },
+          {
+            name: 'Frontend Development Projects with Vue.js 3',
+            link: 'https://drive.google.com/file/d/1caUfgKQcWmv-CGBo95FHyarBlx_Mo8Qd/view?usp=drive_link',
+          },
+          {
+            name: 'Laravel Up & Running 3rd Edition',
+            link: 'https://drive.google.com/file/d/1H4kBZhYmyzhfAwXGjLB_9XittuMJlKBq/view?usp=drive_link',
+          },
         ],
       },
     ],
@@ -365,7 +368,7 @@ export default {
   },
   footer: {
     description:
-      'Full Stack Engineer en San Salvador. Construyo sistemas públicos y ERP con Vue 3, TypeScript y Laravel, documentando cada entrega para que los equipos escalen sin fricción.',
+      'Ingeniero Full Stack en San Salvador. Construyo sistemas con Vue 3, TypeScript y Laravel, documentando cada entrega para escalar equipos sin fricciones.',
     quickMap: 'Mapa rápido',
     links: {
       home: 'Inicio',
@@ -401,7 +404,7 @@ export default {
         },
         palette: {
           title: 'Paleta de color',
-          body: 'Activa una librería curada o conserva los tonos originales.',
+          body: 'Activa una librería o conserva los tonos originales.',
           switch: 'Aplicar paleta',
           select: 'Biblioteca',
         },
@@ -419,7 +422,7 @@ export default {
           ],
         },
       },
-      resolution: 'Bloque {block} · {width} × {height}',
+      resolution: 'Bloque {block} · {width} x {height}',
       presets: {
         sticker: 'Sticker',
         icon: 'Icono',

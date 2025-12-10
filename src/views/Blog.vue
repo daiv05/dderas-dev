@@ -7,6 +7,16 @@
         <p class="section-lead">{{ t('blog.lead') }}</p>
       </header>
 
+      <!-- Banner/Aviso de "PAGINA EN CONSTRUCCIÓN" -->
+      <div>
+        <v-alert
+          title="Hey!"
+          :text="t('blog.constructionNotice')"
+          type="error"
+          :icon="mdiAlertCircle"
+        ></v-alert>
+      </div>
+
       <!-- Índice del blog (tarjetas + paginación) -->
       <div v-if="!Current" class="blog-index-wrapper">
         <div class="blog-index-content">
@@ -143,6 +153,7 @@
 </template>
 
 <script setup>
+import { mdiAlertCircle } from '@mdi/js';
 import { computed, watch, ref, onMounted, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';

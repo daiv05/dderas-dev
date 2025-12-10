@@ -35,6 +35,19 @@
           {{ t('navigation.backToMain') || 'Volver' }}
         </v-btn>
 
+        <v-btn
+          v-if="basePath(route.path).startsWith('/blog')"
+          class="back-button text-none"
+          variant="outlined"
+          rounded="pill"
+          @click="goTo({ to: withLocalePath('/blog'), value: 'back' })"
+        >
+          <template #prepend>
+            <v-icon :icon="mdiViewList"></v-icon>
+          </template>
+          {{ t('navigation.viewBlogEntries') || 'Ver entradas de blog' }}
+        </v-btn>
+
         <v-list ref="navList" density="compact" nav class="nav-list" @scroll="handleNavScroll">
           <v-list-item
             v-for="item in itemsComputed"
@@ -128,6 +141,7 @@
               class="mobile-theme"
               rounded="pill"
               size="small"
+              aria-label="Toggle theme"
               @click="toggleTheme"
             >
               <template #prepend>
@@ -277,16 +291,7 @@ const displayedPosts = computed(() => {
 
 const itemsComputed = computed(() => {
   if (basePath(route.path).startsWith('/blog')) {
-    return [
-      {
-        title: t('navigation.viewBlogEntries') || 'Ver entradas de blog',
-        to: withLocalePath('/blog'),
-        icon: mdiViewList,
-        value: 'blog',
-        isBlogIndex: true,
-      },
-      ...displayedPosts.value,
-    ];
+    return [...displayedPosts.value];
   }
   return items;
 });
