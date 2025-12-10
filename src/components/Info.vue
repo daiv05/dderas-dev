@@ -48,33 +48,39 @@
             <h3>{{ skillsContent.title }}</h3>
             <span class="mono">{{ skillsContent.updated }}</span>
           </div>
-          <div class="skill-list">
-            <div v-for="skill in skills" :key="skill.name" class="skill-item">
-              <div class="skill-legend">
-                <span>{{ skill.name }}</span>
-                <span class="mono">{{ skill.level }}%</span>
-              </div>
-              <div class="skill-track">
-                <div class="skill-progress" :style="{ width: skill.level + '%' }"></div>
-              </div>
+          <div class="skills-grid">
+            <div v-for="skill in skills" :key="skill.name" class="skill-card">
+              <v-icon :icon="getSkillIcon(skill.name)" size="32" color="primary" class="mb-2" />
+              <span class="skill-name">{{ skill.name }}</span>
             </div>
           </div>
         </div>
 
         <div class="detail-block">
           <h3>{{ experienceContent.title }}</h3>
-          <ul class="timeline">
-            <li v-for="item in experience" :key="item.title">
-              <div class="timeline-head">
-                <span class="mono">{{ item.date }}</span>
-                <strong>{{ item.title }}</strong>
+          <v-timeline
+            density="compact"
+            side="end"
+            align="start"
+            truncate-line="both"
+            class="experience-timeline"
+          >
+            <v-timeline-item
+              v-for="item in experience"
+              :key="item.title"
+              dot-color="primary"
+              size="x-small"
+            >
+              <div class="mb-4">
+                <div class="text-caption mono mb-1">{{ item.date }}</div>
+                <div class="text-h6 font-weight-bold mb-1">{{ item.title }}</div>
+                <p class="text-body-2 text-medium-emphasis mb-2">{{ item.description }}</p>
+                <div class="chipline">
+                  <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
+                </div>
               </div>
-              <p>{{ item.description }}</p>
-              <div class="chipline">
-                <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
-              </div>
-            </li>
-          </ul>
+            </v-timeline-item>
+          </v-timeline>
         </div>
 
         <div class="detail-block">
@@ -89,6 +95,15 @@
 </template>
 
 <script setup>
+import {
+  mdiVuejs,
+  mdiLaravel,
+  mdiApi,
+  mdiPalette,
+  mdiLanguagePhp,
+  mdiLanguageTypescript,
+  mdiServerNetwork,
+} from '@mdi/js';
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -116,6 +131,17 @@ const experienceContent = computed(() => tm('about.experience') ?? { timeline: [
 const experience = computed(() => experienceContent.value.timeline ?? []);
 const interestsContent = computed(() => tm('about.interests') ?? { items: [] });
 const interests = computed(() => interestsContent.value.items ?? []);
+
+const getSkillIcon = (name) => {
+  const n = name.toLowerCase();
+  if (n.includes('vue')) return mdiVuejs;
+  if (n.includes('laravel')) return mdiLaravel;
+  if (n.includes('rest') || n.includes('api')) return mdiApi;
+  if (n.includes('ux') || n.includes('ui')) return mdiPalette;
+  if (n.includes('php')) return mdiLanguagePhp;
+  if (n.includes('typescript') || n.includes('ts')) return mdiLanguageTypescript;
+  return mdiServerNetwork;
+};
 
 const setupAnimations = () => {
   const scroller = getMainScroller();
@@ -281,29 +307,35 @@ watch(
   align-items: baseline;
 }
 
-.skill-list {
-  display: flex;
-  flex-direction: column;
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 1rem;
 }
 
-.skill-legend {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.95rem;
-}
-
-.skill-track {
-  width: 100%;
-  height: 6px;
+.skill-card {
+  background: rgba(var(--v-theme-surface-variant), 0.3);
   border: 1px solid var(--line-soft);
-  border-radius: 999px;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
-.skill-progress {
-  height: 100%;
-  background: rgb(var(--v-theme-primary));
-  border-radius: 999px;
+.skill-card:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--v-theme-primary));
+}
+
+.skill-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .timeline {
