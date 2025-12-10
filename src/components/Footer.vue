@@ -16,7 +16,7 @@
           <router-link to="/resources">{{ t('footer.links.ues') }}</router-link>
           <router-link to="/tools">{{ t('footer.links.tools') }}</router-link>
         </div>
-        <a class="cv-link" href="/cv/David_Deras_Frontend_Engineer.pdf" download>
+        <a class="cv-link" href="/cv/David_Deras_FullStack_Developer.pdf" download>
           {{ t('footer.downloadCv') }}
         </a>
       </div>

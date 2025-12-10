@@ -368,7 +368,7 @@ export default {
   },
   footer: {
     description:
-      'Ingeniero Full Stack en San Salvador. Construyo sistemas con Vue 3, TypeScript y Laravel, documentando cada entrega para escalar equipos sin fricciones.',
+      'Desarrollador Full Stack en San Salvador. Construyo sistemas con Vue 3, TypeScript y Laravel, documentando cada entrega para una escalabilidad fluida del producto.',
     quickMap: 'Mapa rápido',
     links: {
       home: 'Inicio',

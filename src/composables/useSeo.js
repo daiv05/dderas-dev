@@ -67,7 +67,7 @@ const upsertStructuredData = (description, keywords, image) => {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'David Deras',
-    jobTitle: 'Full Stack Engineer',
+    jobTitle: 'Full Stack Developer',
     url: SITE_URL,
     image,
     email: `mailto:${CONTACT_EMAIL}`,

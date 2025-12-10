@@ -23,8 +23,8 @@
               variant="flat"
               color="primary"
               rounded="pill"
-              href="/cv/David_Deras_Frontend_Engineer.pdf"
-              download="David_Deras_Frontend_Engineer.pdf"
+              href="/cv/David_Deras_FullStack_Developer.pdf"
+              download="David_Deras_FullStack_Developer.pdf"
             >
               {{ t('about.buttons.downloadCv') }}
             </v-btn>

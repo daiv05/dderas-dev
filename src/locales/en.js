@@ -60,7 +60,7 @@ export default {
       home: {
         title: 'Product with Vue and Laravel',
         description:
-          'Explore the agenda, featured deliveries and focus areas of David Deras, a full stack engineer building public platforms and internal tooling.',
+          'Explore the agenda, featured deliveries and focus areas of David Deras, a full stack developer building platforms and internal tooling.',
         keywords: ['Product engineering', 'Vue specialist', 'Laravel expert'],
       },
       me: {
@@ -206,7 +206,7 @@ export default {
       { label: 'Phone', value: '+503 7464-1460' },
       { label: 'Email', value: 'davidderas50@gmail.com' },
       { label: 'Languages', value: 'Spanish (native) · English (A2)' },
-      { label: 'Availability', value: 'Remote · Hybrid' },
+      { label: 'Availability', value: 'Remote · Hybrid · On-site' },
     ],
     buttons: {
       downloadCv: 'Download resume',
@@ -367,7 +367,7 @@ export default {
   },
   footer: {
     description:
-      'Full Stack Engineer in San Salvador. I build systems with Vue 3, TypeScript and Laravel, documenting each delivery for seamless team scaling.',
+      'Full Stack Developer in San Salvador. I build systems with Vue 3, TypeScript and Laravel, documenting each delivery for smooth product scalability.',
     quickMap: 'Quick map',
     links: {
       home: 'Home',
