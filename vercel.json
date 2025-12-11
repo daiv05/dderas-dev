@@ -7,11 +7,11 @@
   ],
   "headers": [
     {
-      "source": "/service-worker.js",
+      "source": "/service-wk.js",
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     },
     {
-      "source": "/workbox-*.js",
+      "source": "/workbox-:hash.js",
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ]
