@@ -1,7 +1,7 @@
 /* eslint-env node */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import matter from 'gray-matter';
 
@@ -18,7 +18,7 @@ function getSiteUrlFromPackageJson() {
     const pkgPath = path.join(WORKSPACE_ROOT, 'package.json');
     const data = fs.readFileSync(pkgPath, 'utf8');
     const pkg = JSON.parse(data);
-    return pkg.siteUrl || (pkg.homepage && pkg.homepage.replace(/\/$/, '')) || null;
+    return pkg.siteUrl || pkg.homepage?.replace(/\/$/, '') || null;
   } catch {
     return null;
   }
@@ -63,10 +63,10 @@ function fileLastMod(filePath) {
 function normalizeLastmod(value) {
   if (!value) return new Date().toISOString().split('T')[0];
   if (typeof value === 'string') {
-    const isoMatch = value.match(/^(\d{4}-\d{2}-\d{2})/);
+    const isoMatch = /^(\d{4}-\d{2}-\d{2})/.exec(value);
     if (isoMatch) return isoMatch[1];
     const d = new Date(value);
-    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+    if (!Number.isNaN(d.getTime())) return d.toISOString().split('T')[0];
   }
   if (value instanceof Date) {
     return value.toISOString().split('T')[0];
@@ -100,56 +100,57 @@ function discoverBlogPairs() {
   const enDir = path.join(BLOG_DIR, 'en');
   const esDir = path.join(BLOG_DIR, 'es');
 
-  const postsById = {}; // { id: { en: {...}, es: {...} } }
+  const readLangPosts = (dir, lang) => {
+    if (!fs.existsSync(dir)) return [];
+    return fs
+      .readdirSync(dir)
+      .filter((x) => x.endsWith('.md'))
+      .map((f) => readPostData(lang, path.join(dir, f)))
+      .filter(Boolean);
+  };
 
-  // Inglés
-  if (fs.existsSync(enDir)) {
-    for (const f of fs.readdirSync(enDir).filter((x) => x.endsWith('.md'))) {
-      const full = path.join(enDir, f);
-      const post = readPostData('en', full);
-      if (!post) continue;
-      if (!postsById[post.id]) postsById[post.id] = {};
-      postsById[post.id].en = post;
-    }
+  const enPosts = readLangPosts(enDir, 'en');
+  const esPosts = readLangPosts(esDir, 'es');
+
+  const postsById = new Map(); // id -> { en, es }
+
+  for (const p of enPosts) {
+    const entry = postsById.get(p.id) || {};
+    entry.en = p;
+    postsById.set(p.id, entry);
   }
 
-  // Español
-  if (fs.existsSync(esDir)) {
-    for (const f of fs.readdirSync(esDir).filter((x) => x.endsWith('.md'))) {
-      const full = path.join(esDir, f);
-      const post = readPostData('es', full);
-      if (!post) continue;
-      if (!postsById[post.id]) postsById[post.id] = {};
-      postsById[post.id].es = post;
-    }
+  for (const p of esPosts) {
+    const entry = postsById.get(p.id) || {};
+    entry.es = p;
+    postsById.set(p.id, entry);
   }
 
-  const pairs = [];
-
-  for (const id of Object.keys(postsById)) {
-    const entry = postsById[id];
-    const en = entry.en || null;
-    const es = entry.es || null;
-
-    if (!en && !es) continue;
+  const buildPair = (entry) => {
+    const en = entry.en;
+    const es = entry.es;
+    if (!en && !es) return null;
 
     const enPath = en ? `/blog/${en.slug}` : `/blog/${es.slug}`;
     const esPath = es ? `/blog/${es.slug}` : `/blog/${en.slug}`;
 
-    const lastmods = [en?.lastmod, es?.lastmod].filter(Boolean).map(normalizeLastmod);
+    const lastmods = [en?.lastmod, es?.lastmod]
+      .filter(Boolean)
+      .map(normalizeLastmod)
+      .sort((a, b) => a.localeCompare(b, 'en', { numeric: true, sensitivity: 'base' }));
+
     const lastmod = lastmods.length
-      ? lastmods
-          .sort((a, b) => a.localeCompare(b, 'en', { numeric: true, sensitivity: 'base' }))
-          .reverse()[0]
+      ? lastmods[lastmods.length - 1]
       : new Date().toISOString().split('T')[0];
-    pairs.push({
+
+    return {
       enPath: localePath('en', enPath),
       esPath: localePath('es', esPath),
       lastmod,
-    });
-  }
+    };
+  };
 
-  return pairs;
+  return Array.from(postsById.values()).map(buildPair).filter(Boolean);
 }
 
 function buildUrlEntriesForPair({ enPath, esPath, lastmod }, priority) {

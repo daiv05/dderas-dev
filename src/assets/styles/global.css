@@ -167,6 +167,7 @@ ol {
   font-weight: 700;
   line-height: 1.2;
   scroll-margin-top: 88px; /* evita solapamiento con sticky header */
+  font-family: var(--font-display);
 }
 
 .markdown-body ul { list-style: disc inside; }
@@ -267,15 +268,6 @@ ol {
 
 .md-toc a {
   color: inherit;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  font-family: var(--font-display);
 }
 
 .markdown-body pre,

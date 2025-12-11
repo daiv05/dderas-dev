@@ -452,8 +452,6 @@ onUnmounted(() => {
   flex-shrink: 0;
   width: min(960px, 80vw);
   height: min(620px, 75vh);
-  // border-radius: var(--radius-lg);
-  // border: 1px solid var(--line-soft);
   background: rgb(var(--v-theme-surface));
   display: none;
   align-items: center;
