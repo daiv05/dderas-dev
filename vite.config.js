@@ -50,8 +50,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       filename: 'service-worker.js',
       manifest: {
-        name: 'deras-dev',
-        short_name: 'deras-dev',
+        name: 'deras.dev',
+        short_name: 'deras.dev',
         start_url: '/',
         display: 'standalone',
         description:
@@ -155,9 +155,20 @@ export default defineConfig({
         ],
       },
       workbox: {
+        navigateFallback: null,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/deras\.dev\/.*$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'deras-dev-pages',
+            },
+          },
+        ],
       },
       devOptions: {
         sourcemap: true,

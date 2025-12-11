@@ -295,13 +295,23 @@ const itemsComputed = computed(() => {
   }
   return items;
 });
+
 const { t, locale } = useI18n();
 const supportedLanguages = new Set(['en', 'es']);
 useSeo();
 
 const drawer = ref(false);
 const showScrollTop = ref(false);
-const mobileSection = ref(items[0]?.value ?? null);
+
+const basePath = (path) => path.replace(/^\/es(?=\/|$)/, '') || '/';
+
+const getInitialMobileSection = () => {
+  const currentPath = basePath(route.path);
+  const active = items.find((item) => item.to === currentPath);
+  return active ? active.value : (items[0]?.value ?? null);
+};
+
+const mobileSection = ref(getInitialMobileSection());
 const languageOptions = computed(() => [
   {
     value: 'en',
@@ -324,8 +334,6 @@ const getLocaleFromPath = (path) => {
   const seg = (path || '/').split('/')[1];
   return seg === 'es' ? 'es' : 'en';
 };
-
-const basePath = (path) => path.replace(/^\/es(?=\/|$)/, '') || '/';
 
 const withLocalePath = (path) => {
   const p = path.startsWith('/') ? path : `/${path}`;
@@ -387,7 +395,8 @@ watch(
 watch(
   () => route.path,
   (path) => {
-    const active = items.find((item) => item.to === path);
+    const p = basePath(path);
+    const active = items.find((item) => item.to === p);
     if (active) {
       mobileSection.value = active.value;
     }
