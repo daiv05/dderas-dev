@@ -11,10 +11,10 @@
       <div class="footer-links">
         <p class="mono">{{ t('footer.quickMap') }}</p>
         <div class="nav-pills">
-          <router-link to="/">{{ t('footer.links.home') }}</router-link>
-          <router-link to="/projects">{{ t('footer.links.projects') }}</router-link>
-          <router-link to="/resources">{{ t('footer.links.ues') }}</router-link>
-          <router-link to="/tools">{{ t('footer.links.tools') }}</router-link>
+          <router-link :to="withLocalePath('/')">{{ t('footer.links.home') }}</router-link>
+          <router-link :to="withLocalePath('/projects')">{{ t('footer.links.projects') }}</router-link>
+          <router-link :to="withLocalePath('/resources')">{{ t('footer.links.ues') }}</router-link>
+          <router-link :to="withLocalePath('/tools')">{{ t('footer.links.tools') }}</router-link>
         </div>
         <a class="cv-link" href="/cv/David_Deras_FullStack_Developer.pdf" download>
           {{ t('footer.downloadCv') }}
@@ -44,8 +44,16 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { useAppStore } from '@/store/app';
+
 const currentYear = computed(() => new Date().getFullYear());
 const { t } = useI18n();
+const appStore = useAppStore();
+const withLocalePath = (path) => {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  const pathToAdd = p === '/' ? '' : p;
+  return appStore.language === 'es' ? `/es${pathToAdd}` : p;
+};
 </script>
 
 <style scoped lang="scss">

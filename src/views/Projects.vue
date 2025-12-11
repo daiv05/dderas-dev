@@ -8,96 +8,128 @@
       </p>
     </div>
 
-    <v-expansion-panels ref="ledgerRef" variant="accordion" class="projects-ledger">
-      <v-expansion-panel v-for="project in projects" :key="project.id" :ref="setPanelRef">
-        <v-expansion-panel-title>
-          <div class="panel-title">
-            <div class="panel-heading">
-              <span class="mono">{{ project.date }}</span>
-              <strong>{{ project.name }}</strong>
-            </div>
-            <div class="panel-meta">
-              <span class="badge">{{ project.category }}</span>
-              <span v-if="project.client" class="client-tag">{{ project.client }}</span>
-            </div>
-          </div>
-          <span v-if="project.online" class="status">En línea</span>
+    <v-expansion-panels
+      ref="ledgerRef"
+      v-model="panelModel"
+      variant="accordion"
+      class="projects-ledger"
+    >
+      <v-expansion-panel
+        v-for="(project, i) in projects"
+        :key="project.id"
+        :ref="(el) => capturePanelRef(el, i)"
+        elevation="0"
+        class="project-panel"
+      >
+        <v-expansion-panel-title class="project-header">
+          <v-row no-gutters align="center" class="ml-2 ml-md-0">
+            <v-col cols="12" md="1" class="d-flex justify-start justify-md-center">
+              <span class="mono date-label mb-4 mb-md-0">{{ project.date }}</span>
+            </v-col>
+            <v-col cols="12" md="9">
+              <div class="header-main">
+                <h3 class="project-title mb-2 mb-md-0">{{ project.name }}</h3>
+                <v-row class="project-subtitle" dense>
+                  <v-col cols="12" md="auto">
+                    <span class="category">{{ project.category }}</span>
+                  </v-col>
+                  <v-col v-if="project.client" cols="12" md="auto">
+                    <span>{{ project.client }}</span>
+                  </v-col>
+                </v-row>
+              </div>
+            </v-col>
+            <v-col cols="12" md="2" class="text-center d-none d-md-block">
+              <v-chip
+                v-if="project.online"
+                color="success"
+                size="small"
+                variant="tonal"
+                class="status-chip"
+              >
+                En línea
+              </v-chip>
+            </v-col>
+          </v-row>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <div class="project-layout">
-            <div class="project-main">
-              <article class="summary-card">
-                <h4>{{ t('projects.labels.summary') }}</h4>
-                <p>
-                  {{ project.longDescription || project.description }}
-                </p>
-              </article>
+          <div class="project-content">
+            <v-row>
+              <v-col cols="12" md="8">
+                <div class="section-block">
+                  <h4 class="block-title">{{ t('projects.labels.summary') }}</h4>
+                  <p class="block-text">{{ project.longDescription || project.description }}</p>
+                </div>
 
-              <article class="feature-card">
-                <h4>{{ t('projects.labels.deliverables') }}</h4>
-                <ul>
-                  <li v-for="feature in project.features" :key="feature">
-                    {{ feature }}
-                  </li>
-                </ul>
-              </article>
+                <div class="section-block mt-6">
+                  <h4 class="block-title">{{ t('projects.labels.deliverables') }}</h4>
+                  <ul class="feature-list">
+                    <li v-for="feature in project.features" :key="feature">
+                      {{ feature }}
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="project-actions mt-6">
+                  <v-btn
+                    v-if="project.online && project.link && project.link !== '#'"
+                    variant="tonal"
+                    color="primary"
+                    :href="project.link"
+                    target="_blank"
+                    :prepend-icon="mdiOpenInNew"
+                    class="mr-2 text-none"
+                  >
+                    {{ t('projects.labels.viewOnline') }}
+                  </v-btn>
+                  <v-btn
+                    v-if="project.repo && project.link_repo && project.link_repo !== '#'"
+                    variant="tonal"
+                    :href="project.link_repo"
+                    target="_blank"
+                    :prepend-icon="mdiGithub"
+                    class="text-none"
+                  >
+                    {{ t('projects.labels.viewRepo') }}
+                  </v-btn>
+                </div>
+              </v-col>
+              <v-col cols="12" md="4">
+                <div class="meta-sidebar">
+                  <div class="meta-item">
+                    <span class="meta-label">{{ t('projects.labels.technologies') }}</span>
+                    <div class="tech-tags">
+                      <v-chip
+                        v-for="tag in project.tags"
+                        :key="tag"
+                        size="small"
+                        variant="outlined"
+                        class="mr-1 mb-1"
+                      >
+                        {{ tag }}
+                      </v-chip>
+                    </div>
+                  </div>
+                </div>
+              </v-col>
+            </v-row>
+
+            <div v-if="media(project).length" class="media-section mt-8">
+              <div class="d-flex justify-space-between align-center mb-4">
+                <h4 class="block-title mb-0">{{ t('projects.labels.captures') }}</h4>
+              </div>
+              <v-slide-group show-arrows class="gallery-strip">
+                <v-slide-group-item v-for="(image, idx) in media(project)" :key="idx">
+                  <v-img
+                    :src="image"
+                    :alt="project.name"
+                    class="gallery-thumb"
+                    cover
+                    @click="openGallery(project, idx)"
+                  ></v-img>
+                </v-slide-group-item>
+              </v-slide-group>
             </div>
-
-            <aside class="project-aside">
-              <div v-if="project.client" class="info-sheet">
-                <p class="label">{{ t('projects.labels.client') }}</p>
-                <p>{{ project.client }}</p>
-              </div>
-              <div class="info-sheet">
-                <p class="label">{{ t('projects.labels.technologies') }}</p>
-                <p>{{ project.technologies || tagsAsText(project) }}</p>
-              </div>
-              <div class="chip-stack">
-                <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
-              </div>
-            </aside>
-          </div>
-
-          <div v-if="media(project).length" class="media-strip">
-            <div class="media-header">
-              <p>{{ t('projects.labels.captures') }}</p>
-              <v-btn variant="text" size="small" @click="openGallery(project)">
-                {{ t('projects.labels.viewFullscreen') }}
-              </v-btn>
-            </div>
-            <v-slide-group show-arrows class="thumbs-group">
-              <v-slide-group-item v-for="(image, idx) in media(project)" :key="idx">
-                <v-img
-                  :src="image"
-                  :alt="project.name"
-                  class="media-thumb"
-                  cover
-                  @click="openGallery(project, idx)"
-                ></v-img>
-              </v-slide-group-item>
-            </v-slide-group>
-          </div>
-
-          <div class="project-links">
-            <v-btn
-              v-if="project.online && project.link && project.link !== '#'"
-              variant="flat"
-              color="primary"
-              rounded="pill"
-              :href="project.link"
-              target="_blank"
-            >
-              {{ t('projects.labels.viewOnline') }}
-            </v-btn>
-            <v-btn
-              v-if="project.repo && project.link_repo && project.link_repo !== '#'"
-              variant="outlined"
-              rounded="pill"
-              :href="project.link_repo"
-              target="_blank"
-            >
-              {{ t('projects.labels.viewRepo') }}
-            </v-btn>
           </div>
         </v-expansion-panel-text>
       </v-expansion-panel>
@@ -113,16 +145,23 @@
           <v-btn :icon="mdiClose" variant="text" @click="closeGallery"></v-btn>
         </div>
 
-        <v-slide-group v-model="gallery.index" show-arrows center-active class="lightbox-group">
-          <v-slide-group-item v-for="(image, idx) in gallery.images" :key="idx" :value="idx">
+        <div class="lightbox-carousel">
+          <div class="lightbox-track">
             <div
+              v-for="(image, idx) in gallery.images"
+              :key="idx"
               class="lightbox-frame"
               :class="{ 'lightbox-frame--active': gallery.index === idx }"
             >
-              <v-img :src="image" :alt="gallery.project?.name" class="lightbox-image" cover></v-img>
+              <v-img
+                :src="image"
+                :alt="gallery.project?.name"
+                class="lightbox-image"
+                contain
+              ></v-img>
             </div>
-          </v-slide-group-item>
-        </v-slide-group>
+          </div>
+        </div>
 
         <div class="lightbox-controls">
           <v-btn :icon="mdiChevronLeft" variant="tonal" @click="stepGallery(-1)"></v-btn>
@@ -135,8 +174,8 @@
 </template>
 
 <script setup>
-import { mdiChevronLeft, mdiChevronRight, mdiClose } from '@mdi/js';
-import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick } from 'vue';
+import { mdiChevronLeft, mdiChevronRight, mdiClose, mdiOpenInNew, mdiGithub } from '@mdi/js';
+import { ref, computed, onMounted, onUnmounted, onBeforeUpdate, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { useEnterAnimations } from '@/composables/useEnterAnimations.js';
@@ -163,18 +202,37 @@ const {
 } = useEnterAnimations();
 const ledgerRef = ref(null);
 const gallery = ref({ open: false, images: [], project: null, index: 0 });
+const panelModel = ref(null);
+const projectPanels = ref([]);
+
+const capturePanelRef = (el, index) => {
+  setPanelRef(el);
+  if (el) {
+    projectPanels.value[index] = el;
+  }
+};
+
+watch(panelModel, async (newVal) => {
+  if (newVal !== undefined && newVal !== null) {
+    await nextTick();
+    setTimeout(() => {
+      const panel = projectPanels.value[newVal];
+      const el = panel?.$el ?? panel;
+      if (el && el.scrollIntoView) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 300);
+  }
+});
 
 onBeforeUpdate(() => {
   resetPanelRefs();
+  projectPanels.value = [];
 });
 
 const media = (project) => {
   if (!project.images) return [];
   return Object.values(project.images);
-};
-
-const tagsAsText = (project) => {
-  return project.tags?.length ? project.tags.join(', ') : '—';
 };
 
 const openGallery = (project, idx = 0) => {
@@ -223,162 +281,145 @@ onUnmounted(() => {
 }
 
 .projects-ledger {
+  background: transparent;
+}
+
+.project-panel {
+  background: rgba(var(--v-theme-surface), 0.4) !important;
   border: 1px solid var(--line-soft);
-  border-radius: var(--radius-lg);
-  background: rgba(var(--v-theme-surface), 0.7);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &::before {
+    display: none;
+  }
+
+  &:hover {
+    border-color: rgba(var(--v-theme-primary), 0.5);
+  }
 }
 
-.panel-title {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
+.project-header {
+  padding: 1rem 0.5rem;
 }
 
-.panel-heading {
+.date-label {
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+}
+
+.header-main {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
-.panel-meta {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-.badge {
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  padding: 0.15rem 0.85rem;
-  font-size: 0.8rem;
-}
-
-.client-tag {
-  font-size: 0.8rem;
-  color: var(--text-subtle);
-}
-
-.status {
-  font-size: 0.85rem;
-  color: rgb(var(--v-theme-success));
-}
-
-.project-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.project-main {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.summary-card,
-.feature-card,
-.info-sheet {
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
-  padding: 1.1rem;
-  background: rgba(var(--v-theme-surface), 0.65);
-}
-
-.summary-card p {
-  color: var(--text-subtle);
-  margin: 0;
-}
-
-.feature-card ul {
-  margin: 0;
-  padding-left: 1.1rem;
-  color: var(--text-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.project-aside {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.info-sheet .label {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-  margin-bottom: 0.2rem;
-}
-
-.chip-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.chip-stack span {
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-  padding: 0.15rem 0.85rem;
-  font-size: 0.8rem;
-  color: var(--text-subtle);
-}
-
-.media-strip {
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.media-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.project-subtitle {
   font-size: 0.9rem;
   color: var(--text-subtle);
 }
 
-.thumbs-group :deep(.v-slide-group__content) {
+.category {
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-primary));
+}
+
+.separator {
+  opacity: 0.5;
+}
+
+.project-content {
+  padding: 1rem 0.5rem 2rem;
+}
+
+.block-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  margin-bottom: 1rem;
+}
+
+.block-text {
+  line-height: 1.7;
+  color: rgba(var(--v-theme-on-surface), 0.9);
+  white-space: pre-line;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.5;
+    color: rgba(var(--v-theme-on-surface), 0.85);
+
+    &::before {
+      content: '-';
+      position: absolute;
+      left: 0;
+      color: rgb(var(--v-theme-primary));
+    }
+  }
+}
+
+.meta-sidebar {
+  border-left: 1px solid var(--line-soft);
+  padding-left: 2rem;
+  height: 100%;
+}
+
+.meta-item {
+  margin-bottom: 2rem;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  margin-bottom: 0.75rem;
+}
+
+.gallery-strip :deep(.v-slide-group__content) {
   gap: 1rem;
 }
 
-.media-thumb {
-  width: 220px;
-  height: 140px;
-  border-radius: var(--radius-sm);
+.gallery-thumb {
+  width: 240px;
+  height: 150px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--line-soft);
   cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-}
+  transition: opacity 0.2s;
 
-.media-thumb:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-.project-links {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-top: 1.25rem;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .lightbox {
   width: 100%;
   height: 100%;
   padding: clamp(1.5rem, 4vw, 3rem);
-  background: rgba(7, 7, 12, 0.92);
-  color: #fff;
+  background: rgba(var(--v-theme-surface), 0.98);
+  color: rgb(var(--v-theme-on-surface));
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -390,43 +431,65 @@ onUnmounted(() => {
   align-items: center;
 }
 
-.lightbox-group {
+.lightbox-carousel {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
-.lightbox-group :deep(.v-slide-group__content) {
+.lightbox-track {
+  display: flex;
   gap: 2rem;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .lightbox-frame {
+  flex-shrink: 0;
   width: min(960px, 80vw);
   height: min(620px, 75vh);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(12, 12, 18, 0.85);
-  display: flex;
+  // border-radius: var(--radius-lg);
+  // border: 1px solid var(--line-soft);
+  background: rgb(var(--v-theme-surface));
+  display: none;
   align-items: center;
   justify-content: center;
-  opacity: 0.15;
-  transform: scale(0.9);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
 }
 
 .lightbox-frame--active {
+  display: flex;
   opacity: 1;
   transform: scale(1);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .lightbox-image {
   width: 100%;
   height: 100%;
+}
+
+.lightbox-image :deep(img) {
   object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .lightbox-controls {
@@ -435,16 +498,25 @@ onUnmounted(() => {
   justify-content: center;
   gap: 1rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(var(--v-theme-on-surface), 0.85);
 }
 
-@media (max-width: 900px) {
-  .project-layout {
-    grid-template-columns: 1fr;
+@media (max-width: 960px) {
+  .meta-sidebar {
+    border-left: none;
+    padding-left: 0;
+    margin-top: 2rem;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 2rem;
   }
 
-  .media-thumb {
-    width: 100%;
+  .project-header {
+    padding: 1rem 0.5rem;
+  }
+
+  .gallery-thumb {
+    width: 200px;
+    height: 120px;
   }
 
   .lightbox-frame {
@@ -454,10 +526,6 @@ onUnmounted(() => {
 }
 
 :deep(.v-expansion-panel-title) {
-  border-bottom: 1px solid var(--line-soft);
-}
-
-:deep(.v-expansion-panel:last-of-type .v-expansion-panel-title) {
-  border-bottom: none;
+  border-bottom: 1px solid transparent;
 }
 </style>

@@ -25,6 +25,7 @@
                 variant="flat"
                 rounded="pill"
                 size="large"
+                class="text-none"
                 @click="scrollToProjects"
               >
                 {{ t('hero.ctas.primary') }}
@@ -33,6 +34,7 @@
                 variant="outlined"
                 rounded="pill"
                 size="large"
+                class="text-none"
                 href="mailto:davidderas50@gmail.com"
               >
                 {{ t('hero.ctas.secondary') }}
@@ -87,6 +89,7 @@
 import { codeToHtml } from 'shiki';
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import { gsap, gsapDefaults } from '@/plugins/gsap';
 import { useAppStore } from '@/store/app';
@@ -97,6 +100,7 @@ const ledgerBlock = ref(null);
 const ctaGroup = ref(null);
 const roleTicker = ref(null);
 const appStore = useAppStore();
+const router = useRouter();
 const { t, tm, locale } = useI18n();
 let ctx;
 
@@ -166,10 +170,8 @@ const typeWriter = () => {
 };
 
 const scrollToProjects = () => {
-  const projectsSection = document.querySelector('.projects-section');
-  if (projectsSection) {
-    projectsSection.scrollIntoView({ behavior: 'smooth' });
-  }
+  const projectsPath = appStore.language === 'es' ? '/es/projects' : '/projects';
+  router.push(projectsPath);
 };
 
 onMounted(async () => {

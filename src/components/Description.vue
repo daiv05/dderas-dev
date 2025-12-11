@@ -60,8 +60,10 @@ import {
   isElementInViewport,
   animateInOnEnter,
 } from '@/plugins/gsap';
+import { useAppStore } from '@/store/app';
 
 const router = useRouter();
+const appStore = useAppStore();
 const sectionRef = ref(null);
 const gridRef = ref(null);
 const titleEl = ref(null);
@@ -87,7 +89,8 @@ onBeforeUpdate(() => {
 });
 
 const navigateTo = (path) => {
-  router.push(path);
+  const pathWithLocale = appStore.language === 'es' ? `/es${path}` : path;
+  router.push(pathWithLocale);
 };
 
 const setupAnimations = () => {

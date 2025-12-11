@@ -9,7 +9,7 @@
       width="280"
     >
       <div class="nav-root">
-        <router-link to="/" class="brand-mark">
+        <router-link :to="withLocalePath('/')" class="brand-mark">
           <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
           <span class="brand-tag">
             {{
@@ -132,7 +132,7 @@
           <v-btn icon variant="text" title="Open menu" @click="drawer = true">
             <v-icon :icon="mdiMenu"></v-icon>
           </v-btn>
-          <p class="mobile-title">
+          <p class="mobile-title" @click="goTo({ to: withLocalePath('/'), value: 'home' })">
             {{ t('navigation.brand.shortName') }}
           </p>
           <div class="mobile-controls">

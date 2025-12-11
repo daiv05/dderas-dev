@@ -33,15 +33,6 @@ const routes = [
         meta: { seoKey: 'ues' },
       },
       {
-        path: 'tutorials',
-        name: 'Tutorials',
-        redirect: (to) => {
-          const locale = to.params.locale;
-          return locale ? `/es/blog` : `/blog`;
-        },
-        meta: { seoKey: 'tutorials' },
-      },
-      {
         path: 'tools',
         name: 'Tools',
         component: () => import('@/views/Herramientas.vue'),
