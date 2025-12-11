@@ -26,7 +26,7 @@
                 rounded="pill"
                 size="large"
                 class="text-none"
-                @click="scrollToProjects"
+                @click="goToProjects"
               >
                 {{ t('hero.ctas.primary') }}
               </v-btn>
@@ -169,7 +169,7 @@ const typeWriter = () => {
   setTimeout(typeWriter, typeSpeed);
 };
 
-const scrollToProjects = () => {
+const goToProjects = () => {
   const projectsPath = appStore.language === 'es' ? '/es/projects' : '/projects';
   router.push(projectsPath);
 };
