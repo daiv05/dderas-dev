@@ -6,7 +6,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -14,7 +14,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -22,7 +22,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/about"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/about"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -30,7 +30,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/about"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/about"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -38,7 +38,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/projects"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/projects"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/projects"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -46,7 +46,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/projects"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/projects"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/projects"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -54,7 +54,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -62,71 +62,39 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/blog"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/blog"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/blog"/>
-    <lastmod>2025-12-04</lastmod>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://deras.dev/tutos</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tutos"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tutos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tutos"/>
-    <lastmod>2025-12-04</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deras.dev/es/tutos</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tutos"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tutos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tutos"/>
-    <lastmod>2025-12-04</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://deras.dev/herramientas</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/herramientas"/>
-    <lastmod>2025-12-04</lastmod>
+    <loc>https://deras.dev/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/resources"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/resources"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/resources"/>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://deras.dev/es/herramientas</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/herramientas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/herramientas"/>
-    <lastmod>2025-12-04</lastmod>
+    <loc>https://deras.dev/es/resources</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/resources"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/resources"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/resources"/>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://deras.dev/me</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/me"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/me"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/me"/>
-    <lastmod>2025-12-04</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://deras.dev/es/me</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/me"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/me"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/me"/>
-    <lastmod>2025-12-04</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://deras.dev/ues</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/ues"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/ues"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/ues"/>
-    <lastmod>2025-12-04</lastmod>
+    <loc>https://deras.dev/tools</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tools"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tools"/>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://deras.dev/es/ues</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/ues"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/ues"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/ues"/>
-    <lastmod>2025-12-04</lastmod>
+    <loc>https://deras.dev/es/tools</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://deras.dev/tools"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://deras.dev/es/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://deras.dev/tools"/>
+    <lastmod>2025-12-11</lastmod>
     <priority>0.5</priority>
   </url>
   <url>

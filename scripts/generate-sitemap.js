@@ -35,10 +35,8 @@ const STATIC_ROUTES = [
   { path: '/about', priority: 0.8 },
   { path: '/projects', priority: 0.8 },
   { path: '/blog', priority: 0.9 },
-  { path: '/tutos', priority: 0.7 },
-  { path: '/herramientas', priority: 0.6 },
-  { path: '/me', priority: 0.6 },
-  { path: '/ues', priority: 0.5 },
+  { path: '/resources', priority: 0.6 },
+  { path: '/tools', priority: 0.5 },
 ];
 
 function localePath(locale, basePath) {
@@ -140,7 +138,9 @@ function discoverBlogPairs() {
 
     const lastmods = [en?.lastmod, es?.lastmod].filter(Boolean).map(normalizeLastmod);
     const lastmod = lastmods.length
-      ? lastmods.sort().reverse()[0]
+      ? lastmods
+          .sort((a, b) => a.localeCompare(b, 'en', { numeric: true, sensitivity: 'base' }))
+          .reverse()[0]
       : new Date().toISOString().split('T')[0];
     pairs.push({
       enPath: localePath('en', enPath),
