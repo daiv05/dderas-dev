@@ -139,9 +139,7 @@ function discoverBlogPairs() {
       .map(normalizeLastmod)
       .sort((a, b) => a.localeCompare(b, 'en', { numeric: true, sensitivity: 'base' }));
 
-    const lastmod = lastmods.length
-      ? lastmods[lastmods.length - 1]
-      : new Date().toISOString().split('T')[0];
+    const lastmod = lastmods.length ? lastmods.at(-1) : new Date().toISOString().split('T')[0];
 
     return {
       enPath: localePath('en', enPath),
