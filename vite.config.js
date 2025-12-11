@@ -48,7 +48,7 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['images/*.png', '/favicon.ico'],
       registerType: 'autoUpdate',
-      filename: 'service-worker.js',
+      filename: 'service-wk.js',
       manifest: {
         name: 'deras.dev',
         short_name: 'deras.dev',
