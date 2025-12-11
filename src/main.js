@@ -1,4 +1,5 @@
 if ('serviceWorker' in navigator) {
+  console.warn('Checking for old service workers to unregister...');
   navigator.serviceWorker.getRegistrations().then((regs) => {
     regs.forEach((reg) => {
       if (!reg.active?.scriptURL.includes('service-wk.js')) {
