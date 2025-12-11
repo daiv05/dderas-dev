@@ -156,7 +156,7 @@ export default defineConfig({
       },
       workbox: {
         navigateFallback: null,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,ico,png,svg}'],
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
@@ -172,9 +172,9 @@ export default defineConfig({
       },
       devOptions: {
         sourcemap: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,ico,png,svg}'],
+        enabled: true,
       },
-      // devOptions: { enabled: true },
     }),
   ],
   define: { 'process.env': {} },
