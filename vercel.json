@@ -11,8 +11,43 @@
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     },
     {
+      "source": "/service-worker.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
       "source": "/workbox-:hash.js",
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/service-wk.js",
+      "destination": "/service-wk.js",
+      "statusCode": 200
+    },
+    {
+      "source": "/service-worker.js",
+      "destination": "/service-worker.js",
+      "statusCode": 200
+    },
+    {
+      "source": "/sw.js",
+      "destination": "/sw.js",
+      "statusCode": 200
+    },
+    {
+      "source": "/workbox-:hash.js",
+      "destination": "/workbox-:hash.js",
+      "statusCode": 200
+    },
+    {
+      "source": "/(.*)",
+      "destination": "https://deras.dev/$1",
+      "statusCode": 308
     }
   ]
 }
