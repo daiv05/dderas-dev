@@ -36,7 +36,7 @@
         </v-btn>
 
         <v-btn
-          v-if="basePath(route.path).startsWith('/blog')"
+          v-if="basePath(route.path).match(/^\/blog\/.+/)"
           class="back-button text-none"
           variant="outlined"
           rounded="pill"
