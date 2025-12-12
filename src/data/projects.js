@@ -1,7 +1,7 @@
 const projectList = [
   {
     id: 'reportfia',
-    date: '2024',
+    date: '2025',
     tags: [
       'Laravel',
       'TailwindCSS',
@@ -31,7 +31,7 @@ const projectList = [
         client: 'Facultad de Ingeniería y Arquitectura - UES',
         category: 'Gestión de incidencias / Mantenimiento',
         technologies:
-          'Laravel 10.x, TailwindCSS, Flowbite, Chart.js, MySQL, PWA, Spatie Permission, Audits, Reports, Excel',
+          'Laravel 10.x, TailwindCSS, Flowbite, Chart.js, MySQL, PWA, Spatie Permission, Audits, Reports, MS Excel',
         features: [
           'Creación y seguimiento completo del ciclo de vida de reportes',
           'Gestión de personal, puestos y asignaciones',
@@ -139,20 +139,21 @@ const projectList = [
       es: {
         name: 'Sistema de Gestión Carmencita',
         description:
-          'Plataforma integral para inventario, facturación, RRHH y delivery pensada para tiendas.',
+          'Plataforma integral para inventario, facturación, RRHH y rutas de entrega (delivery).',
         longDescription:
-          'ERP desarrollado a medida con módulos conectados: inventario, facturación, gestión de planillas y control de pedidos a domicilio con seguimiento GPS.',
+          'ERP desarrollado a medida con módulos conectados: inventario, facturación, gestión de planillas y rutas de entrega. El sistema incluye un panel administrativo con informes sobre ventas e inventari. \n\n El proyecto nació de la necesidad de una tienda local de contar con un sistema digital que integrara todas sus operaciones diarias en una sola plataforma, ya que anteriormente manejaban inventarios y facturación de forma manual, nos comentaba el cliente que incluso no todos los vendedores conocían los precios de los productos, y siempre tenía que estar él o la subgerente presentes, lo que generaba errores y retrasos. \n\n Se optó por usar Vue.js para el frontend debido a su capacidad para crear interfaces de usuario reactivas y dinámicas, mientras que Laravel se eligió para el backend por su robustez y facilidad para construir APIs RESTful seguras con Sanctum. MySQL fue la base de datos seleccionada por su rendimiento y escalabilidad, y TailwindCSS permitió un diseño rápido y responsivo. \n\n El desarrollo comenzó con un análisis detallado de los procesos comerciales del cliente, se llevaron acabo varias reuniones grabadas que sirvieron para documentar los requerimientos, seguido por la creación de prototipos de la interfaz en Figma, cada prototipo era presentado y validado con el cliente. \n\n La implementación se realizó en fases, comenzando con el módulo de inventario, seguido por facturación, RRHH y finalmente el sistema de rutas de entrega (ellos necesitaban poder registrar pedidos y luego armar rutas por fechas según mejor les convenía). \n\n Durante el desarrollo, se realizaron pruebas continuas con usuarios clave del negocio para asegurar que el sistema cumpliera con sus necesidades y se ajustara según su feedback. Finalmente, se desplegó de forma local en la tienda y se entregó documentación y videotutoriales al personal para su uso efectivo.',
         client: 'Tienda y Depósito "Carmencita"',
         category: 'Software empresarial',
         technologies: 'Vue.js, TailwindCSS, Laravel, MySQL',
         features: [
-          'Inventario con alertas de stock bajo',
+          'Inventario y manejo de stock',
           'Punto de venta con impresión de facturas',
           'Planillas automáticas y gestión de RRHH',
-          'Pedidos delivery con tracking en tiempo real',
+          'Gestión de permisos e incapacidades',
+          'Marcado de asistencia',
+          'Pedidos delivery y armado de rutas de entrega',
           'Panel administrativo con reportes',
-          'Roles y permisos granulares',
-          'Notificaciones en tiempo real',
+          'Roles y permisos básicos (lo que necesitaban)',
         ],
       },
       en: {
@@ -160,18 +161,19 @@ const projectList = [
         description:
           'End-to-end management platform for inventory, invoicing, HR and delivery built for local stores.',
         longDescription:
-          'Custom ERP with connected modules: inventory, invoicing, payroll automation and delivery tracking with GPS plus an analytics control panel.',
+          "Custom-developed ERP with interconnected modules: inventory, invoicing, payroll management, and delivery routes. The system includes an admin dashboard with sales and inventory reports. \n\n The project originated from a local store's need for a digital system that integrated all their daily operations into a single platform, as they previously managed inventory and invoicing manually. The client mentioned that not all salespeople knew the product prices, and he or the assistant manager always had to be present, leading to errors and delays. \n\n Vue.js was chosen for the frontend due to its ability to create reactive and dynamic user interfaces, while Laravel was selected for the backend for its robustness and ease of building secure RESTful APIs with Sanctum. MySQL was the chosen database for its performance and scalability, and TailwindCSS enabled rapid and responsive design. \n\n Development began with a detailed analysis of the client's business processes, with several recorded meetings that helped document the requirements, followed by creating interface prototypes in Figma, each presented and validated with the client. \n\n Implementation was carried out in phases, starting with the inventory module, followed by invoicing, HR, and finally the delivery route system (they needed to be able to register orders and then create routes by dates as it suited them best). \n\n During development, continuous testing was conducted with key business users to ensure the system met their needs and was adjusted based on their feedback. Finally, it was deployed locally in the store, and documentation and video tutorials were provided to the staff for effective use.",
         client: '"Carmencita" store & depot',
         category: 'Enterprise software',
         technologies: 'Vue.js, TailwindCSS, Laravel, MySQL, Redis',
         features: [
-          'Inventory with low-stock alerts',
+          'Inventory and stock management',
           'Point of sale with invoice printing',
-          'Automatic payroll and HR records',
-          'Delivery orders with real-time GPS tracking',
+          'Automated payroll and HR management',
+          'Leave and permission management',
+          'Attendance marking',
+          'Delivery order management and route planning',
           'Admin dashboard with reporting',
-          'Granular roles and permissions',
-          'Real-time notifications',
+          'Basic roles and permissions (the essentials)',
         ],
       },
     },
@@ -207,8 +209,6 @@ const projectList = [
           'Cálculo automático de ratios de liquidez y rentabilidad',
           'Comparación contra promedios de la industria',
           'Visualización de tendencias históricas',
-          'Reportes ejecutivos en PDF',
-          'Dashboard de KPIs financieros',
         ],
       },
       en: {
@@ -225,8 +225,6 @@ const projectList = [
           'Automatic liquidity and profitability ratios',
           'Benchmarking against industry averages',
           'Historical trend visualization',
-          'Executive PDF reports',
-          'Financial KPI dashboard',
         ],
       },
     },
@@ -234,7 +232,7 @@ const projectList = [
   {
     id: 'cheroomsv',
     date: '2022',
-    tags: ['Vue.js', 'Django', 'PostgreSQL', 'WebSockets', 'REST Framework'],
+    tags: ['Vue.js', 'Django', 'PostgreSQL'],
     online: false,
     repo: true,
     images: {
@@ -248,40 +246,32 @@ const projectList = [
     translations: {
       es: {
         name: 'CheRooms SV',
-        description:
-          'Plataforma social para conectar roomies en San Salvador con perfiles verificados y chat en tiempo real.',
+        description: 'Plataforma social para conectar roomies en San Salvador.',
         longDescription:
-          'Red con algoritmo de matching por presupuesto, ubicación y estilo de vida; integra mensajería WebSocket y reseñas para mejorar la confianza.',
+          'Prototipo de plataforma social para la publicación y búsqueda de roommies en San Salvador, orientado a conocer personas y lugares basado en presupuesto, ubicación y estilo de vida.',
         client: 'Proyecto universitario',
         category: 'Plataforma social',
-        technologies: 'Vue.js, Django, PostgreSQL, Django Channels, WebSockets',
+        technologies: 'Vue.js, Django, PostgreSQL',
         features: [
-          'Registro y autenticación con verificación de email',
+          'Registro y autenticación',
           'Perfiles con preferencias y requisitos',
-          'Matching por compatibilidad',
-          'Chat en tiempo real',
           'Búsqueda avanzada con filtros',
-          'Gestión de anuncios de habitaciones',
-          'Sistema de reseñas',
+          'Gestión de anuncios de cuartos',
         ],
       },
       en: {
         name: 'CheRooms SV',
-        description:
-          'Social platform that connects roommates in San Salvador with verified profiles and live chat.',
+        description: 'Social platform that connects roommates in San Salvador.',
         longDescription:
-          'Network with a matching algorithm based on budget, location and lifestyle plus WebSocket messaging and reviews to boost trust.',
+          'Network with a matching algorithm based on budget, location and lifestyle.',
         client: 'University project',
         category: 'Social platform',
-        technologies: 'Vue.js, Django, PostgreSQL, Django Channels, WebSockets',
+        technologies: 'Vue.js, Django, PostgreSQL',
         features: [
-          'Onboarding with email verification',
-          'Detailed profiles with requirements',
-          'Compatibility-based matching',
-          'Real-time chat',
+          'User registration and authentication',
+          'Profiles with preferences and requirements',
           'Advanced search with filters',
           'Room listing management',
-          'Review and rating system',
         ],
       },
     },
