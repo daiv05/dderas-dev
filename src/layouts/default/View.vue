@@ -27,7 +27,7 @@
           class="back-button text-none"
           variant="outlined"
           rounded="pill"
-          @click="goTo({ to: withLocalePath('/'), value: 'back' })"
+          @click="goTo({ to: '/', value: 'back' })"
         >
           <template #prepend>
             <v-icon :icon="mdiArrowLeft"></v-icon>
@@ -40,7 +40,7 @@
           class="back-button text-none"
           variant="outlined"
           rounded="pill"
-          @click="goTo({ to: withLocalePath('/blog'), value: 'back' })"
+          @click="goTo({ to: '/blog', value: 'back' })"
         >
           <template #prepend>
             <v-icon :icon="mdiViewList"></v-icon>
