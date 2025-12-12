@@ -53,7 +53,7 @@
   --md-table-border: var(--line-soft);
 }
 
-html {
+body {
   scroll-behavior: smooth;
   color-scheme: light dark;
   forced-color-adjust: none;

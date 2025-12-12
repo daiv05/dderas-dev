@@ -14,8 +14,8 @@ export default {
     },
     languageToggle: {
       label: 'Idioma',
-      en: 'Ing',
-      es: 'Esp',
+      en: 'EN',
+      es: 'ES',
     },
     items: {
       home: 'Inicio',

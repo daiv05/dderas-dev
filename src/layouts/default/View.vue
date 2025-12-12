@@ -72,40 +72,10 @@
 
         <div class="nav-bottom">
           <div class="nav-controls">
-            <v-btn class="theme-toggle" variant="outlined" rounded="pill" @click="toggleTheme">
-              <template #prepend>
-                <v-icon
-                  :icon="appStore.theme === 'dark' ? mdiWeatherSunny : mdiWeatherNight"
-                ></v-icon>
-              </template>
-              {{
-                t(
-                  appStore.theme === 'dark'
-                    ? 'navigation.themeToggle.toLight'
-                    : 'navigation.themeToggle.toDark'
-                )
-              }}
-            </v-btn>
-            <v-btn-toggle
-              v-model="appStore.language"
-              class="language-toggle"
-              density="comfortable"
-              rounded="pill"
-              mandatory
-            >
-              <v-btn
-                v-for="option in languageOptions"
-                :key="option.value"
-                :value="option.value"
-                variant="text"
-                size="small"
-                width="50%"
-              >
-                {{ option.label }}
-              </v-btn>
-            </v-btn-toggle>
+            <ThemeToggle />
+            <LocaleToggle />
           </div>
-
+          <v-divider></v-divider>
           <div class="nav-links">
             <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
               <v-icon size="18" :icon="mdiGithub"></v-icon>
@@ -136,47 +106,8 @@
             {{ t('navigation.brand.shortName') }}
           </p>
           <div class="mobile-controls">
-            <v-btn
-              variant="text"
-              class="mobile-theme"
-              rounded="pill"
-              size="small"
-              aria-label="Toggle theme"
-              @click="toggleTheme"
-            >
-              <template #prepend>
-                <v-icon
-                  size="18"
-                  :icon="appStore.theme === 'dark' ? mdiWeatherSunny : mdiWeatherNight"
-                ></v-icon>
-              </template>
-              {{
-                !isDesktop
-                  ? ''
-                  : t(
-                      appStore.theme === 'dark'
-                        ? 'navigation.themeToggle.lightShort'
-                        : 'navigation.themeToggle.darkShort'
-                    )
-              }}
-            </v-btn>
-            <!-- <v-btn-toggle
-              v-model="appStore.language"
-              class="mobile-language"
-              density="comfortable"
-              rounded="pill"
-              mandatory
-            >
-              <v-btn
-                v-for="option in languageOptions"
-                :key="`mobile-${option.value}`"
-                :value="option.value"
-                variant="text"
-                size="x-small"
-              >
-                {{ option.label }}
-              </v-btn>
-            </v-btn-toggle> -->
+            <ThemeToggle />
+            <LocaleToggle />
           </div>
         </div>
 
@@ -228,8 +159,6 @@ import {
   mdiGithub,
   mdiLinkedin,
   mdiMenu,
-  mdiWeatherSunny,
-  mdiWeatherNight,
   mdiArrowLeft,
   mdiViewList,
   mdiFileDocumentOutline,
@@ -240,6 +169,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { useTheme, useDisplay } from 'vuetify';
 
 import Footer from '@/components/Footer.vue';
+import LocaleToggle from '@/components/LocaleToggle.vue';
+import ThemeToggle from '@/components/ThemeToggle.vue';
 import { useSeo } from '@/composables/useSeo';
 import { setupGSAP, clearGSAPProps, refreshScrollTriggers } from '@/plugins/gsap';
 import sidebarItems from '@/router/sidebar-items.js';
@@ -312,16 +243,6 @@ const getInitialMobileSection = () => {
 };
 
 const mobileSection = ref(getInitialMobileSection());
-const languageOptions = computed(() => [
-  {
-    value: 'en',
-    label: t('navigation.languageToggle.en'),
-  },
-  {
-    value: 'es',
-    label: t('navigation.languageToggle.es'),
-  },
-]);
 
 const isDesktop = computed(() => display.mdAndUp.value);
 
@@ -357,6 +278,8 @@ watch(
   () => appStore.theme,
   (val) => {
     theme.change(val);
+    const meta = document.querySelector('#themeColor');
+    if (meta) meta.setAttribute('content', theme.current.value.colors.surface);
   },
   { immediate: true }
 );
@@ -402,10 +325,6 @@ watch(
     }
   }
 );
-
-const toggleTheme = () => {
-  appStore.theme = appStore.theme === 'dark' ? 'light' : 'dark';
-};
 
 const goTo = (item) => {
   router.push(withLocalePath(item.to));
@@ -553,25 +472,10 @@ onUnmounted(() => {
 
 .nav-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-}
-
-.theme-toggle {
-  border-color: var(--line-soft) !important;
-
-  :deep(.v-btn__prepend) {
-    margin-inline-end: 0.5rem;
-  }
-}
-
-.language-toggle {
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
-}
-
-.language-toggle :deep(.v-btn) {
-  min-width: 52px;
 }
 
 .nav-links {
@@ -622,23 +526,10 @@ onUnmounted(() => {
   font-weight: 600;
 }
 
-.mobile-theme {
-  border: 1px solid var(--line-soft);
-
-  :deep(.v-btn__prepend) {
-    margin-inline-end: 0.35rem;
-  }
-}
-
 .mobile-controls {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-}
-
-.mobile-language {
-  border: 1px solid var(--line-soft);
-  border-radius: 999px;
 }
 
 .mobile-nav {
