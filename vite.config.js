@@ -173,7 +173,7 @@ export default defineConfig({
       devOptions: {
         sourcemap: true,
         globPatterns: ['**/*.{js,css,ico,png,svg}'],
-        enabled: true,
+        // enabled: true,
       },
     }),
   ],

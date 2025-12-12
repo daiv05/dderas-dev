@@ -3,7 +3,7 @@ export default {
     brand: {
       name: 'DDeras',
       shortName: 'DDeras',
-      tagline: 'Fullstack Developer',
+      tagline: 'Full Stack Developer',
       blogTagline: 'Blog & articles',
     },
     themeToggle: {
@@ -38,18 +38,23 @@ export default {
     siteName: 'DDeras',
     twitterHandle: 'daiv_09',
     defaults: {
-      title: 'Full Stack Developer shipping Vue, Laravel and TypeScript products',
+      title: 'Full Stack Developer oriented to Vue, Laravel and TypeScript',
       description:
-        'Portfolio, tutorials and projects from David Deras. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
+        'Portfolio, tutorials and projects. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
       keywords: [
         'David Deras',
         'Full Stack Developer',
+        'Frontend Developer',
+        'Backend Developer',
         'Vue 3',
+        'Vue 2',
+        'Vue',
         'Laravel 11',
         'Vuetify',
         'PrimeVue',
         'TypeScript',
         'El Salvador',
+        'DDeras',
       ],
       author: 'David Deras',
       ogImage: 'https://deras.dev/punpun_OG.jpg',
@@ -57,22 +62,21 @@ export default {
     },
     pages: {
       home: {
-        title: 'Product with Vue and Laravel',
+        title: 'Developing with Vue and Laravel',
         description:
-          'Explore the agenda, featured deliveries and focus areas of David Deras, a full stack developer building platforms and internal tooling.',
-        keywords: ['Product engineering', 'Vue specialist', 'Laravel expert'],
+          'Explore featured deliverables and focus areas, developing with Vue 3, Laravel, and TypeScript.',
+        keywords: ['Software engineering', 'Vue specialist', 'Laravel expert'],
       },
       me: {
         title: 'Profile and experience',
-        description:
-          'Skills, experience timeline and collaboration principles shaped by accessibility, SEO and cloud deployments.',
-        keywords: ['About David', 'Professional profile', 'Experience timeline'],
+        description: 'Skills, learning, and professional timeline.',
+        keywords: ['David Deras', 'Professional profile', 'Experience', 'DDeras', 'daiv05'],
       },
       projects: {
-        title: 'Projects and case studies',
+        title: 'Projects',
         description:
-          'Detailed dossiers covering GovTech portals, retail ERPs and analytics dashboards designed with Vue 3, Laravel 11 and Vuetify.',
-        keywords: ['Case studies', 'GovTech projects', 'Retail ERP'],
+          'Applications I have worked on, with some technical details and product decisions.',
+        keywords: ['Projects', 'Case studies', 'Portfolio', 'DDeras', 'daiv05', 'Personal project'],
       },
       blog: {
         title: 'Blog & technical articles',
