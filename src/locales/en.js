@@ -3,7 +3,7 @@ export default {
     brand: {
       name: 'DDeras',
       shortName: 'DDeras',
-      tagline: 'Fullstack developer',
+      tagline: 'Fullstack Developer',
       blogTagline: 'Blog & articles',
     },
     themeToggle: {
@@ -38,7 +38,7 @@ export default {
     siteName: 'DDeras',
     twitterHandle: 'daiv_09',
     defaults: {
-      title: 'Full Stack developer shipping Vue, Laravel and TypeScript products',
+      title: 'Full Stack Developer shipping Vue, Laravel and TypeScript products',
       description:
         'Portfolio, tutorials and projects from David Deras. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
       keywords: [
