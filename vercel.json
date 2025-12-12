@@ -1,10 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/service-wk.js",
@@ -23,6 +17,7 @@
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ],
+
   "redirects": [
     {
       "source": "/service-wk.js",
@@ -46,8 +41,21 @@
     },
     {
       "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "www.deras.dev" }
+      ],
       "destination": "https://deras.dev/$1",
       "statusCode": 308
+    }
+  ],
+
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "deras.dev" }
+      ],
+      "destination": "/index.html"
     }
   ]
 }
