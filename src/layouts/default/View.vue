@@ -102,7 +102,7 @@
           <v-btn icon variant="text" title="Open menu" @click="drawer = true">
             <v-icon :icon="mdiMenu"></v-icon>
           </v-btn>
-          <p class="mobile-title" @click="goTo({ to: withLocalePath('/'), value: 'home' })">
+          <p class="mobile-title" @click="goTo({ to: '/', value: 'home' })">
             {{ t('navigation.brand.shortName') }}
           </p>
           <div class="mobile-controls">
