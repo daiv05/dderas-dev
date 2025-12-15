@@ -208,6 +208,14 @@ ol {
   border: 1px solid var(--line-soft);
 }
 
+.markdown-body img + em {
+  display: block;
+  text-align: center;
+  font-size: 0. ninerem;
+  color: var(--md-muted);
+  margin-top: 0.5rem;
+}
+
 .markdown-body table {
   width: 100%;
   border-collapse: separate;
@@ -241,30 +249,75 @@ ol {
   margin: 2rem 0;
 }
 
-.markdown-body .header-anchor, .md-anchor {
-  opacity: 0.7;
-  color: var(--md-muted);
+/* Estilos para headers con anchors */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
 }
-.md-anchor {
-  margin-right: 0.35rem;
+
+/* Anchor al final del título */
+.markdown-body .md-anchor {
+  margin-left: 0.5rem;
   color: var(--text-subtle);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-weight: 400;
+  }
+
+  /* Mostrar anchor al hacer hover sobre el heading */
+  .markdown-body h1:hover .md-anchor,
+  .markdown-body h2:hover .md-anchor,
+  .markdown-body h3:hover .md-anchor,
+  .markdown-body h4:hover .md-anchor,
+  .markdown-body h5:hover .md-anchor,
+  .markdown-body h6:hover .md-anchor {
+    opacity: 1;
+  }
+
+  /* Hacer el anchor clickable sin afectar el texto */
+  .markdown-body .md-anchor:hover {
+    color: var(--link);
   text-decoration: none;
 }
 
 .md-toc {
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-sm);
-  padding: 1rem;
+  padding: 1.5rem;
   background: var(--bg-soft);
-  margin: 1rem 0 2rem;
+  margin: 2rem 0;
 }
 
-.md-toc ul {
-  padding-left: 1rem;
+.md-toc > ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0;
+}
+
+.md-toc ul ul {
+  list-style: none !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem;
+}
+
+.md-toc li {
+  margin: 0.5rem 0;
+  line-height: 1.6;
 }
 
 .md-toc a {
-  color: inherit;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.md-toc a:hover {
+  color: var(--link);
+  text-decoration: underline;
 }
 
 .markdown-body pre,
