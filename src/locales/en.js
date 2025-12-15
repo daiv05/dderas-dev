@@ -4,7 +4,7 @@ export default {
       name: 'DDeras',
       shortName: 'DDeras',
       tagline: 'Full Stack Developer',
-      blogTagline: 'Blog & articles',
+      blogTagline: 'Tech blog',
     },
     themeToggle: {
       toLight: 'Light mode',
@@ -26,21 +26,21 @@ export default {
       tools: 'Tools',
     },
     backToMain: 'Home',
-    viewBlogEntries: 'View blog entries',
+    viewBlogEntries: 'View posts',
     search: 'Search',
     links: {
       github: 'GitHub',
       linkedin: 'LinkedIn',
-      email: 'Mail',
+      email: 'Email',
     },
   },
   seo: {
     siteName: 'DDeras',
     twitterHandle: 'daiv_09',
     defaults: {
-      title: 'Full Stack Developer oriented to Vue, Laravel and TypeScript',
+      title: 'Full Stack Developer with Vue, Laravel and TypeScript',
       description:
-        'Portfolio, tutorials and projects. Vue 3, Laravel and cloud deployments focused on accessibility and UX.',
+        'Personal portfolio, real projects and technical articles about Vue, Laravel and cloud deployments.',
       keywords: [
         'David Deras',
         'Full Stack Developer',
@@ -63,37 +63,33 @@ export default {
     pages: {
       home: {
         title: 'Developing with Vue and Laravel',
-        description:
-          'Explore featured deliverables and focus areas, developing with Vue 3, Laravel, and TypeScript.',
-        keywords: ['Software engineering', 'Vue specialist', 'Laravel expert'],
+        description: 'Projects, experiments and learnings using Vue 3, Laravel and TypeScript.',
+        keywords: ['Web development', 'Vue.js', 'Laravel'],
       },
       me: {
-        title: 'Profile and experience',
-        description: 'Skills, learning, and professional timeline.',
+        title: 'A bit about me',
+        description: 'My experience, learning, and what I have worked on.',
         keywords: ['David Deras', 'Professional profile', 'Experience', 'DDeras', 'daiv05'],
       },
       projects: {
         title: 'Projects',
-        description:
-          'Applications I have worked on, with some technical details and product decisions.',
-        keywords: ['Projects', 'Case studies', 'Portfolio', 'DDeras', 'daiv05', 'Personal project'],
+        description: 'Real applications I have worked on and how I built them.',
+        keywords: ['Projects', 'Case studies', 'Portfolio'],
       },
       blog: {
         title: 'Blog & technical articles',
-        description:
-          'Posts about full stack development, tutorials and practical cases with Vue, Laravel and cloud deployments.',
-        keywords: ['Technical blog', 'Vue tutorials', 'Laravel guides', 'Web development'],
+        description: 'Notes, guides and solutions about web development that I use daily.',
+        keywords: ['Technical blog', 'Vue', 'Laravel', 'Web development'],
       },
       ues: {
-        title: 'UES academic resources',
-        description:
-          'Collaborative repository for Computer Systems Engineering students: syllabuses, labs, exams and administrative formats.',
-        keywords: ['UES resources', 'Academic guides', 'Labs'],
+        title: 'UES resources',
+        description: 'Academic material organized for Computer Systems Engineering students.',
+        keywords: ['Resources', 'UES', 'Engineering', 'Computer Systems Engineering'],
       },
       tools: {
         title: 'Tools and experiments',
-        description: 'Just experiments',
-        keywords: ['Pixedai', 'Pixel art tool', 'Developer utilities'],
+        description: 'Small projects and things I am trying out.',
+        keywords: ['Tools', 'Experiments', 'Dev tools'],
       },
     },
   },
@@ -134,35 +130,35 @@ export default {
   hero: {
     eyebrow: 'Hi, I am',
     title: 'David Deras',
-    highlight: 'Full Stack Developer focused on Vue, Laravel and TypeScript',
+    highlight: 'Full Stack Developer (Vue · Laravel · TypeScript)',
     roleLabel: 'Current role',
-    lead: 'More than two years shipping institutional systems and public platforms with Vue 3, Laravel and cloud deployments. I blend full stack architecture, research and UX to deliver accessible software that scales.',
+    lead: 'I have over two years of experience building web applications for institutions and public projects. I enjoy working with Vue 3 and Laravel, focusing on UX and thorough documentation to ensure smooth scalability.',
     ctas: {
       primary: 'View projects',
-      secondary: 'Direct contact',
+      secondary: 'Send me a message',
     },
-    stackTitle: 'Operating stack',
+    stackTitle: 'Tech stack I use',
     techStack: [
-      { name: 'Frontend', detail: 'Vue 3 + TS · Vite · Pinia' },
-      { name: 'Backend', detail: 'Laravel 11 · PHP 8 · Node APIs' },
-      { name: 'Infra', detail: 'Vercel · Railway · GCP · Azure' },
+      { name: 'Frontend', detail: 'Vue 3 · TypeScript · Vite · Pinia' },
+      { name: 'Backend', detail: 'Laravel · PHP 8 · REST APIs' },
+      { name: 'Infra', detail: 'Vercel · Railway · GCP · Cloudflare' },
       { name: 'UX Ops', detail: 'Vuetify · PrimeVue · Vitest' },
-      { name: 'UI', detail: 'Figma' },
+      { name: 'UI', detail: 'Vuetify · PrimeVue · Figma' },
     ],
-    agendaTitle: 'Immediate agenda',
+    agendaTitle: 'What I am doing now',
     agenda: [
       { title: 'FIA-UES incident management system', status: 'In development' },
       { title: 'MusyCharts v2', status: 'UI/UX and SEO redesign' },
       { title: 'Learn React', status: 'In progress' },
     ],
-    snapshotTitle: 'Snapshot',
+    snapshotTitle: 'Quick facts',
     focusNotes: [
       { label: 'Base', value: 'San Salvador, SV' },
-      { label: 'Experience', value: '2+ years Full Stack' },
-      { label: 'Sectors', value: 'GovTech · Retail · Analytics' },
+      { label: 'Experience', value: '2+ years' },
+      { label: 'Areas', value: 'GovTech · Retail · Analytics' },
     ],
     codeLabel: 'profile.js',
-    roles: ['Full Stack Developer · DTIC - MINSAL', 'Vue 3 + Laravel Specialist'],
+    roles: ['Full Stack Developer · MINSAL', 'Vue & Laravel Specialist'],
   },
   overview: {
     eyebrow: 'Content map',
@@ -171,33 +167,33 @@ export default {
     cards: [
       {
         label: '01',
-        title: 'Projects & case studies',
-        body: 'Projects I have worked on, with technical details and product decisions.',
-        tags: ['Vue 3', 'Laravel', 'Vuetify'],
-        cta: 'Open dossier',
+        title: 'Projects',
+        body: 'Projects I have worked on, with technical decisions and what I learned in the process.',
+        tags: ['Vue 3', 'Laravel', 'Full Stack'],
+        cta: 'View projects',
         to: '/projects',
       },
       {
         label: '02',
-        title: 'Blog & tutorials',
-        body: 'Short guides about deployments, cloud, automations and practical cases I use daily.',
-        tags: ['Vue 3', 'Laravel', 'TypeScript', 'Vercel', 'Railway', 'GCP'],
-        cta: 'Read entries',
+        title: 'Blog',
+        body: 'Notes, short tutorials and practical solutions.',
+        tags: ['Vue 3', 'Laravel', 'Cloud'],
+        cta: 'Go to blog',
         to: '/blog',
       },
       {
         label: '03',
         title: 'UES resources',
-        body: 'Collective repository for the Systems School: curriculum, guides, exams and support material.',
-        tags: ['Documents', 'Labs', 'Curriculum'],
-        cta: 'Open drive',
+        body: 'Organized material for Computer Systems Engineering students.',
+        tags: ['Guides', 'Labs', 'Classes'],
+        cta: 'View resources',
         to: '/resources',
       },
     ],
     collaboration: {
-      title: 'Build something new?',
-      body: 'I look to collaborate with teams that value research, documentation and short cycles. Share your idea and we create a plan.',
-      cta: 'Send message',
+      title: 'Do you have an idea?',
+      body: 'If you want to collaborate or need help with a project, write to me and we will see it.',
+      cta: 'Contact',
     },
   },
   about: {
@@ -291,7 +287,7 @@ export default {
   ues: {
     eyebrow: 'UES resources',
     title: 'Collaborative repository',
-    lead: 'Academic material for Computer Systems Engineering. Everything organized by modality so you can find guides, labs and formats quickly.',
+    lead: 'Academic material for Computer Systems Engineering. Everything organized by modality.',
     categories: [
       {
         title: 'On-campus modality',
@@ -369,8 +365,8 @@ export default {
   },
   footer: {
     description:
-      'Full Stack Developer in San Salvador. I build systems with Vue 3, TypeScript and Laravel, documenting each delivery for smooth product scalability.',
-    quickMap: 'Quick map',
+      'Full Stack Developer in San Salvador. I build apps with Vue, Laravel, and TypeScript, always keeping in mind to keep them simple and scalable.',
+    quickMap: 'Sections',
     links: {
       home: 'Home',
       projects: 'Projects',
@@ -379,7 +375,7 @@ export default {
     },
     downloadCv: 'Download resume',
     contact: 'Contact',
-    builtWith: 'Built with ❤️ Vue · Vuetify',
+    builtWith: 'Made with ❤️ using Vue',
   },
   tools: {
     pixedai: {
