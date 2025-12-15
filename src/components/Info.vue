@@ -48,10 +48,12 @@
             <h3>{{ skillsContent.title }}</h3>
             <span class="mono">{{ skillsContent.updated }}</span>
           </div>
-          <div class="skills-grid">
-            <div v-for="skill in skills" :key="skill.name" class="skill-card">
-              <v-icon :icon="getSkillIcon(skill.name)" size="32" color="primary" class="mb-2" />
-              <span class="skill-name">{{ skill.name }}</span>
+          <div class="skills-groups">
+            <div v-for="group in skillGroups" :key="group.title" class="skill-group">
+              <h4 class="group-title">{{ group.title }}</h4>
+              <ul class="skill-list">
+                <li v-for="item in group.items" :key="item">{{ item }}</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -95,15 +97,6 @@
 </template>
 
 <script setup>
-import {
-  mdiVuejs,
-  mdiLaravel,
-  mdiApi,
-  mdiPalette,
-  mdiLanguagePhp,
-  mdiLanguageTypescript,
-  mdiServerNetwork,
-} from '@mdi/js';
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -124,24 +117,13 @@ const detailsSection = ref(null);
 let ctx;
 const { t, tm } = useI18n();
 const quickFacts = computed(() => tm('about.quickFacts') ?? []);
-const skillsContent = computed(() => tm('about.skills') ?? { items: [] });
-const skills = computed(() => skillsContent.value.items ?? []);
+const skillsContent = computed(() => tm('about.skills') ?? { groups: [] });
+const skillGroups = computed(() => skillsContent.value.groups ?? []);
 const focusContent = computed(() => tm('about.focus') ?? {});
 const experienceContent = computed(() => tm('about.experience') ?? { timeline: [] });
 const experience = computed(() => experienceContent.value.timeline ?? []);
 const interestsContent = computed(() => tm('about.interests') ?? { items: [] });
 const interests = computed(() => interestsContent.value.items ?? []);
-
-const getSkillIcon = (name) => {
-  const n = name.toLowerCase();
-  if (n.includes('vue')) return mdiVuejs;
-  if (n.includes('laravel')) return mdiLaravel;
-  if (n.includes('rest') || n.includes('api')) return mdiApi;
-  if (n.includes('ux') || n.includes('ui')) return mdiPalette;
-  if (n.includes('php')) return mdiLanguagePhp;
-  if (n.includes('typescript') || n.includes('ts')) return mdiLanguageTypescript;
-  return mdiServerNetwork;
-};
 
 const setupAnimations = () => {
   const scroller = getMainScroller();
@@ -307,35 +289,47 @@ watch(
   align-items: baseline;
 }
 
-.skills-grid {
+.skills-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
 
-.skill-card {
-  background: rgba(var(--v-theme-surface-variant), 0.3);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--radius-md);
-  padding: 1rem;
+.skill-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition:
-    transform 0.2s,
-    border-color 0.2s;
+  gap: 0.5rem;
 }
 
-.skill-card:hover {
-  transform: translateY(-2px);
-  border-color: rgb(var(--v-theme-primary));
+.group-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-primary));
+  margin-bottom: 0.25rem;
 }
 
-.skill-name {
+.skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.skill-list li {
   font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.3;
+  color: var(--text-subtle);
+  position: relative;
+  padding-left: 1rem;
+}
+
+.skill-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgb(var(--v-theme-primary));
+  opacity: 0.7;
 }
 
 .timeline {

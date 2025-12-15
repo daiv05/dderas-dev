@@ -143,6 +143,8 @@ export default {
       { name: 'Backend', detail: 'Laravel · PHP 8 · APIs REST' },
       { name: 'Infra', detail: 'Vercel · Railway · GCP · Cloudflare' },
       { name: 'UI', detail: 'Vuetify · PrimeVue · Figma' },
+      { name: 'Testing', detail: 'Vitest' },
+      { name: 'AI Tools', detail: 'Copilot · Claude · Codex' },
     ],
     agendaTitle: 'En qué estoy ahora',
     agenda: [
@@ -217,22 +219,64 @@ export default {
     skills: {
       title: 'Competencias principales',
       updated: 'Actualizado 2025',
-      items: [
-        { name: 'Vue 3 + TypeScript + Vite', level: 93 },
-        { name: 'Laravel 10/11/12 · PHP 8 APIs', level: 90 },
-        { name: 'Integración REST', level: 84 },
-        { name: 'UX / UI & accesibilidad', level: 82 },
+      groups: [
+        {
+          title: 'Frontend',
+          items: [
+            'Vue 3 · TypeScript · Vite',
+            'Arquitectura de componentes',
+            'Pinia y manejo de estado',
+            'SEO y SSR en SPAs',
+            'Accesibilidad (a11y)',
+          ],
+        },
+        {
+          title: 'Backend',
+          items: [
+            'Laravel 10/11/12 · PHP 8',
+            'Diseño de APIs REST',
+            'Roles y permisos (Spatie)',
+            'Modelado de datos y relaciones',
+            'Optimización de rendimiento',
+          ],
+        },
+        {
+          title: 'Infra & Deploy',
+          items: [
+            'Vercel · Railway · GCP',
+            'Nginx básico',
+            'HTTPS, dominios y redirects',
+            'CI/CD simple con GitHub',
+            'Entornos dev / prod',
+          ],
+        },
+        {
+          title: 'Producto & Proceso',
+          items: [
+            'Documentación técnica',
+            'Iteración por entregables',
+            'Trabajo con requerimientos reales',
+            'Mantenimiento y soporte',
+          ],
+        },
       ],
     },
     experience: {
       title: 'Experiencia y entregables',
       timeline: [
         {
-          date: 'Jan 2024 - Presente',
+          date: 'Ene 2024 - Presente',
           title: 'Desarrollador Full Stack · DTIC - MINSAL',
           description:
             'Desarrollo de plataformas públicas y sistemas internos para el Ministerio de Salud: nuevas funcionalidades, integraciones, monitoreo y mejoras de performance en Vue 3 y Laravel.',
           tags: ['Vue 3', 'Laravel', 'GovTech'],
+        },
+        {
+          date: 'Ago 2024 - Dic 2025',
+          title: 'Proyecto Horas Sociales · FIA - UES',
+          description:
+            'Desarrollo de un sistema de gestión de incidencias y reportes para el programa de horas sociales de la Facultad de Ingeniería y Arquitectura.',
+          tags: ['Laravel', 'Vue', 'Gestión de incidencias'],
         },
         {
           date: 'Mar 2023 - Jun 2023',
@@ -242,22 +286,15 @@ export default {
           tags: ['Laravel', 'Vue', 'ERP'],
         },
         {
-          date: 'Jun 2023 - Dec 2023',
-          title: 'Frontend Intern · Presidencia / CASATIC',
+          date: 'Jun 2023 - Dic 2023',
+          title: 'Frontend Intern · Secretaría de Innovación / CASATIC',
           description:
-            'Programa de habilidades digitales con enfoque en testing, despliegue y metodologías ágiles para innovación pública.',
-          tags: ['Vue', 'Testing', 'Agile'],
-        },
-        {
-          date: 'Sept 2022 - Dec 2022',
-          title: 'Web Developer · Proyecto CheRooms',
-          description:
-            'Plataforma de roomies con Django + Vue, matching inteligente y chat en tiempo real para estudiantes en San Salvador.',
-          tags: ['Django', 'Vue', 'WebSockets'],
+            'Programa de habilidades digitales con enfoque en desarrollo y metodologías ágiles para innovación pública.',
+          tags: ['Vue', 'Agile'],
         },
         {
           date: '2019 - Actualidad',
-          title: 'Computer Systems Engineering · UES',
+          title: 'Ingeniería de Sistemas Informáticos · UES',
           description:
             'Último año de la carrera, reforzando algoritmos, bases de datos y liderazgo estudiantil en comunidades tech.',
           tags: ['Academia', 'Liderazgo'],
@@ -266,7 +303,7 @@ export default {
     },
     interests: {
       title: 'Intereses actuales',
-      items: ['Playbooks JS/TS', 'Accesibilidad y SEO', 'Despliegues cloud', 'UX Ops'],
+      items: ['Animaciones CSS', 'Desarrollo con React', 'Optimización SEO'],
     },
   },
   projects: {

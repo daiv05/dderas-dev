@@ -140,16 +140,17 @@ export default {
     stackTitle: 'Tech stack I use',
     techStack: [
       { name: 'Frontend', detail: 'Vue 3 · TypeScript · Vite · Pinia' },
-      { name: 'Backend', detail: 'Laravel · PHP 8 · REST APIs' },
+      { name: 'Backend', detail: 'Laravel · PHP 8 · APIs REST' },
       { name: 'Infra', detail: 'Vercel · Railway · GCP · Cloudflare' },
-      { name: 'UX Ops', detail: 'Vuetify · PrimeVue · Vitest' },
       { name: 'UI', detail: 'Vuetify · PrimeVue · Figma' },
+      { name: 'Testing', detail: 'Vitest' },
+      { name: 'AI Tools', detail: 'Copilot · Claude · Codex' },
     ],
     agendaTitle: 'What I am doing now',
     agenda: [
-      { title: 'FIA-UES incident management system', status: 'In development' },
+      { title: 'FIA-UES incident management system', status: 'Production ready' },
       { title: 'MusyCharts v2', status: 'UI/UX and SEO redesign' },
-      { title: 'Learn React', status: 'In progress' },
+      { title: 'Learning React', status: 'In progress' },
     ],
     snapshotTitle: 'Quick facts',
     focusNotes: [
@@ -218,11 +219,46 @@ export default {
     skills: {
       title: 'Core skills',
       updated: 'Updated 2025',
-      items: [
-        { name: 'Vue 3 + TypeScript + Vite', level: 93 },
-        { name: 'Laravel 10/11/12 · PHP 8 APIs', level: 90 },
-        { name: 'REST integration', level: 84 },
-        { name: 'UX / UI & accessibility', level: 82 },
+      groups: [
+        {
+          title: 'Frontend',
+          items: [
+            'Vue 3 · TypeScript · Vite',
+            'Component Architecture',
+            'Pinia & State Management',
+            'SEO & SSR in SPAs',
+            'Accessibility (a11y)',
+          ],
+        },
+        {
+          title: 'Backend',
+          items: [
+            'Laravel 10/11/12 · PHP 8',
+            'REST API Design',
+            'Roles & Permissions (Spatie)',
+            'Data Modeling & Relations',
+            'Performance Optimization',
+          ],
+        },
+        {
+          title: 'Infra & Deploy',
+          items: [
+            'Vercel · Railway · GCP',
+            'Basic Nginx',
+            'HTTPS, Domains & Redirects',
+            'Simple CI/CD with GitHub',
+            'Dev / Prod Environments',
+          ],
+        },
+        {
+          title: 'Product & Process',
+          items: [
+            'Technical Documentation',
+            'Iteration by Deliverables',
+            'Working with Real Requirements',
+            'Maintenance & Support',
+          ],
+        },
       ],
     },
     experience: {
@@ -234,6 +270,13 @@ export default {
           description:
             'Development of public platforms and internal systems for the Ministry of Health: new features, integrations, monitoring and performance improvements in Vue 3 and Laravel.',
           tags: ['Vue 3', 'Laravel', 'GovTech'],
+        },
+        {
+          date: 'Ago 2024 - Dic 2025',
+          title: 'Social Hours Project · FIA - UES',
+          description:
+            'Development of an incident management and reporting system for the social hours program of the Faculty of Engineering and Architecture.',
+          tags: ['Laravel', 'Vue', 'Incident Management'],
         },
         {
           date: 'Mar 2023 - Jun 2023',
@@ -250,13 +293,6 @@ export default {
           tags: ['Vue', 'Testing', 'Agile'],
         },
         {
-          date: 'Sep 2022 - Dec 2022',
-          title: 'Web Developer · CheRooms project',
-          description:
-            'Roommate platform built with Django + Vue, smart matching and real-time chat for students in San Salvador.',
-          tags: ['Django', 'Vue', 'WebSockets'],
-        },
-        {
           date: '2019 - Current',
           title: 'Computer Systems Engineering · UES',
           description:
@@ -267,7 +303,7 @@ export default {
     },
     interests: {
       title: 'Current interests',
-      items: ['JS/TS playbooks', 'Accessibility & SEO', 'Cloud deployments', 'UX Ops'],
+      items: ['CSS animations', 'React development', 'SEO optimization'],
     },
   },
   projects: {
@@ -314,7 +350,7 @@ export default {
       {
         title: 'Distance modality',
         mode: 'Virtual',
-        description: "Recorded tutorials, guides and self-paced material (subjects with '- D').",
+        description: "Tutorials, guides and self-paced material (subjects with '- D').",
         driveLink:
           'https://drive.google.com/drive/folders/1w7WfrEShtjBharxYq_qDqs4lXH1Ao00h?usp=drive_link',
         featured: [

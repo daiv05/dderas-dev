@@ -427,20 +427,19 @@ watch(
   display: grid;
   grid-template-columns: 200px 1fr;
   gap: 1.25rem;
-  align-items: start;
+  align-items: center;
   text-decoration: none;
   color: inherit;
   padding: 0;
 }
 
 .post-thumb {
-  display: block;
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 .post-thumb img {
-  width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
