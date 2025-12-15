@@ -54,12 +54,6 @@
 }
 
 body {
-  scroll-behavior: smooth;
-  color-scheme: light dark;
-  forced-color-adjust: none;
-}
-
-body {
   font-family: var(--font-body);
   background-color: rgb(var(--v-theme-background));
   color: rgb(var(--v-theme-on-surface));
@@ -67,6 +61,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   min-height: 100vh;
+  scroll-behavior: smooth;
+  color-scheme: light dark;
+  forced-color-adjust: none;
 }
 
 h1,

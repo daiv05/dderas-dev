@@ -31,7 +31,6 @@ export function refreshScrollTriggers() {
 
 /**
  * Verifica si un elemento ya está en el viewport
- * Útil para decidir si aplicar animación o mostrar directamente
  */
 export function isElementInViewport(element, scroller = null) {
   if (!element) return false;
