@@ -12,6 +12,33 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 // Utilities
 
+/**
+ * Función para generar slugs seguros a partir de texto con caracteres especiales
+ * - Maneja acentos (á, é, í, ó, ú, etc.)
+ * - Convierte espacios a guiones
+ * - Elimina caracteres especiales
+ * - Convierte a minúsculas
+ */
+const slugify = (text) => {
+  return (
+    text
+      .trim()
+      // Normalizar caracteres acentuados
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      // Convertir a minúsculas
+      .toLowerCase()
+      // Reemplazar espacios y guiones bajos por guiones
+      .replace(/[\s_]+/g, '-')
+      // Eliminar caracteres especiales (mantener solo letras, números y guiones)
+      .replace(/[^\w-]/g, '')
+      // Eliminar guiones duplicados
+      .replace(/-+/g, '-')
+      // Remover guiones al inicio y final
+      .replace(/^-|-$/g, '')
+  );
+};
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -25,18 +52,20 @@ export default defineConfig({
       headEnabled: false,
       markdownItSetup(md) {
         md.use(mdAnchor, {
+          slugify,
           permalink: mdAnchor.permalink.linkInsideHeader({
             symbol: '#',
-            placement: 'before',
+            placement: 'after',
             ariaHidden: true,
             class: 'md-anchor',
           }),
         });
         md.use(mdAttrs);
         md.use(mdToc, {
-          placeholder: '\n[toc]\n',
+          placeholder: '\\[toc\\]',
           listType: 'ul',
           containerClass: 'md-toc',
+          slugify,
         });
       },
     }),
