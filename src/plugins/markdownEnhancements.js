@@ -12,42 +12,25 @@ const getCodeTextFromButton = (buttonEl) => {
 
 const copyToClipboard = async (text) => {
   if (!text) return false;
-
   try {
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    }
-  } catch {
-    // fallback below
-  }
-
-  try {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    ta.style.top = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-    return ok;
+    await navigator.clipboard.writeText(text);
+    return true;
   } catch {
     return false;
   }
 };
 
 const setCopyButtonState = (btn, state) => {
-  const label = btn.querySelector('.md-code-copy__label');
-  if (!label) return;
+  const iconCopy = btn.querySelector('.icon-copy');
+  const iconCopied = btn.querySelector('.icon-copied');
 
   if (state === 'copied') {
-    label.textContent = 'Copiado';
+    if (iconCopy) iconCopy.style.display = 'none';
+    if (iconCopied) iconCopied.style.display = 'block';
     btn.dataset.state = 'copied';
   } else {
-    label.textContent = 'Copiar';
+    if (iconCopy) iconCopy.style.display = 'block';
+    if (iconCopied) iconCopied.style.display = 'none';
     delete btn.dataset.state;
   }
 };
