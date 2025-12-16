@@ -38,6 +38,12 @@ const routes = [
         component: () => import('@/views/Herramientas.vue'),
         meta: { seoKey: 'tools' },
       },
+    ],
+  },
+  {
+    path: '/:locale(es)?',
+    component: () => import('@/layouts/blog/BlogLayout.vue'),
+    children: [
       {
         path: 'blog',
         name: 'BlogIndex',

@@ -25,7 +25,8 @@ export default {
       ues: 'Recursos UES',
       tools: 'Herramientas',
     },
-    backToMain: 'Inicio',
+    backToMain: 'Portafolio',
+    backToBlog: 'Blog',
     viewBlogEntries: 'Ver posts',
     search: 'Buscar',
     links: {

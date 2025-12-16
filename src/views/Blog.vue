@@ -1,20 +1,18 @@
 <template>
   <div class="page-frame">
     <section class="section-stack">
-      <header v-if="!Current" class="blog-header">
+      <!-- <header v-if="!Current" class="blog-header">
         <div class="eyebrow">{{ t('blog.eyebrow') }}</div>
         <h1 class="section-title">{{ t('blog.title') }}</h1>
         <p class="section-lead">{{ t('blog.lead') }}</p>
-      </header>
+      </header> -->
 
       <!-- Banner/Aviso de "PAGINA EN CONSTRUCCIÓN" -->
       <div>
-        <v-alert
-          title="Hey!"
-          :text="t('blog.constructionNotice')"
-          type="error"
-          :icon="mdiAlertCircle"
-        ></v-alert>
+        <v-alert class="text-body-2" density="compact" type="error" :icon="mdiAlertCircle">
+          <template #title><span>Hey</span></template>
+          {{ t('blog.constructionNotice') }}
+        </v-alert>
       </div>
 
       <!-- Índice del blog (tarjetas + paginación) -->

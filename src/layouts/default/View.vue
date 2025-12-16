@@ -11,52 +11,16 @@
       <div class="nav-root">
         <router-link :to="withLocalePath('/')" class="brand-mark">
           <span class="brand-initial">{{ t('navigation.brand.name') }}</span>
-          <span class="brand-tag">
-            {{
-              basePath(route.path).startsWith('/blog')
-                ? t('navigation.brand.blogTagline')
-                : t('navigation.brand.tagline')
-            }}
-          </span>
+          <span class="brand-tag">{{ t('navigation.brand.tagline') }}</span>
         </router-link>
 
         <v-divider class="nav-divider" thickness="1"></v-divider>
 
-        <v-btn
-          v-if="basePath(route.path).startsWith('/blog')"
-          class="back-button text-none"
-          variant="outlined"
-          rounded="pill"
-          @click="goTo({ to: '/', value: 'back' })"
-        >
-          <template #prepend>
-            <v-icon :icon="mdiArrowLeft"></v-icon>
-          </template>
-          {{ t('navigation.backToMain') || 'Volver' }}
-        </v-btn>
-
-        <v-btn
-          v-if="basePath(route.path).match(/^\/blog\/.+/)"
-          class="back-button text-none"
-          variant="outlined"
-          rounded="pill"
-          @click="goTo({ to: '/blog', value: 'back' })"
-        >
-          <template #prepend>
-            <v-icon :icon="mdiViewList"></v-icon>
-          </template>
-          {{ t('navigation.viewBlogEntries') || 'Ver entradas de blog' }}
-        </v-btn>
-
-        <v-list ref="navList" density="compact" nav class="nav-list" @scroll="handleNavScroll">
+        <v-list density="compact" nav class="nav-list">
           <v-list-item
-            v-for="item in itemsComputed"
+            v-for="item in items"
             :key="item.value"
-            :class="[
-              'nav-link',
-              { 'nav-link--active': isActive(item) },
-              { 'nav-link--blog-index': item.isBlogIndex },
-            ]"
+            :class="['nav-link', { 'nav-link--active': isActive(item) }]"
             @click="goTo(item)"
           >
             <template #prepend>
@@ -113,7 +77,7 @@
 
         <div v-if="!isDesktop" class="mobile-nav">
           <v-slide-group v-model="mobileSection" show-arrows>
-            <v-slide-group-item v-for="item in itemsComputed" :key="item.value" :value="item.value">
+            <v-slide-group-item v-for="item in items" :key="item.value" :value="item.value">
               <v-btn
                 variant="text"
                 rounded="pill"
@@ -153,16 +117,7 @@
 </template>
 
 <script setup>
-import {
-  mdiArrowUp,
-  mdiEmail,
-  mdiGithub,
-  mdiLinkedin,
-  mdiMenu,
-  mdiArrowLeft,
-  mdiViewList,
-  mdiFileDocumentOutline,
-} from '@mdi/js';
+import { mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -182,50 +137,6 @@ const router = useRouter();
 const route = useRoute();
 const appStore = useAppStore();
 const items = sidebarItems;
-const navList = ref(null);
-const postsPerPage = 10;
-const displayedPostsCount = ref(postsPerPage);
-const blogModules = import.meta.glob('/blog/**/*.md', { eager: true });
-const blogPosts = computed(() => {
-  const locale = getLocaleFromPath(route.path);
-  const entries = Object.keys(blogModules)
-    .map((path) => {
-      const mod = blogModules[path];
-      const segments = path.split('/').filter(Boolean);
-      const fileName = segments.pop() || '';
-      const slug = fileName.replace(/\.md$/, '');
-      const detectedLocaleEn = segments.includes('en') ? 'en' : null;
-      const detectedLocale = segments.includes('es') ? 'es' : detectedLocaleEn;
-
-      // El frontmatter puede estar en mod.frontmatter o directamente en mod
-      const fm = mod?.frontmatter || mod || {};
-
-      return {
-        title: fm.title || slug,
-        date: fm.date || '',
-        to: `/blog/${fm.slug || slug}`,
-        icon: mdiFileDocumentOutline,
-        value: fm.slug || slug,
-        detectedLocale,
-        summary: fm.summary || '',
-        tags: fm.tags || [],
-      };
-    })
-    .filter((p) => p.detectedLocale === locale)
-    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  return entries;
-});
-
-const displayedPosts = computed(() => {
-  return blogPosts.value.slice(0, displayedPostsCount.value);
-});
-
-const itemsComputed = computed(() => {
-  if (basePath(route.path).startsWith('/blog')) {
-    return [...displayedPosts.value];
-  }
-  return items;
-});
 
 const { t, locale } = useI18n();
 const supportedLanguages = new Set(['en', 'es']);
@@ -311,7 +222,6 @@ watch(
     if (supportedLanguages.has(lang) && lang !== appStore.language) {
       appStore.language = lang;
     }
-    displayedPostsCount.value = postsPerPage;
   }
 );
 
@@ -346,21 +256,6 @@ const handleScroll = () => {
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-const handleNavScroll = (e) => {
-  const element = e.target;
-  if (!element) return;
-
-  const scrollPercentage =
-    (element.scrollTop / (element.scrollHeight - element.clientHeight)) * 100;
-
-  if (scrollPercentage > 80 && displayedPostsCount.value < blogPosts.value.length) {
-    displayedPostsCount.value = Math.min(
-      displayedPostsCount.value + postsPerPage,
-      blogPosts.value.length
-    );
-  }
 };
 
 onMounted(() => {
@@ -442,17 +337,6 @@ onUnmounted(() => {
   border-radius: var(--radius-sm);
   margin-bottom: 0.5rem;
   padding-inline: 0.75rem;
-}
-
-.nav-link--blog-index {
-  background: var(--bg-soft);
-  border-color: var(--line-soft) !important;
-  font-weight: 600;
-}
-
-.nav-link--blog-index:hover {
-  background: var(--bg-muted);
-  border-color: var(--line-strong) !important;
 }
 
 .nav-link--active {
