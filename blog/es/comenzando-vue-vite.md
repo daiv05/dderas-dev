@@ -34,9 +34,9 @@ Además, instala la extensión oficial de Vue.js para VS Code:
 
 ## ¿JavaScript o TypeScript?
 
-Vue 3 tiene un soporte excelente para TypeScript, puedes usarlo, si quieres, teniendo en cuenta la <a target="_blank" href="https://vuejs.org/guide/typescript/overview.html">guía de uso oficial</a>.
+Vue 3 tiene un soporte excelente para TypeScript, puedes usarlo teniendo en cuenta la <a target="_blank" href="https://vuejs.org/guide/typescript/overview.html">guía de uso oficial</a>.
 
-No necesitas usar TypeScript en todos tus proyectos, especialmente si estás comenzando o solo quieres experimentar. Asi que mi recomendación es que valores tu contexto, la aplicación y tu equipo, ¡investiga!
+No necesitas usar TypeScript en todos tus proyectos, especialmente si estás comenzando o solo quieres experimentar. Asi que mi recomendación es que valores tu contexto, la aplicación y tu equipo (si aplica), ¡investiga!
 
 En esta guía usaremos JavaScript para mantener las cosas simples.
 
@@ -50,10 +50,10 @@ La forma más rápida de iniciar un proyecto Vue 3 con Vite es usando el comando
 npm create vue@latest
 ```
 
-Si es primera vez que lo usas, te preguntará si deseas instalar el paquete `create-vue`. Responde que sí (`y` y damos ENTER).
+Si es primera vez que lo usas, te preguntará si deseas instalar el paquete `create-vue`. Responde que sí (escribimos `y` y damos ENTER).
 
 ![Instalando create-vue](/blog/comenzando-vue-vite/install-create-vue-package.png)
-_Instalando create-vue_
+_Instalando paquete: create-vue_
 
 ## Estructura del proyecto: donde nacen o mueren las apps
 
