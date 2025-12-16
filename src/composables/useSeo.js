@@ -124,7 +124,8 @@ export function useSeo() {
 
     const ogImage = page.ogImage ?? defaults.ogImage ?? `${SITE_URL}/punpun_OG.jpg`;
     const ogImageAlt = page.ogImageAlt ?? defaults.ogImageAlt ?? siteName;
-    const localizedUrl = buildUrl(route.fullPath, locale.value);
+    const pathWithoutHash = route.fullPath.split('#')[0];
+    const localizedUrl = buildUrl(pathWithoutHash, locale.value);
 
     upsertMetaTag({ property: 'og:title', content: page.ogTitle ?? fullTitle });
     upsertMetaTag({ property: 'og:description', content: description });
@@ -151,16 +152,16 @@ export function useSeo() {
     upsertLinkTag({ rel: 'canonical', href: localizedUrl });
 
     SUPPORTED_LOCALES.forEach((lang) => {
-      upsertLinkTag({ rel: 'alternate', hreflang: lang, href: buildUrl(route.fullPath, lang) });
+      upsertLinkTag({ rel: 'alternate', hreflang: lang, href: buildUrl(pathWithoutHash, lang) });
     });
 
-    upsertLinkTag({ rel: 'alternate', hreflang: 'x-default', href: buildUrl(route.fullPath) });
+    upsertLinkTag({ rel: 'alternate', hreflang: 'x-default', href: buildUrl(pathWithoutHash) });
 
     upsertStructuredData(description, keywords, ogImage);
   };
 
   watch(
-    [() => route.fullPath, () => locale.value],
+    [() => route.path, () => locale.value],
     () => {
       applySeo();
     },
@@ -170,9 +171,9 @@ export function useSeo() {
   return {
     updateSeo: applySeo,
     updateSeoWith(overrides = {}) {
-      // Opcional: aplicar overrides desde frontmatter
+      // Aplicar overrides desde frontmatter
       if (typeof document === 'undefined') return;
-      const { title, description, ogImage, lastmod, author } = overrides;
+      const { title, description, ogImage, lastmod, author, alternateLinks } = overrides;
       if (title) {
         document.title = `${title} | ${t('seo.siteName')}`;
         upsertMetaTag({ property: 'og:title', content: title });
@@ -194,6 +195,11 @@ export function useSeo() {
       if (lastmod) {
         upsertMetaTag({ name: 'article:modified_time', content: lastmod });
         upsertMetaTag({ property: 'og:updated_time', content: lastmod });
+      }
+      if (alternateLinks && Array.isArray(alternateLinks)) {
+        alternateLinks.forEach(({ hreflang, href }) => {
+          upsertLinkTag({ rel: 'alternate', hreflang, href });
+        });
       }
     },
   };

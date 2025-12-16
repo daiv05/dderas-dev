@@ -185,6 +185,25 @@ const formatDate = (dateString) => {
   });
 };
 
+// Helper para normalizar locale
+const normalizeLocale = (locale) => (locale === 'es' ? 'es' : 'en');
+
+// Helper para construir ruta del blog
+const buildBlogPath = (locale, slug) => {
+  return locale === 'es' ? `/es/blog/${slug}` : `/blog/${slug}`;
+};
+
+// Helper para encontrar post equivalente en otro idioma
+const findEquivalentPost = (currentSlug, fromLocale, toLocale) => {
+  const currentPost = allPosts.find(
+    (p) => p.slug === currentSlug && p.detectedLocale === fromLocale
+  );
+
+  if (!currentPost?.id) return null;
+
+  return allPosts.find((p) => p.id === currentPost.id && p.detectedLocale === toLocale);
+};
+
 // Construir lista de posts
 const allPosts = Object.keys(modules).map((path) => {
   const mod = modules[path];
@@ -328,6 +347,33 @@ watch(
       updateSeo();
       return;
     }
+
+    // Calcular alternate links correctos
+    const currentLocale = getLocale();
+    const SITE_URL = 'https://deras.dev';
+    const SUPPORTED_LOCALES = ['en', 'es'];
+    const alternateLinks = [];
+
+    SUPPORTED_LOCALES.forEach((lang) => {
+      let path = '';
+      if (lang === currentLocale) {
+        path = buildBlogPath(lang, slug);
+      } else {
+        const equivalent = findEquivalentPost(slug, currentLocale, lang);
+        if (equivalent) {
+          path = buildBlogPath(lang, equivalent.slug);
+        } else {
+          path = lang === 'es' ? '/es/blog' : '/blog';
+        }
+      }
+      const url = new URL(path, SITE_URL).toString();
+      alternateLinks.push({ hreflang: lang, href: url });
+
+      if (lang === 'en') {
+        alternateLinks.push({ hreflang: 'x-default', href: url });
+      }
+    });
+
     updateSeo();
     updateSeoWith({
       title: post.title || slug,
@@ -335,29 +381,11 @@ watch(
       ogImage: post.image || '',
       author: post.author || '',
       lastmod: post.lastmod || '',
+      alternateLinks,
     });
   },
   { immediate: true }
 );
-
-// Helper para normalizar locale
-const normalizeLocale = (locale) => (locale === 'es' ? 'es' : 'en');
-
-// Helper para construir ruta del blog
-const buildBlogPath = (locale, slug) => {
-  return locale === 'es' ? `/es/blog/${slug}` : `/blog/${slug}`;
-};
-
-// Helper para encontrar post equivalente en otro idioma
-const findEquivalentPost = (currentSlug, fromLocale, toLocale) => {
-  const currentPost = allPosts.find(
-    (p) => p.slug === currentSlug && p.detectedLocale === fromLocale
-  );
-
-  if (!currentPost?.id) return null;
-
-  return allPosts.find((p) => p.id === currentPost.id && p.detectedLocale === toLocale);
-};
 
 // Resetear paginación al cambiar idioma y redirigir al post equivalente
 watch(
