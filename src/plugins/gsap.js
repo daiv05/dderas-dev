@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function setupGSAP() {
-  const scroller = document.querySelector('.shell-main');
+  const scroller = getMainScroller();
 
   if (scroller) {
     ScrollTrigger.defaults({
@@ -64,7 +64,7 @@ export function clearGSAPProps(elements) {
  * Obtiene el contenedor de scroll principal
  */
 export function getMainScroller() {
-  return document.querySelector('.shell-main');
+  return document.querySelector('.shell-main') || document.querySelector('.blog-main');
 }
 
 /**

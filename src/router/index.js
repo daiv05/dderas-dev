@@ -64,32 +64,39 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    const mainElement = document.querySelector('.shell-main');
-    if (savedPosition) return savedPosition;
-    if (to.hash && mainElement) {
+    const scroller = document.querySelector('.shell-main') || document.querySelector('.blog-main');
+
+    // IMPORTANT: hashes (anchors) should win over browser/router scroll restoration.
+    // Otherwise the browser jumps to the anchor and then Vue Router restores the previous position.
+    if (to.hash && scroller) {
       return new Promise((resolve) => {
         requestAnimationFrame(() => {
           const target = document.querySelector(to.hash);
           if (target) {
-            const y = target.offsetTop || 0;
-            mainElement.scrollTo({ top: y, behavior: 'auto' });
+            const scrollerRect = scroller.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            const y = targetRect.top - scrollerRect.top + scroller.scrollTop;
+            scroller.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
           }
           resolve(false);
         });
       });
     }
 
-    if (mainElement) {
+    if (savedPosition) return savedPosition;
+
+    if (scroller) {
       return new Promise((resolve) => {
-        mainElement.scrollTop = 0;
+        scroller.scrollTop = 0;
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            mainElement.scrollTo({ top: 0, behavior: 'auto' });
+            scroller.scrollTo({ top: 0, behavior: 'auto' });
             resolve(false);
           });
         });
       });
     }
+
     return { top: 0 };
   },
 });
@@ -99,13 +106,6 @@ router.beforeEach((to, _from) => {
     return { path: '/' };
   }
   killAllScrollTriggers();
-});
-
-router.afterEach(() => {
-  const mainElement = document.querySelector('.shell-main');
-  if (mainElement) {
-    mainElement.scrollTop = 0;
-  }
 });
 
 export default router;
