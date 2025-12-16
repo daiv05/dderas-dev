@@ -1,62 +1,111 @@
-// Plugins
 import { fileURLToPath, URL } from 'node:url';
 
+import Shiki from '@shikijs/markdown-it';
 import vue from '@vitejs/plugin-vue';
 import mdAnchor from 'markdown-it-anchor';
 import mdAttrs from 'markdown-it-attrs';
+import mdContainer from 'markdown-it-container';
 import mdToc from 'markdown-it-toc-done-right';
 import Markdown from 'unplugin-vue-markdown/vite';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
-// Utilities
-
-/**
- * Función para generar slugs seguros a partir de texto con caracteres especiales
- * - Maneja acentos (á, é, í, ó, ú, etc.)
- * - Convierte espacios a guiones
- * - Elimina caracteres especiales
- * - Convierte a minúsculas
- */
 const slugify = (text) => {
-  return (
-    text
-      .trim()
-      // Normalizar caracteres acentuados
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      // Convertir a minúsculas
-      .toLowerCase()
-      // Reemplazar espacios y guiones bajos por guiones
-      .replace(/[\s_]+/g, '-')
-      // Eliminar caracteres especiales (mantener solo letras, números y guiones)
-      .replace(/[^\w-]/g, '')
-      // Eliminar guiones duplicados
-      .replace(/-+/g, '-')
-      // Remover guiones al inicio y final
-      .replace(/^-|-$/g, '')
-  );
+  return text
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[\s_]+/g, '-')
+    .replace(/[^\w-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 };
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue({
-      // Permitir que Vite trate archivos Markdown como componentes Vue
       include: [/\.vue$/, /\.md$/],
       template: { transformAssetUrls },
     }),
-    // Transformar `.md` a componentes Vue en dev/build
     Markdown({
       headEnabled: false,
-      markdownItSetup(md) {
+      async markdownItSetup(md) {
+        const escapeHtml = (str = '') =>
+          String(str)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#39;');
+
+        const isInsideContainer = (tokens, idx, name) => {
+          const openType = `container_${name}_open`;
+          const closeType = `container_${name}_close`;
+          let depth = 0;
+
+          for (let i = idx; i >= 0; i -= 1) {
+            const t = tokens[i];
+            if (!t) continue;
+            if (t.type === closeType) depth += 1;
+            if (t.type === openType) {
+              if (depth === 0) return true;
+              depth -= 1;
+            }
+          }
+          return false;
+        };
+
+        md.use(mdContainer, 'code-tabs', {
+          render(tokens, idx) {
+            if (tokens[idx].nesting === 1) return '<div class="md-code-tabs">\n';
+            return '</div>\n';
+          },
+        });
+
+        const defaultFence = md.renderer.rules.fence;
+        md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+          const token = tokens[idx];
+          const info = (token.info || '').trim();
+          const lang = info.split(/\s+/)[0] || '';
+
+          const tabMatch = info.match(/\btab\s*=\s*(?:"([^"]+)"|'([^']+)')/);
+          const bracketMatch = info.match(/\[(.+?)\]/);
+          const tabTitle = (tabMatch?.[1] || tabMatch?.[2] || bracketMatch?.[1] || '').trim();
+
+          const rendered = defaultFence
+            ? defaultFence(tokens, idx, options, env, self)
+            : self.renderToken(tokens, idx, options);
+
+          const copyLabel = 'Copiar';
+          const ariaLabel = 'Copiar código al portapapeles';
+          const copyButton =
+            `<button class="md-code-copy" type="button" aria-label="${ariaLabel}">` +
+            `<span class="md-code-copy__icon" aria-hidden="true">⧉</span>` +
+            `<span class="md-code-copy__label">${copyLabel}</span>` +
+            `</button>`;
+
+          const block =
+            `<div class="md-code-block" data-lang="${escapeHtml(lang)}">` +
+            `${copyButton}` +
+            `${rendered}` +
+            `</div>`;
+
+          if (isInsideContainer(tokens, idx, 'code-tabs')) {
+            const title = tabTitle || (lang ? lang.toUpperCase() : 'Code');
+            return `<div class="md-code-tab" data-title="${escapeHtml(title)}">${block}</div>`;
+          }
+
+          return block;
+        };
+
         md.use(mdAnchor, {
           slugify,
           permalink: mdAnchor.permalink.linkInsideHeader({
             symbol: '#',
             placement: 'after',
-            ariaHidden: true,
+            ariaHidden: false,
             class: 'md-anchor',
           }),
         });
@@ -67,9 +116,16 @@ export default defineConfig({
           containerClass: 'md-toc',
           slugify,
         });
+        md.use(
+          await Shiki({
+            themes: {
+              light: 'vitesse-light',
+              dark: 'vitesse-dark',
+            },
+          })
+        );
       },
     }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     vuetify({
       autoImport: true,
     }),

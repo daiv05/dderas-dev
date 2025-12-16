@@ -197,10 +197,115 @@ ol {
   padding: 1rem;
 }
 
+/* Bloques de código con botón copiar */
+.markdown-body .md-code-block {
+  position: relative;
+  margin: 0 0 1.125rem;
+}
+
+.markdown-body .md-code-block pre {
+  margin: 0;
+  padding-top: 2.75rem;
+}
+
+.markdown-body .md-code-copy {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  background: var(--bg-muted);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.markdown-body .md-code-copy:hover {
+  background: var(--surface-mild);
+  border-color: var(--line-strong);
+}
+
+.markdown-body .md-code-copy:focus-visible {
+  outline: 2px solid rgba(var(--v-theme-primary), 0.55);
+  outline-offset: 2px;
+}
+
+.markdown-body .md-code-copy__icon {
+  line-height: 1;
+}
+
+/* Tabs de código (opcional) */
+.markdown-body .md-code-tabs {
+  border: 1px solid var(--md-code-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-elevated);
+  margin: 0 0 1.125rem;
+}
+
+.markdown-body .md-code-tabs__header {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: var(--bg-muted);
+  overflow-x: auto;
+}
+
+.markdown-body .md-code-tabs__tab {
+  border: 1px solid var(--line-soft);
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.markdown-body .md-code-tabs__tab.is-active {
+  background: var(--surface-mild);
+  border-color: var(--line-strong);
+}
+
+.markdown-body .md-code-tabs__panels > .md-code-tab {
+  display: none;
+}
+
+.markdown-body .md-code-tabs__panels > .md-code-tab.is-active {
+  display: block;
+}
+
+.markdown-body .md-code-tabs .md-code-block {
+  margin: 0;
+}
+
+.markdown-body .md-code-tabs .md-code-block pre {
+  border: 0;
+  border-radius: 0;
+}
+
 .markdown-body pre code {
   background: transparent;
   border: 0;
   padding: 0;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 .markdown-body img {

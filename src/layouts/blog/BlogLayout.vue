@@ -124,6 +124,11 @@ watch(
     theme.change(val);
     const meta = document.querySelector('#themeColor');
     if (meta) meta.setAttribute('content', theme.current.value.colors.surface);
+    if (val === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   },
   { immediate: true }
 );

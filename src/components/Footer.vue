@@ -12,7 +12,9 @@
         <p class="mono">{{ t('footer.quickMap') }}</p>
         <div class="nav-pills">
           <router-link :to="withLocalePath('/')">{{ t('footer.links.home') }}</router-link>
-          <router-link :to="withLocalePath('/projects')">{{ t('footer.links.projects') }}</router-link>
+          <router-link :to="withLocalePath('/projects')">
+            {{ t('footer.links.projects') }}
+          </router-link>
           <router-link :to="withLocalePath('/resources')">{{ t('footer.links.ues') }}</router-link>
           <router-link :to="withLocalePath('/tools')">{{ t('footer.links.tools') }}</router-link>
         </div>
