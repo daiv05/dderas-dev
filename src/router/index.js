@@ -64,40 +64,34 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    const scroller = document.querySelector('.shell-main') || document.querySelector('.blog-main');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const scroller =
+          document.querySelector('.shell-main') || document.querySelector('.blog-main');
 
-    // IMPORTANT: hashes (anchors) should win over browser/router scroll restoration.
-    // Otherwise the browser jumps to the anchor and then Vue Router restores the previous position.
-    if (to.hash && scroller) {
-      return new Promise((resolve) => {
-        requestAnimationFrame(() => {
+        // Manejo de anchors/hashes
+        if (to.hash && scroller) {
           const target = document.querySelector(to.hash);
           if (target) {
             const scrollerRect = scroller.getBoundingClientRect();
             const targetRect = target.getBoundingClientRect();
             const y = targetRect.top - scrollerRect.top + scroller.scrollTop;
-            scroller.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
+            scroller.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
           }
-          resolve(false);
-        });
-      });
-    }
+          return resolve(false);
+        }
 
-    if (savedPosition) return savedPosition;
+        if (savedPosition) {
+          return resolve(savedPosition);
+        }
 
-    if (scroller) {
-      return new Promise((resolve) => {
-        scroller.scrollTop = 0;
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            scroller.scrollTo({ top: 0, behavior: 'auto' });
-            resolve(false);
-          });
-        });
-      });
-    }
+        if (scroller) {
+          scroller.scrollTo({ top: 0, behavior: 'auto' });
+        }
 
-    return { top: 0 };
+        resolve({ top: 0 });
+      }, 50);
+    });
   },
 });
 
