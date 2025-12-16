@@ -57,7 +57,8 @@
               :aria-label="t('blog.pagination.prev')"
               @click="prevPage"
             >
-              ← {{ t('blog.pagination.prev') }}
+              <v-icon :icon="mdiArrowLeft"></v-icon>
+              {{ t('blog.pagination.prev') }}
             </button>
             <span class="pagination-info">
               {{ t('blog.pagination.page') }} {{ page }} {{ t('blog.pagination.of') }}
@@ -69,7 +70,8 @@
               :aria-label="t('blog.pagination.next')"
               @click="nextPage"
             >
-              {{ t('blog.pagination.next') }} →
+              {{ t('blog.pagination.next') }}
+              <v-icon :icon="mdiArrowRight"></v-icon>
             </button>
           </div>
         </div>
@@ -101,20 +103,6 @@
 
         <div class="markdown-body">
           <component :is="Current" />
-        </div>
-
-        <div v-if="showToc && tocItems.length > 0" class="floating-toc">
-          <button class="toc-toggle" @click="toggleToc">
-            {{ tocCollapsed ? t('blog.toc.show') : t('blog.toc.hide') }}
-          </button>
-          <nav v-show="!tocCollapsed" class="toc-nav" aria-label="Table of Contents">
-            <h3 class="toc-title">{{ t('blog.toc.title') }}</h3>
-            <ul class="toc-list">
-              <li v-for="item in tocItems" :key="item.id" :class="`toc-${item.level}`">
-                <a :href="item.href" class="toc-link">{{ item.text }}</a>
-              </li>
-            </ul>
-          </nav>
         </div>
 
         <nav
@@ -151,27 +139,20 @@
 </template>
 
 <script setup>
-import { mdiAlertCircle } from '@mdi/js';
-import { computed, watch, ref, onMounted, nextTick } from 'vue';
+import { mdiAlertCircle, mdiArrowLeft, mdiArrowRight } from '@mdi/js';
+import { computed, watch, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import PostHeader from '@/components/PostHeader.vue';
+import { useBlog } from '@/composables/useBlog';
 import { useSeo } from '@/composables/useSeo';
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { updateSeo, updateSeoWith } = useSeo();
-
-// Cargar posts soportando subcarpetas por idioma (/blog/en, /blog/es)
-const modules = import.meta.glob('/blog/**/*.md', { eager: true });
-
-const getLocale = (forRouter = false) => {
-  const isSpanish = route.params.locale === 'es';
-  if (isSpanish) return 'es';
-  return forRouter ? undefined : 'en';
-};
+const { posts: postList, getPostComponent, findEquivalentPost, getLocale } = useBlog();
 
 // Función para formatear fecha
 const formatDate = (dateString) => {
@@ -184,64 +165,6 @@ const formatDate = (dateString) => {
     day: 'numeric',
   });
 };
-
-// Helper para normalizar locale
-const normalizeLocale = (locale) => (locale === 'es' ? 'es' : 'en');
-
-// Helper para construir ruta del blog
-const buildBlogPath = (locale, slug) => {
-  return locale === 'es' ? `/es/blog/${slug}` : `/blog/${slug}`;
-};
-
-// Helper para encontrar post equivalente en otro idioma
-const findEquivalentPost = (currentSlug, fromLocale, toLocale) => {
-  const currentPost = allPosts.find(
-    (p) => p.slug === currentSlug && p.detectedLocale === fromLocale
-  );
-
-  if (!currentPost?.id) return null;
-
-  return allPosts.find((p) => p.id === currentPost.id && p.detectedLocale === toLocale);
-};
-
-// Construir lista de posts
-const allPosts = Object.keys(modules).map((path) => {
-  const mod = modules[path];
-  const segments = path.split('/').filter(Boolean);
-  const fileName = segments.pop() || '';
-  const slug = fileName.replace(/\.md$/, '');
-  const detectedLocaleEn = segments.includes('en') ? 'en' : null;
-  const detectedLocale = segments.includes('es') ? 'es' : detectedLocaleEn;
-
-  const fm = mod?.frontmatter || mod || {};
-
-  return {
-    slug: fm.slug || slug,
-    title: fm.title || slug,
-    date: fm.date || '',
-    lastmod: fm.lastmod || '',
-    author: fm.author || '',
-    tags: fm.tags || [],
-    summary: fm.summary || '',
-    image: fm.image || '',
-    id: fm.id || null,
-    detectedLocale,
-    mod,
-    path,
-  };
-});
-
-const postList = computed(() => {
-  const locale = getLocale();
-
-  return allPosts
-    .filter((post) => post.detectedLocale === locale)
-    .sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateB - dateA; // Más reciente primero
-    });
-});
 
 // Paginación
 const page = ref(1);
@@ -264,55 +187,14 @@ const nextPage = () => {
   }
 };
 
-// Componente del post actual
-const Current = computed(() => {
-  const slug = route.params.slug;
-  if (!slug) return null;
-  const locale = getLocale();
-  const byLocale = Object.entries(modules).find(([path]) =>
-    path.endsWith(`/blog/${locale}/${slug}.md`)
-  );
-  if (byLocale) return byLocale[1].default;
-  const any = Object.entries(modules).find(([path]) => path.endsWith(`${slug}.md`));
-  return any ? any[1].default : null;
-});
+const normalizeLocale = (locale) => (locale === 'es' ? 'es' : 'en');
 
-// Tabla de contenidos flotante
-const showToc = computed(() => Boolean(Current.value));
-const tocCollapsed = ref(false);
-const tocItems = ref([]);
-const toggleToc = () => {
-  tocCollapsed.value = !tocCollapsed.value;
+const buildBlogPath = (locale, slug) => {
+  return locale === 'es' ? `/es/blog/${slug}` : `/blog/${slug}`;
 };
 
-const buildToc = () => {
-  const container = document.querySelector('.markdown-body');
-  if (!container) {
-    tocItems.value = [];
-    return;
-  }
-  const headings = Array.from(container.querySelectorAll('h2, h3'));
-  tocItems.value = headings.map((h) => ({
-    id: h.id || h.textContent.trim().toLowerCase().replaceAll(/\s+/g, '-'),
-    href: `#${h.id || h.textContent.trim().toLowerCase().replaceAll(/\s+/g, '-')}`,
-    text: h.textContent.trim(),
-    level: h.tagName.toLowerCase(),
-  }));
-};
+const Current = computed(() => getPostComponent(route.params.slug));
 
-watch(
-  () => Current.value,
-  async () => {
-    await nextTick();
-    buildToc();
-  }
-);
-
-onMounted(() => {
-  buildToc();
-});
-
-// Navegación entre posts
 const currentIndex = computed(() => {
   const slug = route.params.slug;
   if (!slug) return -1;
@@ -387,7 +269,6 @@ watch(
   { immediate: true }
 );
 
-// Resetear paginación al cambiar idioma y redirigir al post equivalente
 watch(
   () => route.params.locale,
   (newLocale, oldLocale) => {
@@ -502,11 +383,6 @@ watch(
 .meta-author {
   font-weight: 500;
 }
-
-/* .meta-date::before {
-  content: '•';
-  margin-right: 0.75rem;
-} */
 
 .post-summary {
   color: var(--text-subtle);

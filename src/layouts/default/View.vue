@@ -118,7 +118,7 @@
 
 <script setup>
 import { mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
-import { ref, computed, onMounted, onUnmounted, watch, watchEffect, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useTheme, useDisplay } from 'vuetify';
@@ -126,6 +126,7 @@ import { useTheme, useDisplay } from 'vuetify';
 import Footer from '@/components/Footer.vue';
 import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
+import { useLocaleNavigation } from '@/composables/useLocaleNavigation';
 import { useSeo } from '@/composables/useSeo';
 import { setupGSAP, clearGSAPProps, refreshScrollTriggers } from '@/plugins/gsap';
 import sidebarItems from '@/router/sidebar-items.js';
@@ -138,8 +139,8 @@ const route = useRoute();
 const appStore = useAppStore();
 const items = sidebarItems;
 
-const { t, locale } = useI18n();
-const supportedLanguages = new Set(['en', 'es']);
+const { t } = useI18n();
+const { withLocalePath, initializeLanguage, setupWatchers } = useLocaleNavigation();
 useSeo();
 
 const drawer = ref(false);
@@ -157,28 +158,6 @@ const mobileSection = ref(getInitialMobileSection());
 
 const isDesktop = computed(() => display.mdAndUp.value);
 
-const applyLanguage = (lang) => {
-  locale.value = lang;
-  document.documentElement.setAttribute('lang', lang);
-};
-
-const getLocaleFromPath = (path) => {
-  const seg = (path || '/').split('/')[1];
-  return seg === 'es' ? 'es' : 'en';
-};
-
-const withLocalePath = (path) => {
-  const p = path.startsWith('/') ? path : `/${path}`;
-  const pathToAdd = p === '/' ? '' : p;
-  return appStore.language === 'es' ? `/es${pathToAdd}` : p;
-};
-
-const initializeLanguage = () => {
-  const lang = getLocaleFromPath(route.path);
-  appStore.language = lang;
-  applyLanguage(lang);
-};
-
 initializeLanguage();
 
 watchEffect(() => {
@@ -195,35 +174,16 @@ watch(
   { immediate: true }
 );
 
-watch(
-  () => appStore.language,
-  async (lang) => {
-    applyLanguage(lang);
-    const target = withLocalePath(basePath(route.path));
-    if (target !== route.path) {
-      router.replace(target);
+setupWatchers(() => {
+  setTimeout(() => {
+    const root = document.querySelector('.shell-content');
+    if (root) {
+      const animatedElements = root.querySelectorAll('[style*="opacity"], [style*="transform"]');
+      clearGSAPProps(Array.from(animatedElements));
     }
-    await nextTick();
-    setTimeout(() => {
-      const root = document.querySelector('.shell-content');
-      if (root) {
-        const animatedElements = root.querySelectorAll('[style*="opacity"], [style*="transform"]');
-        clearGSAPProps(Array.from(animatedElements));
-      }
-      refreshScrollTriggers();
-    }, 100);
-  }
-);
-
-watch(
-  () => route.path,
-  (p) => {
-    const lang = getLocaleFromPath(p);
-    if (supportedLanguages.has(lang) && lang !== appStore.language) {
-      appStore.language = lang;
-    }
-  }
-);
+    refreshScrollTriggers();
+  }, 100);
+});
 
 watch(
   () => route.path,

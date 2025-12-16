@@ -74,46 +74,23 @@
 import { mdiArrowUp, mdiGithub, mdiLinkedin, mdiEmail } from '@mdi/js';
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter, useRoute } from 'vue-router';
 import { useTheme } from 'vuetify';
 
 import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
+import { useLocaleNavigation } from '@/composables/useLocaleNavigation';
 import { useSeo } from '@/composables/useSeo';
 import { useAppStore } from '@/store/app';
 
 const theme = useTheme();
-const router = useRouter();
-const route = useRoute();
 const appStore = useAppStore();
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { withLocalePath, initializeLanguage, setupWatchers } = useLocaleNavigation();
 
 useSeo();
 
 const showScrollTop = ref(false);
 const currentYear = new Date().getFullYear();
-
-const getLocaleFromPath = (path) => {
-  const seg = (path || '/').split('/')[1];
-  return seg === 'es' ? 'es' : 'en';
-};
-
-const withLocalePath = (path) => {
-  const p = path.startsWith('/') ? path : `/${path}`;
-  const pathToAdd = p === '/' ? '' : p;
-  return appStore.language === 'es' ? `/es${pathToAdd}` : p;
-};
-
-const applyLanguage = (lang) => {
-  locale.value = lang;
-  document.documentElement.setAttribute('lang', lang);
-};
-
-const initializeLanguage = () => {
-  const lang = getLocaleFromPath(route.path);
-  appStore.language = lang;
-  applyLanguage(lang);
-};
 
 initializeLanguage();
 
@@ -133,16 +110,7 @@ watch(
   { immediate: true }
 );
 
-watch(
-  () => appStore.language,
-  (lang) => {
-    applyLanguage(lang);
-    const target = withLocalePath(route.path.replace(/^\/es(?=\/|$)/, '') || '/');
-    if (target !== route.path) {
-      router.replace(target);
-    }
-  }
-);
+setupWatchers();
 
 // Scroll to top functionality
 const handleScroll = () => {
