@@ -4,13 +4,13 @@ title: 'Comenzando con Vue 3 y Vite'
 slug: 'comenzando-vue-vite'
 date: 2025-12-04
 summary: 'Una guía completa para configurar tu primer proyecto Vue 3 con Vite, incluyendo mejores prácticas y herramientas modernas.'
-tags: ['vue', 'vite', 'tailwindcss']
+tags: ['Vue.js', 'Vite', 'Tailwind CSS']
 image: /blog/comenzando-vue-vite/vite+vue+tailwind.jpg
 author: David Deras
 lastmod: 2025-12-15
 ---
 
-En esta guía, exploraremos cómo iniciar un proyecto moderno con Vue 3 y Vite, además como bonus instalaremos Tailwind CSS v4 para obtener estilos rápidos y responsivos. Cubriremos desde la configuración inicial hasta algunos tips para estructurar tu aplicación, manejar el estado global con Pinia, y optimizar el rendimiento.
+En esta guía, exploraremos cómo iniciar un proyecto moderno con Vue 3 y Vite, además como bonus instalaremos Tailwind CSS v4 para obtener estilos rápidos y responsivos. Cubriremos desde la configuración inicial hasta algunos tips para estructurar tu aplicación, manejar el estado global con Pinia, y optimizar el rendimiento. Por último subiremos el proyecto a GitHub para que lo puedas compartir.
 
 [toc]
 
@@ -18,31 +18,32 @@ En esta guía, exploraremos cómo iniciar un proyecto moderno con Vue 3 y Vite, 
 
 ## Configurando el entorno
 
-Antes de escribir una sola línea de Vue, asegúrate de tener:
+Antes de escribir una sola línea de Vue, debemos tener:
 
-- Node.js, cualquier versión **LTS**. Recomiendo acostumbrarse a utilizar [nvm](https://github.com/coreybutler/nvm-windows) para manejar múltiples versiones de Node.
-- Un gestor de paquetes confiable (aquí usaremos `npm`, que ya viene con Node.js).
-- VS Code actualizado
-- Git configurado correctamente
+- Node.js, cualquier versión **LTS**. Recomiendo acostumbrarse a utilizar <a target="_blank" href="https://github.com/coreybutler/nvm-windows">nvm</a> para manejar múltiples versiones de Node.
+- Un gestor de paquetes (aquí usaremos `npm`, que ya se instala con Node.js).
+- <a target="_blank" href="https://code.visualstudio.com/">VS Code</a> actualizado
+- <a target="_blank" href="https://www.desarrollolibre.net/blog/programacion-basica/la-guia-de-git-que-nunca-tuve">Git configurado</a> correctamente
 
-Además deberías instalar la extensión oficial de Vue.js para VS Code:
+Además, instala la extensión oficial de Vue.js para VS Code:
 
-- [Vue.js (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar). 
+- <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=Vue.volar">Vue.js (Volar)</a>.
   Más adelante puede explorar otros plugins útiles como ESLint, Prettier y Tailwind CSS IntelliSense.
 
 ---
 
 ## ¿JavaScript o TypeScript?
 
-La documentación oficial de Vue 3 está escrita **pensando en TypeScript**.  
-La API de composición, los `props`, los `emit`, los stores y los composables se benefician enormemente del tipado.
+Vue 3 tiene un soporte excelente para TypeScript, puedes usarlo, si quieres, teniendo en cuenta la <a target="_blank" href="https://vuejs.org/guide/typescript/overview.html">guía de uso oficial</a>.
 
-Pero, <a href="https://dev.to/holasoymalva/stop-using-typescript-for-small-projects-47hl" target="_blank">no necesitas usar TypeScript en todos lados</a>, especialmente si estás comenzando. Asi que mi recomendación es que valores tu contexto, la aplicación y tu equipo.
+No necesitas usar TypeScript en todos tus proyectos, especialmente si estás comenzando o solo quieres experimentar. Asi que mi recomendación es que valores tu contexto, la aplicación y tu equipo, ¡investiga!
+
 En esta guía usaremos JavaScript para mantener las cosas simples.
 
 ---
 
 ## Creando el proyecto con Vite
+
 La forma más rápida de iniciar un proyecto Vue 3 con Vite es usando el comando:
 
 ```bash
@@ -52,11 +53,7 @@ npm create vue@latest
 Si es primera vez que lo usas, te preguntará si deseas instalar el paquete `create-vue`. Responde que sí (`y` y damos ENTER).
 
 ![Instalando create-vue](/blog/comenzando-vue-vite/install-create-vue-package.png)
-*Instalando create-vue*
-
-
-
-
+_Instalando create-vue_
 
 ## Estructura del proyecto: donde nacen o mueren las apps
 

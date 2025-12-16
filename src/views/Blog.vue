@@ -33,7 +33,7 @@
                 <div class="post-body">
                   <h2 class="post-title">{{ post.title }}</h2>
                   <div class="post-meta">
-                    <span v-if="post.author" class="meta-author">{{ post.author }}</span>
+                    <!-- <span v-if="post.author" class="meta-author">{{ post.author }}</span> -->
                     <span v-if="post.date" class="meta-date">{{ formatDate(post.date) }}</span>
                   </div>
                   <p v-if="post.summary" class="post-summary">
@@ -475,10 +475,10 @@ watch(
   font-weight: 500;
 }
 
-.meta-date::before {
+/* .meta-date::before {
   content: '•';
   margin-right: 0.75rem;
-}
+} */
 
 .post-summary {
   color: var(--text-subtle);
