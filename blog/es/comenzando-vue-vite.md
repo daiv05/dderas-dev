@@ -55,6 +55,26 @@ Si es primera vez que lo usas, te preguntará si deseas instalar el paquete `cre
 ![Instalando create-vue](/blog/comenzando-vue-vite/install-create-vue-package.png)
 _Instalando paquete: create-vue_
 
+Nos preguntará por el nombre del proyecto, escribe el nombre que quieras:
+
+![Nombre del proyecto](/blog/comenzando-vue-vite/project-name.png)
+_Asigna un nombre que te ayude a identificar tu proyecto_
+
+Luego selecciona las opciones que necesites:
+
+![Opciones del proyecto](/blog/comenzando-vue-vite/project-options.png)
+_Features disponibles al crear una app Vue_
+
+Vamos punto por punto (tal como se muestra en la imagen, nos movemos con las flechas y seleccionamos con la barra espaciadora):
+
+1. **TypeScript**: como mencionamos antes, usaremos JavaScript, así que ignoramos.
+2. **JSX Support**: Ignoramos, no usaremos <a target="_blank" href="https://kinsta.com/es/blog/que-es-jsx/">JSX</a>.
+3. **Router (SPA development)**: Vue Router es esencial para trabajar con Vue como SPA (Single Page Application). No ahondaremos en temas de <a target="_blank" href="https://www.geeksforgeeks.org/blogs/spa-vs-mpa-which-one-is-better-for-you/">SPA vs MPA</a>, solo ten presente que Vue funciona como SPA por defecto. Selecciona esta opción.
+4. **Pinia (state management)**: es el reemplazo oficial de Vuex para manejo de estado. Nos ayudará a manejar datos compartidos entre componentes. Selecciona esta opción.
+5. **Vitest (unit testing)**: es el framework de testing recomendado para proyectos con Vite. Ignoramos por ahora.
+6. **End-to-End Testing**: es una herramienta para pruebas E2E. Ignoramos por ahora.
+7. **ESLint (error prevention)**: es una herramienta para mantener la calidad del código. Selecciona esta opción.
+
 ## Estructura del proyecto: donde nacen o mueren las apps
 
 Vue no impone una estructura rígida, pero **eso no significa que todas las estructuras sean buenas**.
