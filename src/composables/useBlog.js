@@ -33,9 +33,10 @@ const allPosts = Object.keys(modules).map((path) => {
 export function useBlog() {
   const route = useRoute();
 
-  const getLocale = () => {
+  const getLocale = (forRouter = false) => {
     const isSpanish = route.params.locale === 'es';
-    return isSpanish ? 'es' : 'en';
+    if (isSpanish) return 'es';
+    return forRouter ? undefined : 'en';
   };
 
   const posts = computed(() => {
