@@ -302,7 +302,119 @@ Al final, la elección depende del tamaño y complejidad de tu proyecto, así co
 
 ---
 
-## Empezando con Vue Router
+## Entendiendo como se monta la app Vue
+
+El punto de entrada de la aplicación es el archivo `src/main.js`. Aquí es donde se inicializa Vue, se configuran los plugins y se monta la aplicación en el DOM. Abre el archivo `src/main.js`:
+
+```javascript
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
+```
+
+Aquí estamos haciendo lo siguiente:
+1. Importamos los estilos globales desde `main.css`. Este archivo contiene cualquier estilo que quieras aplicar globalmente.
+2. Importamos la función `createApp` y `createPinia` para crear una nueva instancia de la aplicación y para configurar el estado global con Pinia.
+4. Importamos el componente raíz `App.vue`.
+5. Importamos la configuración de nuestras rutas desde `src/router/index.js`.
+6. Creamos la instancia de la aplicación con `createApp(App)`, pasando el componente raíz `App` como argumento, indicando que este será el punto de partida de nuestra aplicación Vue, básicamente le estamos diciendo a Vue: "Aquí está el componente principal, constrúyeme la aplicación a partir de él".
+7. Usamos `app.use(createPinia())` para registrar la instancia de Pinia, habilitando el manejo de estado global en nuestra aplicación.
+8. Usamos `app.use(router)` para registrar la instancia de Vue Router y habilitar la navegación entre vistas.
+9. Finalmente, montamos la aplicación en el elemento del DOM con el id `app` usando `app.mount('#app')`.
+
+Ahora, abre el archivo `index.html` en la raíz del proyecto:
+
+```html
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+```
+Aquí vemos que el archivo HTML tiene un `<div>` con el id `app`, que es donde Vue montará nuestra aplicación. El `<script>` que le sigue carga nuestro archivo `main.js`, que es donde inicializamos Vue.
+
+¿Y que es el componente `App.vue`? Es la raíz de nuestra aplicación. Abre el archivo `src/App.vue`:
+
+```vue
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+/* Estilos CSS */
+</style>
+```
+Aquí vemos que `App.vue` contiene un encabezado con un logo, un componente `HelloWorld`, y un menú de navegación con enlaces a las rutas definidas. El `<RouterView />` es donde se renderizarán las vistas correspondientes según la ruta actual, gracias a Vue Router.
+Entonces, repasemos el flujo completo: 
+1. El archivo `index.html` es lo que el navegador nos muestra, y lo primero que hace es cargar `main.js`.
+2. En `main.js`, se crea la aplicación Vue con `App.vue` como componente raíz (a parte de importar estilos, configurar Pinia, Vue Router y otras configuraciones).
+3. `App.vue` define la estructura principal de la aplicación (como un layout principal) y utiliza `<RouterView />` para renderizar las vistas según la ruta.
+
+Ahora exploremos la configuración de Vue Router. Abre el archivo `src/router/index.js`:
+
+```javascript
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/AboutView.vue'),
+    },
+  ],
+})
+
+export default router
+```
+
+Aquí estamos importando las funciones necesarias de Vue Router y definiendo una ruta básica para la vista `HomeView` y otra para `AboutView`. La ruta `/` renderiza `HomeView`, y la ruta `/about` carga `AboutView` de forma perezosa (lazy loading).
+
+
 
 ---
 
