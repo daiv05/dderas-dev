@@ -1,0 +1,375 @@
+.markdown-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--md-text);
+  background: var(--md-bg);
+  margin: 0;
+  padding: 0;
+}
+
+.markdown-body a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.markdown-body a:hover {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body blockquote,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body figure {
+  margin: 0 0 1.5rem; /* Aumentado el margen inferior para mejor separación */
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin: 2.5rem 0 1rem; /* Más aire antes de los títulos */
+  font-weight: 700;
+  line-height: 1.25;
+  scroll-margin-top: 100px; /* Ajustado para headers fijos */
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.markdown-body h1 { font-size: 2.25rem; }
+.markdown-body h2 { font-size: 1.75rem; border-bottom: 1px solid var(--line-soft); padding-bottom: 0.5rem; }
+.markdown-body h3 { font-size: 1.5rem; }
+.markdown-body h4 { font-size: 1.25rem; }
+
+.markdown-body ul { list-style: disc inside; }
+.markdown-body ol { list-style: decimal inside; }
+.markdown-body li { margin: 0.5rem 0; }
+.markdown-body li > ul,
+.markdown-body li > ol { margin-left: 1.5rem; margin-top: 0.5rem; }
+
+/* Task lists */
+.markdown-body ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.markdown-body li.task-list-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.markdown-body input[type="checkbox"] {
+  margin: 0;
+  transform: translateY(1px);
+}
+
+.markdown-body blockquote {
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--md-blockquote-border);
+  background: var(--md-blockquote-bg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-subtle);
+  font-style: italic;
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code */
+.markdown-body code:not(pre code) {
+  background: var(--md-code-bg);
+  border: 1px solid var(--md-code-border);
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+  font-size: 0.85em;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  white-space: break-spaces;
+}
+
+/* Keyboard keys */
+.markdown-body kbd {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  font-size: 0.75em;
+  font-family: var(--font-mono);
+  line-height: 1;
+  color: var(--text-primary);
+  vertical-align: middle;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  box-shadow: 0 2px 0 var(--line-strong);
+  margin: 0 0.15em;
+}
+
+.markdown-body pre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--md-code-border);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  padding: 1.25rem;
+  line-height: 1.5;
+}
+
+.markdown-body .md-code-block {
+  position: relative;
+  margin: 0 0 1.5rem;
+}
+
+.markdown-body .md-code-block pre {
+  margin: 0;
+}
+
+.markdown-body .md-code-copy {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid var(--line-soft);
+  background: var(--bg-elevated);
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0; /* Oculto por defecto para limpieza */
+}
+
+.markdown-body .md-code-block:hover .md-code-copy {
+  opacity: 1;
+}
+
+.markdown-body .md-code-copy:hover {
+  background: var(--surface-mild);
+  border-color: var(--line-strong);
+  color: var(--text-primary);
+}
+
+/* Tabs de código */
+.markdown-body .md-code-tabs {
+  border: 1px solid var(--md-code-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-elevated);
+  margin: 0 0 1.5rem;
+}
+
+.markdown-body .md-code-tabs__header {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: var(--bg-muted);
+  overflow-x: auto;
+}
+
+.markdown-body .md-code-tabs__tab {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-subtle);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.markdown-body .md-code-tabs__tab:hover {
+  color: var(--text-primary);
+  background: var(--surface-faint);
+}
+
+.markdown-body .md-code-tabs__tab.is-active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--line-soft);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.markdown-body .md-code-tabs__panels > .md-code-tab {
+  display: none;
+}
+
+.markdown-body .md-code-tabs__panels > .md-code-tab.is-active {
+  display: block;
+}
+
+.markdown-body .md-code-tabs .md-code-block {
+  margin: 0;
+}
+
+.markdown-body .md-code-tabs .md-code-block pre {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 0.9em;
+  color: inherit;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.markdown-body img {
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-soft);
+}
+
+.markdown-body img + em {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-subtle);
+  font-style: normal;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--md-table-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.markdown-body thead th {
+  background: var(--bg-muted);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.markdown-body th,
+.markdown-body td {
+  border-bottom: 1px solid var(--md-table-border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+/* Zebra striping para tablas */
+.markdown-body tbody tr:nth-child(even) {
+  background-color: var(--surface-faint);
+}
+
+.markdown-body tr:last-child td {
+  border-bottom: 0;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--line-soft);
+  margin: 3rem 0;
+}
+
+/* Estilos para headers con anchors */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+}
+
+/* Anchor al final del título */
+.markdown-body .md-anchor {
+  margin-left: 0.5rem;
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  font-weight: 400;
+  text-decoration: none !important;
+  font-size: 0.8em;
+}
+
+/* Mostrar anchor al hacer hover sobre el heading */
+.markdown-body h1:hover .md-anchor,
+.markdown-body h2:hover .md-anchor,
+.markdown-body h3:hover .md-anchor,
+.markdown-body h4:hover .md-anchor,
+.markdown-body h5:hover .md-anchor,
+.markdown-body h6:hover .md-anchor {
+  opacity: 1;
+}
+
+.markdown-body .md-anchor:hover {
+  color: var(--link);
+}
+
+/* Table of Contents (TOC) */
+.md-toc {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  background: var(--bg-soft);
+  margin: 2rem 0;
+}
+
+.md-toc > ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0;
+}
+
+.md-toc ul ul {
+  list-style: none !important;
+  padding-left: 1.25rem !important;
+  margin-top: 0.25rem;
+}
+
+.md-toc li {
+  margin: 0.35rem 0;
+  line-height: 1.5;
+}
+
+.md-toc a {
+  color: var(--text-subtle);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-size: 0.95rem;
+}
+
+.md-toc a:hover {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+.markdown-body pre,
+.markdown-body code {
+  font-family: var(--font-mono);
+}
