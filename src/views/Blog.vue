@@ -1,21 +1,12 @@
 <template>
-  <div class="page-frame">
-    <section class="section-stack">
-      <!-- <header v-if="!Current" class="blog-header">
-        <div class="eyebrow">{{ t('blog.eyebrow') }}</div>
-        <h1 class="section-title">{{ t('blog.title') }}</h1>
-        <p class="section-lead">{{ t('blog.lead') }}</p>
-      </header> -->
-
-      <!-- Banner/Aviso de "PAGINA EN CONSTRUCCIÓN" -->
+  <div class="page-frame-blog">
+    <section class="section-stack blog-wrapper">
       <div>
         <v-alert class="text-body-2" density="compact" type="error" :icon="mdiAlertCircle">
           <template #title><span>Hey</span></template>
           {{ t('blog.constructionNotice') }}
         </v-alert>
       </div>
-
-      <!-- Índice del blog (tarjetas + paginación) -->
       <div v-if="!Current" class="blog-index-wrapper">
         <div class="blog-index-content">
           <ul v-if="pagedPosts.length > 0" class="post-index">
@@ -33,7 +24,6 @@
                 <div class="post-body">
                   <h2 class="post-title">{{ post.title }}</h2>
                   <div class="post-meta">
-                    <!-- <span v-if="post.author" class="meta-author">{{ post.author }}</span> -->
                     <span v-if="post.date" class="meta-date">{{ formatDate(post.date) }}</span>
                   </div>
                   <p v-if="post.summary" class="post-summary">
@@ -77,7 +67,6 @@
         </div>
       </div>
 
-      <!-- Post abierto + TOC flotante -->
       <article v-else class="blog-post">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
           <router-link :to="getLocale() === 'es' ? '/es' : '/'">
@@ -449,8 +438,10 @@ watch(
   font-size: 0.95rem;
 }
 
-.blog-post {
-  max-width: 800px;
+.blog-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 68ch;
   margin: 0 auto;
 }
 

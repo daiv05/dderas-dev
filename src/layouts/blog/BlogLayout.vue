@@ -1,6 +1,5 @@
 <template>
   <v-app class="blog-layout">
-    <!-- Header simple similar al modo móvil -->
     <v-app-bar flat elevation="0" class="blog-header">
       <div class="blog-header-content">
         <router-link :to="withLocalePath('/blog')" class="blog-brand">
@@ -13,9 +12,9 @@
             {{ t('navigation.backToMain') }}
           </v-btn>
 
-          <v-btn rounded="pill" size="small" class="text-none" :to="withLocalePath('/blog')">
+          <!-- <v-btn rounded="pill" size="small" class="text-none" :to="withLocalePath('/blog')">
             {{ t('navigation.backToBlog') }}
-          </v-btn>
+          </v-btn> -->
 
           <div class="blog-controls">
             <ThemeToggle />
@@ -74,23 +73,46 @@
 import { mdiArrowUp, mdiGithub, mdiLinkedin, mdiEmail } from '@mdi/js';
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter, useRoute } from 'vue-router';
 import { useTheme } from 'vuetify';
 
 import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
-import { useLocaleNavigation } from '@/composables/useLocaleNavigation';
 import { useSeo } from '@/composables/useSeo';
 import { useAppStore } from '@/store/app';
 
 const theme = useTheme();
+const router = useRouter();
+const route = useRoute();
 const appStore = useAppStore();
-const { t } = useI18n();
-const { withLocalePath, initializeLanguage, setupWatchers } = useLocaleNavigation();
+const { t, locale } = useI18n();
 
 useSeo();
 
 const showScrollTop = ref(false);
 const currentYear = new Date().getFullYear();
+
+const getLocaleFromPath = (path) => {
+  const seg = (path || '/').split('/')[1];
+  return seg === 'es' ? 'es' : 'en';
+};
+
+const withLocalePath = (path) => {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  const pathToAdd = p === '/' ? '' : p;
+  return appStore.language === 'es' ? `/es${pathToAdd}` : p;
+};
+
+const applyLanguage = (lang) => {
+  locale.value = lang;
+  document.documentElement.setAttribute('lang', lang);
+};
+
+const initializeLanguage = () => {
+  const lang = getLocaleFromPath(route.path);
+  appStore.language = lang;
+  applyLanguage(lang);
+};
 
 initializeLanguage();
 
@@ -110,7 +132,16 @@ watch(
   { immediate: true }
 );
 
-setupWatchers();
+watch(
+  () => appStore.language,
+  (lang) => {
+    applyLanguage(lang);
+    const target = withLocalePath(route.path.replace(/^\/es(?=\/|$)/, '') || '/');
+    if (target !== route.path) {
+      router.replace(target);
+    }
+  }
+);
 
 // Scroll to top functionality
 const handleScroll = () => {
@@ -162,7 +193,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 900px;
+  max-width: 78ch;
   margin: 0 auto;
   padding: 0 16px;
 }
@@ -172,6 +203,7 @@ onUnmounted(() => {
   flex-direction: column;
   text-decoration: none;
   color: rgb(var(--v-theme-on-surface));
+  margin-left: 1rem;
 }
 
 .blog-brand-name {
@@ -217,7 +249,7 @@ onUnmounted(() => {
 }
 
 .blog-footer-content {
-  max-width: 900px;
+  max-width: 78ch;
   margin: 0 auto;
   display: flex;
   align-items: center;

@@ -1,9 +1,4 @@
-/* Importar fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
-@import 'github-markdown-css/github-markdown.css';
-/* Temas de Prism: claro y oscuro según media query */
-@import url('prism-themes/themes/prism-material-light.css') screen and (prefers-color-scheme: light);
-@import url('prism-themes/themes/prism-vsc-dark-plus.css') screen and (prefers-color-scheme: dark);
 
 * {
   box-sizing: border-box;
@@ -125,11 +120,19 @@ ol {
   position: relative;
 }
 
-/* Estilos del cuerpo Markdown (limpio y temable) */
+.page-frame-blog {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--shell-padding);
+  position: relative;
+}
+
 .markdown-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.75;
   color: var(--md-text);
   background: var(--md-bg);
-  max-width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -137,7 +140,8 @@ ol {
 .markdown-body a {
   color: var(--link);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
 }
 
 .markdown-body a:hover {
@@ -161,9 +165,9 @@ ol {
 .markdown-body h5,
 .markdown-body h6 {
   margin: 2rem 0 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
-  scroll-margin-top: 88px; /* evita solapamiento con sticky header */
+  scroll-margin-top: 88px;
   font-family: var(--font-display);
 }
 
@@ -197,7 +201,6 @@ ol {
   padding: 1rem;
 }
 
-/* Bloques de código con botón copiar */
 .markdown-body .md-code-block {
   position: relative;
   margin: 0 0 1.125rem;
@@ -320,9 +323,9 @@ html.dark .shiki span {
 .markdown-body img + em {
   display: block;
   text-align: center;
-  font-size: 0. ninerem;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
   color: var(--md-muted);
-  margin-top: 0.5rem;
 }
 
 .markdown-body table {
@@ -432,6 +435,7 @@ html.dark .shiki span {
 .markdown-body pre,
 .markdown-body code {
   font-family: var(--font-mono);
+  font-size: 0.9rem;
 }
 
 .section-stack {

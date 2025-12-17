@@ -20,6 +20,7 @@ import { createApp } from 'vue';
 import { registerPlugins } from '@/plugins';
 
 // Estilos globales
+import '@/assets/styles/markdown.css';
 import '@/assets/styles/global.css';
 
 // Components

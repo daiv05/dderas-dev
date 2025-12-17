@@ -73,179 +73,258 @@ Vamos punto por punto (tal como se muestra en la imagen, nos movemos con las fle
 4. **Pinia (state management)**: es el reemplazo oficial de Vuex para manejo de estado. Nos ayudará a manejar datos compartidos entre componentes. Selecciona esta opción.
 5. **Vitest (unit testing)**: es el framework de testing recomendado para proyectos con Vite. Ignoramos por ahora.
 6. **End-to-End Testing**: es una herramienta para pruebas E2E. Ignoramos por ahora.
-7. **ESLint (error prevention)**: es una herramienta para mantener la calidad del código. Selecciona esta opción.
+7. **ESLint (error prevention)**: es una herramienta para mantener la calidad del código, ayudando a detectar errores y mantener un estilo consistente. Recomiendo mucho su uso, aunque es importante personalizarlo según tu equipo y proyecto. La seleccionaremos para explorarla un poco más adelante.
+8. **Prettier (code formatting)**: es una herramienta para formatear el código automáticamente, recomiendo mucho usarla (aunque al igual que ESLint, es importante configurarla según tus necesidades, o directamente no usarla). En este caso la seleccionaremos también para explorarla.
 
-## Estructura del proyecto: donde nacen o mueren las apps
+Despues de seleccionar según las necesidades de tu proyecto, presionamos ENTER y ahora nos preguntará sobre algunas features experimentales de Vite:
 
-Vue no impone una estructura rígida, pero **eso no significa que todas las estructuras sean buenas**.
+![Features experimentales de Vite](/blog/comenzando-vue-vite/project-experimental-options.png)
+_Features experimentales de Vite_
 
-Una estructura bien fundamentada separa responsabilidades:
+1. **Oxlint**: es un nuevo linter, parte de <a target="_blank" href="https://oxc.rs/">OXC</a>, una nueva colección de herramientas de javascript escritas en Rust, Oxlint es en extremo rápido y promete bastante, sin embargo como se menciona en su web: "En esta etapa, Oxlint puede utilizarse para sustituir por completo a ESLint en proyectos pequeños y medianos." Por ahora, recomiendo seguir usando ESLint, así que ignoramos esta opción.
+2. **rolldown vite (experimental)**: Rolldown-vite es una bifurcación de Vite que utiliza Rolldown en lugar de Rollup y esbuild, con el objetivo de obtener el máximo rendimiento. Pronto se convetirá en el paquete por defecto, por ahora ignoremos esta opción.
 
-src/
-components/ → piezas reutilizables
-pages/ → vistas asociadas a rutas
-composables/ → lógica reutilizable (hooks)
-store/ → estado global (Pinia)
-services/ → acceso a APIs
-router/ → definición de rutas
-styles/ → estilos globales y tokens
+Despues de seleccionar las opciones, presionamos ENTER.
 
-### ¿Por qué esta separación?
+Nos preguntará si queremos empezar con un proyecto totalmente en blanco o con ejemplos. Si es tu primera vez, te recomiendo seleccionar "No" para que puedas ver una estructura básica con ejemplos. Esa será la opción que seleccionaremos aquí.
 
-- **Components** deben ser visuales y predecibles.
-- **Pages** orquestan componentes, no contienen lógica compleja.
-- **Composables** encapsulan lógica reutilizable y testeable.
-- **Services** evitan que Axios o Fetch se filtren por toda la app.
+Vite creará la estructura inicial del proyecto y nos dará algunos comandos útiles, vamos ejecutando uno por uno:
 
-Este patrón está alineado con:
+![Proyecto creado](/blog/comenzando-vue-vite/project-created.png)
+_Proyecto creado_
 
-- Principios de _Separation of Concerns_
-- Recomendaciones del core team de Vue
-- Prácticas comunes en apps medianas y grandes
+1. Primero navegamos a la carpeta del proyecto:
 
-> Si todo vive en `components/`, tu proyecto no es simple: está desordenado.
+```bash
+cd nombre-del-proyecto
+```
 
----
+2. Instalamos las dependencias (esto puede tardar unos minutos dependiendo de tu conexión):
 
-## Estado global: por qué Pinia es la elección correcta
+```bash
+npm install
+```
 
-Pinia no es “el nuevo Vuex”. Es **el reemplazo oficial**.
+3. Este comando es para correr Prettier, no tendrá ningún efecto porque no hemos modificado nada aún, pero es bueno tenerlo presente:
 
-Fundamentos claros:
+```bash
+npm run format
+```
 
-- API más simple
-- Mejor soporte para TypeScript
-- Integración natural con la Composition API
-- Menos boilerplate, menos magia
+4. Finalmente, iniciamos el servidor de desarrollo:
 
-Pinia adopta patrones explícitos:
+```bash
+npm run dev
+```
 
-- Estado claro
-- Acciones declaradas
-- Sin mutaciones ocultas
+![Servidor de desarrollo corriendo](/blog/comenzando-vue-vite/dev-server-running.png)
+_Servidor de desarrollo levantado_
 
-**Conclusión:** para cualquier proyecto nuevo en Vue 3, Pinia es la opción técnicamente correcta.
+Vite corre el servidor de desarrollo en `http://localhost:5173/` (el puerto puede variar si el 5173 ya está en uso (5174, 5175, etc.) ).
 
----
+> El puerto 5173 es un guiño al propio Vite:
+>
+> - 5 = V
+> - 1 = I
+> - 7 = T
+> - 3 = E
+>
+> Aunque más allá de eso, Vite utiliza el puerto 5173 porque es poco habitual en entornos de desarrollo, lo que reduce la probabilidad de conflictos con otros servidores locales. Vía <a target="_blank" href="https://medium.com/@bishakhghosh0/why-localhost-5173-is-every-frontend-developers-best-friend-b3bb5b6fb1db">Why localhost:5173 is Every Frontend Developer’s Best Friend</a>.
 
-## Rutas: carga diferida y responsabilidad clara
+Si entramos a esa URL en nuestro navegador, veremos la app Vue corriendo:
 
-Vue Router permite algo fundamental: **lazy-loading de vistas**.
+![App Vue corriendo](/blog/comenzando-vue-vite/vue-app-running.png)
+_App Vue corriendo_
 
-Esto no es una optimización prematura; es una buena práctica respaldada por:
-
-- Mejor tiempo de carga inicial
-- Menor consumo de recursos
-- Escalabilidad real
-
-Cada ruta debe:
-
-- Apuntar a una vista (`page`)
-- Cargarla dinámicamente
-- Delegar permisos y validaciones a _guards_ o composables
-
-La ruta no es el lugar para lógica de negocio.  
-Es el lugar para **decidir qué se muestra, no cómo funciona**.
+Como puedes ver, el equipo de Vue comparte varios recursos oficiales para aprender más sobre el framework, comenzando por la <a target="_blank" href="https://vuejs.org/guide/introduction.html">documentación oficial</a>. Explora cada enlace para aprender y conocer sobre todo el ecosistema.
 
 ---
 
-## Estilos: Tailwind como herramienta, no como dogma
+## Estructura del proyecto
 
-Tailwind CSS se ha consolidado porque:
+Pasemos a ver la estructura inicial, abre el proyecto en tu editor de código favorito (recomiendo VS Code):
 
-- Elimina CSS muerto
-- Facilita el diseño consistente
-- Funciona extremadamente bien con componentes
+```bash
+my-vue-app/
+├── .vscode/              # (Si estás en VS Code) Configuración de Visual Studio Code
+├── node_modules/         # Dependencias del proyecto, generadas al instalar los paquetes
+├── public/               # Archivos estáticos
+├── src/                  # Código fuente de la aplicación
+│   ├── assets/           # Recursos como imágenes y estilos
+│   ├── components/       # Componentes Vue reutilizables
+│   ├── router/           # Configuración de Vue Router
+│   ├── store/            # Configuración de Pinia
+│   ├── views/            # Vistas para las rutas
+│   ├── App.vue           # Componente raíz de la aplicación
+│   └── main.js           # Punto de entrada de la aplicación
+├── .editorconfig         # Configuración de EditorConfig
+├── .gitattributes        # Configuración de Git
+├── .gitignore            # Archivos y carpetas ignoradas por Git
+├── .prettierrc.json      # Configuración de Prettier
+├── .eslint.config.js     # Configuración de ESLint
+├── index.html            # Archivo HTML principal
+├── jsconfig.json         # Configuración de JavaScript para el editor
+├── package-lock.json     # Versiones exactas de las dependencias (autogenerado)
+├── package.json          # Información del proyecto y scripts
+├── README.md             # Documentación del proyecto
+└── vite.config.js        # Configuración de Vite
+```
 
-Pero está fundamentado en una idea clave:
+La estructura puede variar ligeramente dependiendo de las opciones seleccionadas al crear el proyecto (por ejemplo, si se incluye o no ESLint o Pinia). Además, si estás usando VS Code es probable que veas la carpeta `.vscode/` con configuraciones específicas para el editor y que algunos archivos los veas "agrupados":
 
-> **Los estilos también son parte de la lógica del componente.**
+![Estructura del proyecto en VS Code](/blog/comenzando-vue-vite/project-structure-nested.png)
+_Estructura del proyecto en VS Code_
 
-Eso no significa llenar archivos de clases ilegibles.  
-Significa:
+Esto es solo una forma visual que tiene VS Code para organizar los archivos, puedes mostrarlos individualmente (opción que prefiero) cambiando el valor de `"explorer.fileNesting.enabled"` a `false` en el archivo `.vscode\settings.json`.
 
-- Extraer patrones
-- Usar componentes base
-- Definir tokens (colores, spacing, tipografía)
+### Entendiendo las carpetas principales
 
-Tailwind no reemplaza el criterio. Lo amplifica.
+- `public/`: Aquí van los archivos estáticos que no serán procesados por Vite. Puedes colocar imágenes, fuentes u otros recursos que necesites servir directamente.
+- `src/`: Esta es la carpeta más importante, contiene todo el código fuente de tu aplicación. Aquí tenemos:
+  - `assets/`: Aquí van los recursos como imágenes y estilos CSS.
+  - `components/`: Aquí van los componentes Vue reutilizables que puedes usar en diferentes partes de tu aplicación, por ejemplo, botones, tarjetas, modales, etc.
+  - `router/`: Aquí va la configuración de <a href="https://router.vuejs.org/" target="_blank">Vue Router</a>, donde defines las rutas de tu aplicación y cómo se navega entre ellas.
+  - `store/`: Aquí va la configuración de <a href="https://pinia.vuejs.org/" target="_blank">Pinia</a>, donde defines el <a href="https://kinsta.com/es/blog/vue-pinia/" target="_blank">estado global de tu aplicación. </a>
+  - `views/`: Aquí van las vistas principales que corresponden a las rutas definidas en Vue Router. Cada vista generalmente representa una página completa, caso contrario a los componentes que son partes más pequeñas y reutilizables. A final todos son archivos `.vue`, por lo que la diferencia radica en su propósito y uso.
+  - `App.vue`: Este es el componente raíz de tu aplicación, donde se monta todo (ya explicaremos más adelante).
+  - `main.js`: Este es el punto de entrada de tu aplicación, donde se inicializa Vue, se configuran los plugins (como Vue Router y Pinia) y se monta la aplicación en el DOM.
+
+### ¿Es suficiente esta estructura?
+
+Esta es la estructura básica que Vite genera para un proyecto Vue 3. Es un buen punto de partida, pero a medida que tu aplicación crezca, es probable que necesites organizar mejor tu código. Existen algunas prácticas comunes para estructurar proyectos Vue más grandes, como:
+
+- Crear subcarpetas por módulo/funcionalidad dentro de las distintas carpetas, como `components/` y `views/`. Por ejemplo:
+
+```bash
+my-vue-app/
+├── src/
+│   ├── assets/
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   └── shared/
+│   │
+│   ├── components/
+│   │   ├── auth/
+│   │   │   ├── LoginForm.vue
+│   │   │   └── RegisterForm.vue
+│   │   ├── dashboard/
+│   │   │   ├── StatsCard.vue
+│   │   │   └── ChartWidget.vue
+│   │   └── shared/
+│   │       ├── BaseButton.vue
+│   │       └── BaseModal.vue
+│   │
+│   ├── views/
+│   │   ├── auth/
+│   │   │   ├── LoginView.vue
+│   │   │   └── RegisterView.vue
+│   │   ├── dashboard/
+│   │   │   └── DashboardView.vue
+│   │   └── home/
+│   │       └── HomeView.vue
+│   │
+│   ├── store/
+│   │   ├── auth/
+│   │   │   └── auth.store.js
+│   │   ├── dashboard/
+│   │   │   └── dashboard.store.js
+│   │   └── shared/
+│   │       └── ui.store.js
+│   │
+│   ├── router/
+│   │   ├── auth.routes.js
+│   │   ├── dashboard.routes.js
+│   │   └── index.js
+│   │
+│   ├── App.vue
+│   └── main.js
+├── ...
+```
+
+**Puedes usar este enfoque** en apps pequeñas o medianas en las que quieres un poco más de orden sin complicarte demasiado. **La limitante** es que a medida que la app crece, puede volverse difícil manejar dependencias entre módulos y mantener el código organizado, porque todo está disperso en varias carpetas.
+
+- En otros casos, puedes optar por una estructura basada en funcionalidades o módulos, donde cada uno tiene su propia carpeta que contiene componentes, vistas, y lógica relacionada. Por ejemplo:
+
+```bash
+my-vue-app/
+├── src/
+│   ├── modules/
+│   │   ├── auth/
+│   │   │   ├── components/
+│   │   │   │   └── LoginForm.vue
+│   │   │   ├── views/
+│   │   │   │   └── LoginView.vue
+│   │   │   ├── store/
+│   │   │   │   └── auth.store.js
+│   │   │   ├── router/
+│   │   │   │   └── auth.routes.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── dashboard/
+│   │   │   ├── components/
+│   │   │   ├── views/
+│   │   │   ├── store/
+│   │   │   ├── router/
+│   │   │   └── index.js
+│   │   │
+│   │   └── users/
+│   │       ├── components/
+│   │       ├── views/
+│   │       ├── store/
+│   │       ├── router/
+│   │       └── index.js
+│   │
+│   ├── shared/
+│   │   ├── components/
+│   │   │   ├── BaseButton.vue
+│   │   │   └── BaseModal.vue
+│   │   ├── composables/
+│   │   │   └── useFetch.js
+│   │   ├── store/
+│   │   │   └── ui.store.js
+│   │   ├── utils/
+│   │   │   └── formatDate.js
+│   │   └── constants/
+│   │       └── roles.js
+│   │
+│   ├── router/
+│   │   └── index.js
+│   │
+│   ├── assets/
+│   ├── App.vue
+│   └── main.js
+├── ...
+```
+
+Cada módulo o característica tiene **todo lo que necesita en un solo lugar**, lo que facilita la navegación y el mantenimiento del código. Este enfoque es especialmente útil en aplicaciones grandes y complejas. Al dividir por módulos puede haber cierta duplicación de código si varias características comparten componentes o lógica similar, y esto se mitiga utilizando la carpeta `shared/`, donde puedes colocar componentes reutilizables, composables, utilidades y constantes que se usan en toda la aplicación.
+
+Al final, la elección depende del tamaño y complejidad de tu proyecto, así como de las **_preferencias de tu equipo_**.
 
 ---
 
-## Testing: lo que no pruebas, no existe
-
-Vue 3 y Vite integran **Vitest** de forma nativa.  
-Esto no es casualidad: la cercanía entre tooling y testing reduce fricción.
-
-La base sólida:
-
-- Probar **composables** antes que componentes
-- Testear lógica, no estilos
-- Usar componentes como integración, no como unidad aislada
-
-**Fundamento:** la mayor parte de los bugs no están en el HTML, están en la lógica.
+## Empezando con Vue Router
 
 ---
 
-## VS Code + IA: productividad con responsabilidad
-
-La IA no reemplaza al desarrollador, pero **sí amplifica sus decisiones**.
-
-Usada correctamente:
-
-- Acelera boilerplate
-- Sugiere tests
-- Explica errores complejos
-- Ayuda a refactorizar
-
-Usada sin criterio:
-
-- Introduce bugs sutiles
-- Genera código innecesario
-- Oculta problemas de diseño
-
-**Regla clave:**
-
-> La IA propone. Tú decides.
-
-VS Code, junto con extensiones oficiales (Volar, ESLint, TypeScript), crea un entorno donde los errores aparecen **antes** de ejecutar la app. Eso es ingeniería, no magia.
+## Pinia para manejo de estado global
 
 ---
 
-## Producción: pensar desde el primer día
-
-Una app Vue no termina en `npm run dev`.
-
-Desde el inicio deberías considerar:
-
-- Variables de entorno bien definidas
-- Separación entre config y código
-- Builds reproducibles
-- Deploys predecibles
-
-Vite facilita esto, pero no lo hace automático.  
-La responsabilidad sigue siendo del desarrollador.
+## Composables en Vue 3
 
 ---
 
-## Reflexión final
-
-Aprender Vue 3 no es aprender sintaxis.  
-Es aprender a **pensar en componentes, estados, flujos y límites claros**.
-
-Vue 3 + Vite + VS Code + IA forman un stack moderno, pero solo funciona bien si:
-
-- Las decisiones están fundamentadas
-- La estructura es clara
-- El tooling se usa con criterio
-- La IA se usa como apoyo, no como muleta
-
-Si entiendes esto, no solo estás empezando con Vue.  
-Estás empezando **bien**.
+## Optimización y buenas prácticas
 
 ---
 
-- Diagrama de estructura de carpetas (arquitectura)
-- Flujo de carga de una ruta con lazy-loading
-- Pirámide de testing (composables → vistas → e2e)
-- Flujo de desarrollo con IA (idea → código → test → commit)
+## ESLint y Prettier
+
+---
+
+## EXTRA: Instalando Tailwind CSS v4
+
+---
+
+## EXTRA: Subiendo el proyecto a GitHub
+
