@@ -69,7 +69,6 @@ const router = createRouter({
         const scroller =
           document.querySelector('.shell-main') || document.querySelector('.blog-main');
 
-        // Manejo de anchors/hashes
         if (to.hash && scroller) {
           const target = document.querySelector(to.hash);
           if (target) {
@@ -82,14 +81,14 @@ const router = createRouter({
         }
 
         if (savedPosition) {
-          return resolve(savedPosition);
+          return resolve({ ...savedPosition, behavior: 'smooth' });
         }
 
         if (scroller) {
-          scroller.scrollTo({ top: 0, behavior: 'auto' });
+          scroller.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        resolve({ top: 0 });
+        resolve({ top: 0, behavior: 'smooth' });
       }, 50);
     });
   },
