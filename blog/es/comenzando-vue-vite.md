@@ -5,7 +5,7 @@ slug: 'comenzando-vue-vite'
 date: 2025-12-04
 summary: 'Una guía completa para configurar tu primer proyecto Vue 3 con Vite, incluyendo mejores prácticas y herramientas modernas.'
 tags: ['Vue.js', 'Vite', 'Tailwind CSS']
-image: /blog/comenzando-vue-vite/vite+vue+tailwind.jpg
+image: /blog/getting-started-vue-vite/shared/vite+vue+tailwind.jpg
 author: David Deras
 lastmod: 2025-12-15
 ---
@@ -52,17 +52,17 @@ npm create vue@latest
 
 Si es primera vez que lo usas, te preguntará si deseas instalar el paquete `create-vue`. Responde que sí (escribimos `y` y damos ENTER).
 
-![Instalando create-vue](/blog/comenzando-vue-vite/install-create-vue-package.png)
+![Instalando create-vue](/blog/getting-started-vue-vite/shared/install-create-vue-package.png)
 _Instalando paquete: create-vue_
 
 Nos preguntará por el nombre del proyecto, escribe el nombre que quieras:
 
-![Nombre del proyecto](/blog/comenzando-vue-vite/project-name.png)
+![Nombre del proyecto](/blog/getting-started-vue-vite/shared/project-name.png)
 _Asigna un nombre que te ayude a identificar tu proyecto_
 
 Luego selecciona las opciones que necesites:
 
-![Opciones del proyecto](/blog/comenzando-vue-vite/project-options.png)
+![Opciones del proyecto](/blog/getting-started-vue-vite/shared/project-options.png)
 _Features disponibles al crear una app Vue_
 
 Vamos punto por punto (tal como se muestra en la imagen, nos movemos con las flechas y seleccionamos con la barra espaciadora):
@@ -78,7 +78,7 @@ Vamos punto por punto (tal como se muestra en la imagen, nos movemos con las fle
 
 Despues de seleccionar según las necesidades de tu proyecto, presionamos ENTER y ahora nos preguntará sobre algunas features experimentales de Vite:
 
-![Features experimentales de Vite](/blog/comenzando-vue-vite/project-experimental-options.png)
+![Features experimentales de Vite](/blog/getting-started-vue-vite/shared/project-experimental-options.png)
 _Features experimentales de Vite_
 
 1. **Oxlint**: es un nuevo linter, parte de <a target="_blank" href="https://oxc.rs/">OXC</a>, una nueva colección de herramientas de javascript escritas en Rust, Oxlint es en extremo rápido y promete bastante, sin embargo como se menciona en su web: "En esta etapa, Oxlint puede utilizarse para sustituir por completo a ESLint en proyectos pequeños y medianos." Por ahora, recomiendo seguir usando ESLint, así que ignoramos esta opción.
@@ -90,7 +90,7 @@ Nos preguntará si queremos empezar con un proyecto totalmente en blanco o con e
 
 Vite creará la estructura inicial del proyecto y nos dará algunos comandos útiles, vamos ejecutando uno por uno:
 
-![Proyecto creado](/blog/comenzando-vue-vite/project-created.png)
+![Proyecto creado](/blog/getting-started-vue-vite/shared/project-created.png)
 _Proyecto creado_
 
 1. Primero navegamos a la carpeta del proyecto:
@@ -117,7 +117,7 @@ npm run format
 npm run dev
 ```
 
-![Servidor de desarrollo corriendo](/blog/comenzando-vue-vite/dev-server-running.png)
+![Servidor de desarrollo corriendo](/blog/getting-started-vue-vite/shared/dev-server-running.png)
 _Servidor de desarrollo levantado_
 
 Vite corre el servidor de desarrollo en `http://localhost:5173/` (el puerto puede variar si el 5173 ya está en uso (5174, 5175, etc.) ).
@@ -133,7 +133,7 @@ Vite corre el servidor de desarrollo en `http://localhost:5173/` (el puerto pued
 
 Si entramos a esa URL en nuestro navegador, veremos la app Vue corriendo:
 
-![App Vue corriendo](/blog/comenzando-vue-vite/vue-app-running.png)
+![App Vue corriendo](/blog/getting-started-vue-vite/shared/vue-app-running.png)
 _App Vue corriendo_
 
 Como puedes ver, el equipo de Vue comparte varios recursos oficiales para aprender más sobre el framework, comenzando por la <a target="_blank" href="https://vuejs.org/guide/introduction.html">documentación oficial</a>. Explora cada enlace para aprender y conocer sobre todo el ecosistema.
@@ -172,7 +172,7 @@ my-vue-app/
 
 La estructura puede variar ligeramente dependiendo de las opciones seleccionadas al crear el proyecto (por ejemplo, si se incluye o no ESLint o Pinia). Además, si estás usando VS Code es probable que veas la carpeta `.vscode/` con configuraciones específicas para el editor y que algunos archivos los veas "agrupados":
 
-![Estructura del proyecto en VS Code](/blog/comenzando-vue-vite/project-structure-nested.png)
+![Estructura del proyecto en VS Code](/blog/getting-started-vue-vite/shared/project-structure-nested.png)
 _Estructura del proyecto en VS Code_
 
 Esto es solo una forma visual que tiene VS Code para organizar los archivos, puedes mostrarlos individualmente (opción que prefiero) cambiando el valor de `"explorer.fileNesting.enabled"` a `false` en el archivo `.vscode\settings.json`.
@@ -307,31 +307,32 @@ Al final, la elección depende del tamaño y complejidad de tu proyecto, así co
 El punto de entrada de la aplicación es el archivo `src/main.js`. Aquí es donde se inicializa Vue, se configuran los plugins y se monta la aplicación en el DOM. Abre el archivo `src/main.js`:
 
 ```javascript
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(createPinia())
-app.use(router)
+app.use(createPinia());
+app.use(router);
 
-app.mount('#app')
+app.mount('#app');
 ```
 
 Aquí estamos haciendo lo siguiente:
+
 1. Importamos los estilos globales desde `main.css`. Este archivo contiene cualquier estilo que quieras aplicar globalmente.
 2. Importamos la función `createApp` y `createPinia` para crear una nueva instancia de la aplicación y para configurar el estado global con Pinia.
-4. Importamos el componente raíz `App.vue`.
-5. Importamos la configuración de nuestras rutas desde `src/router/index.js`.
-6. Creamos la instancia de la aplicación con `createApp(App)`, pasando el componente raíz `App` como argumento, indicando que este será el punto de partida de nuestra aplicación Vue, básicamente le estamos diciendo a Vue: "Aquí está el componente principal, constrúyeme la aplicación a partir de él".
-7. Usamos `app.use(createPinia())` para registrar la instancia de Pinia, habilitando el manejo de estado global en nuestra aplicación.
-8. Usamos `app.use(router)` para registrar la instancia de Vue Router y habilitar la navegación entre vistas.
-9. Finalmente, montamos la aplicación en el elemento del DOM con el id `app` usando `app.mount('#app')`.
+3. Importamos el componente raíz `App.vue`.
+4. Importamos la configuración de nuestras rutas desde `src/router/index.js`.
+5. Creamos la instancia de la aplicación con `createApp(App)`, pasando el componente raíz `App` como argumento, indicando que este será el punto de partida de nuestra aplicación Vue, básicamente le estamos diciendo a Vue: "Aquí está el componente principal, constrúyeme la aplicación a partir de él".
+6. Usamos `app.use(createPinia())` para registrar la instancia de Pinia, habilitando el manejo de estado global en nuestra aplicación.
+7. Usamos `app.use(router)` para registrar la instancia de Vue Router y habilitar la navegación entre vistas.
+8. Finalmente, montamos la aplicación en el elemento del DOM con el id `app` usando `app.mount('#app')`.
 
 Ahora, abre el archivo `index.html` en la raíz del proyecto:
 
@@ -339,9 +340,9 @@ Ahora, abre el archivo `index.html` en la raíz del proyecto:
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
   <body>
@@ -350,14 +351,15 @@ Ahora, abre el archivo `index.html` en la raíz del proyecto:
   </body>
 </html>
 ```
+
 Aquí vemos que el archivo HTML tiene un `<div>` con el id `app`, que es donde Vue montará nuestra aplicación. El `<script>` que le sigue carga nuestro archivo `main.js`, que es donde inicializamos Vue.
 
 ¿Y que es el componente `App.vue`? Es la raíz de nuestra aplicación. Abre el archivo `src/App.vue`:
 
 ```vue
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import HelloWorld from './components/HelloWorld.vue';
 </script>
 
 <template>
@@ -381,17 +383,19 @@ import HelloWorld from './components/HelloWorld.vue'
 /* Estilos CSS */
 </style>
 ```
+
 Aquí vemos que `App.vue` contiene un encabezado con un logo, un componente `HelloWorld`, y un menú de navegación con enlaces a las rutas definidas. El `<RouterView />` es donde se renderizarán las vistas correspondientes según la ruta actual, gracias a Vue Router.
-Entonces, repasemos el flujo completo: 
+Entonces, repasemos el flujo completo:
+
 1. El archivo `index.html` es lo que el navegador nos muestra, y lo primero que hace es cargar `main.js`.
 2. En `main.js`, se crea la aplicación Vue con `App.vue` como componente raíz (a parte de importar estilos, configurar Pinia, Vue Router y otras configuraciones).
-3. `App.vue` define la estructura principal de la aplicación (como un layout principal) y utiliza `<RouterView />` para renderizar las vistas según la ruta.
+3. `App.vue` define la estructura principal de la aplicación (como un layout principal) y utiliza `<RouterView />` para renderizar las vistas según la ruta actual.
 
 Ahora exploremos la configuración de Vue Router. Abre el archivo `src/router/index.js`:
 
 ```javascript
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -407,14 +411,17 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
   ],
-})
+});
 
-export default router
+export default router;
 ```
 
-Aquí estamos importando las funciones necesarias de Vue Router y definiendo una ruta básica para la vista `HomeView` y otra para `AboutView`. La ruta `/` renderiza `HomeView`, y la ruta `/about` carga `AboutView` de forma perezosa (lazy loading).
+Aquí estamos importando las funciones necesarias de Vue Router y definiendo una ruta básica para la vista `HomeView` y otra para `AboutView`. La ruta `/` renderiza `HomeView`, y la ruta `/about` carga `AboutView` utilizando carga diferida (<a href="https://medium.com/@drewcauchi/lazy-loading-in-vue-js-bb32018d2c2d" target="_blank">lazy loading</a>).
 
+![Flujo de una app Vue](/blog/getting-started-vue-vite/es/explaining-vue-app.png)
+_Flujo de una app Vue_
 
+Esto quiere decir que todo lo que veas dentro de `App.vue` estará siempre presente (como el header y el menú de navegación), mientras que el contenido principal se mostrará dentro de `<RouterView />` y cambiará dependiendo de la ruta actual, gracias a Vue Router.
 
 ---
 
@@ -439,4 +446,3 @@ Aquí estamos importando las funciones necesarias de Vue Router y definiendo una
 ---
 
 ## EXTRA: Subiendo el proyecto a GitHub
-
