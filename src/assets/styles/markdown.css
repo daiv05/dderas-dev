@@ -92,7 +92,7 @@
   position: relative;
 }
 
-.markdown-body li input[type="checkbox"] {
+.markdown-body li input[type='checkbox'] {
   position: absolute;
   left: 0.25rem;
   top: 0.35em;
@@ -241,6 +241,12 @@ html.dark .shiki span {
   margin-right: auto;
   border-radius: var(--radius-md);
   border: 1px solid var(--line-soft);
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.markdown-body img:hover {
+  transform: scale(1.01);
 }
 
 .markdown-body img + em {

@@ -123,6 +123,10 @@ export default {
       prev: 'Previous',
       next: 'Next',
     },
+    imageViewer: {
+      download: 'Download image',
+      close: 'Close',
+    },
     constructionNotice: 'This page is under construction. Real content will be available soon.',
   },
   loader: {
