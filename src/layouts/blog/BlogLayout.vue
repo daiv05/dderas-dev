@@ -26,7 +26,7 @@
 
     <!-- Contenido principal -->
     <v-main class="blog-main">
-      <div class="blog-container">
+      <div class="blog-container" @click="handleImageClick">
         <router-view v-slot="{ Component }">
           <transition name="page-fade" mode="out-in">
             <component :is="Component" />
@@ -66,6 +66,8 @@
       size="large"
       @click="scrollToTop"
     ></v-btn>
+
+    <ImageViewer v-model="showImageViewer" :src="selectedImage.src" :alt="selectedImage.alt" />
   </v-app>
 </template>
 
@@ -76,6 +78,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useTheme } from 'vuetify';
 
+import ImageViewer from '@/components/ImageViewer.vue';
 import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import { useSeo } from '@/composables/useSeo';
@@ -90,7 +93,22 @@ const { t, locale } = useI18n();
 useSeo();
 
 const showScrollTop = ref(false);
+const showImageViewer = ref(false);
+const selectedImage = ref({ src: '', alt: '' });
 const currentYear = new Date().getFullYear();
+
+const handleImageClick = (event) => {
+  const target = event.target;
+  if (target.tagName === 'IMG' && target.closest('.markdown-body')) {
+    if (target.closest('a')) return;
+
+    selectedImage.value = {
+      src: target.src,
+      alt: target.alt || '',
+    };
+    showImageViewer.value = true;
+  }
+};
 
 const getLocaleFromPath = (path) => {
   const seg = (path || '/').split('/')[1];

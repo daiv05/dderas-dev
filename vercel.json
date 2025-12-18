@@ -41,9 +41,7 @@
     },
     {
       "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "www.deras.dev" }
-      ],
+      "has": [{ "type": "host", "value": "www.deras.dev" }],
       "destination": "https://deras.dev/$1",
       "statusCode": 308
     }
@@ -52,9 +50,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "deras.dev" }
-      ],
+      "has": [{ "type": "host", "value": "deras.dev" }],
       "destination": "/index.html"
     }
   ]
