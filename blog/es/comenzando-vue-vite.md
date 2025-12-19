@@ -5,7 +5,7 @@ slug: 'comenzando-vue-vite'
 date: 2025-12-04
 summary: 'Una guía completa para configurar tu primer proyecto Vue 3 con Vite, incluyendo mejores prácticas y herramientas modernas.'
 tags: ['Vue.js', 'Vite', 'Tailwind CSS']
-image: /blog/getting-started-vue-vite/shared/vite+vue+tailwind.jpg
+image: /blog/getting-started-vue-vite/shared/vite+vue.png
 author: David Deras
 lastmod: 2025-12-15
 ---
@@ -191,7 +191,7 @@ Esto es solo una forma visual que tiene VS Code para organizar los archivos, pue
 
 ### ¿Es suficiente esta estructura?
 
-Esta es la estructura básica que Vite genera para un proyecto Vue 3. Es un buen punto de partida, pero a medida que tu aplicación crezca, es probable que necesites organizar mejor tu código. Existen algunas prácticas comunes para estructurar proyectos Vue, como:
+Es una estructura básica que por ahora está bien. A medida que tu aplicación crezca normalmente se busca organizar mejor el código. Aquí hay dos propuestas:
 
 - Crear subcarpetas por módulo/funcionalidad dentro de las distintas carpetas, como `components/` y `views/`. Por ejemplo:
 
@@ -236,7 +236,7 @@ my-vue-app/
 ├── ...
 ```
 
-**Puedes usar un enfoque similar a este** en apps pequeñas o medianas en las que quieres un poco más de orden sin complicarte demasiado. **La limitante** es que a medida que la app crece, puede volverse difícil manejar dependencias entre módulos y mantener el código organizado, porque todo está disperso en varias carpetas.
+**Puedes usar un enfoque similar a este** en apps pequeñas o medianas, con poca gente trabajando, en las que quieres un poco más de orden sin complicarte demasiado y sin cambiar demasiado la estructura original que propone Vue. **La limitante** es que a medida que la app crece, puede volverse difícil manejar dependencias entre módulos y mantener el código organizado, porque todo está disperso en varias carpetas.
 
 - En otros casos, puedes optar por una estructura basada en funcionalidades o módulos, donde cada uno tiene su propia carpeta que contiene componentes, vistas, y lógica relacionada. Por ejemplo:
 
@@ -244,7 +244,7 @@ my-vue-app/
 my-vue-app/
 ├── src/
 │   ├── modules/
-│   │   ├── auth/
+│   │   ├── auth/                     # Si el módulo es pequeño, puedes omitir la división en carpetas
 │   │   │   ├── components/
 │   │   │   │   └── LoginForm.vue
 │   │   │   ├── views/
@@ -283,17 +283,17 @@ my-vue-app/
 │   │       └── roles.js
 │   │
 │   ├── router/
-│   │   └── index.js
-│   │
+│   │   └── index.js                # Archivo principal del router que importa las rutas de los módulos
+│   │                               # (los guards van aquí)
 │   ├── ...
 ├── ...
 ```
 
 Cada módulo o funcionalidad concentra **todo lo que necesita en un solo lugar**, lo que simplifica la navegación y facilita el mantenimiento del código. Este enfoque resulta especialmente beneficioso en aplicaciones grandes o complejas.
 
-Al organizar la aplicación por módulos, puede aparecer cierta duplicación de código cuando distintas funcionalidades comparten componentes o lógica similar. Esto se soluciona mediante la carpeta `shared/`, donde se agrupan componentes reutilizables, composables, utilidades y constantes comunes a toda la aplicación.
+La carpeta `shared/` nos sirve para almacenar componentes, composables, utilidades y constantes que son reutilizables en toda la aplicación (solo ten cuidado de no sobrecargarla).
 
-La base de este enfoque consiste en dividir la aplicación en módulos independientes dentro de `/src/modules`, cada uno con su propia estructura interna claramente definida.
+La base de este enfoque consiste en dividir la aplicación en módulos independientes dentro de `/src/modules`, cada uno con su propia estructura interna.
 
 > Al final, la elección depende del tamaño y complejidad de tu proyecto, así como de las **_preferencias de tu equipo_**, asi que no hay una única forma correcta de hacerlo. Estos son solo ejemplos para inspirarte.
 
@@ -426,46 +426,71 @@ Y cuando se necesita, se crean layouts específicos para diferentes módulos de 
 
 ---
 
+A este punto ya tenemos una idea clara de cómo se estructura y monta una aplicación Vue 3 con Vite. Puedes comenzar a explorar y modificar los componentes, vistas y rutas para familiarizarte más con el framework. Ahora seguiremos explorando otros conceptos y herramientas importantes del ecosistema.
+
+---
+
 ## Pinia para manejo de estado global
 
-Pinia nos sirve para manejar el estado global de nuestra aplicación. El estado global se refiere a datos que deben ser accesibles desde cualquier parte de la aplicación, datos que necesitamos compartir entre múltiples componentes o vistas. Por ejemplo, si necesitamos tener acceso a la información del usuario autenticado en diferentes partes de la app, o si queremos manejar un carrito de compras que pueda ser modificado desde distintas vistas.
-Para entender cómo funciona Pinia, veamos un ejemplo básico. Abre el archivo `src/store/counter.store.js` (si no existe, créalo):
+Pinia nos sirve para manejar el estado global de nuestra aplicación: datos que deben ser accesibles desde cualquier parte de la aplicación, datos que necesitamos compartir entre múltiples componentes o vistas.
+
+Por ejemplo, cuando necesitamos tener acceso a la información del usuario autenticado en diferentes partes de la app, o si queremos manejar un carrito de compras que pueda ser consultado desde distintos componentes.
+
+Veamos un ejemplo básico. Crea el archivo `src/store/auth.store.js`:
 
 ```javascript
 import { defineStore } from 'pinia';
-export const useCounterStore = defineStore('counter', {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
-    count: 0,
+    user: null,
+    token: null,
   }),
   actions: {
-    increment() {
-      this.count++;
+    login(userData, token) {
+      this.user = userData;
+      this.token = token;
     },
-    decrement() {
-      this.count--;
+    logout() {
+      this.user = null;
+      this.token = null;
     },
   },
 });
 ```
 
-Aquí estamos definiendo una store llamada `counter` que tiene un estado con una propiedad `count` y dos acciones para incrementar y decrementar ese contador.
-Ahora, veamos cómo usar esta store en un componente. Abre o crea un componente Vue, por ejemplo `src/components/Counter.vue`:
+Aquí estamos definiendo una store llamada `auth` que tiene un estado con las propiedades `user` y `token`, y dos acciones para iniciar sesión y cerrar sesión.
+Ahora, veamos cómo usar esta store en un componente. Crea un componente Vue, por ejemplo `src/components/Auth.vue`:
 
 ```vue
 <template>
   <div>
-    <h2>Counter: {{ counterStore.count }}</h2>
-    <button @click="counterStore.decrement">-</button>
-    <button @click="counterStore.increment">+</button>
+    <div v-if="authStore.user">
+      <p>Welcome, {{ authStore.user.name }}!</p>
+      <button @click="logout">Logout</button>
+    </div>
+    <div v-else>
+      <button @click="login">Login</button>
+    </div>
   </div>
 </template>
 <script setup>
-import { useCounterStore } from '../store/counter.store';
-const counterStore = useCounterStore();
+import { useAuthStore } from '../store/auth.store';
+const authStore = useAuthStore();
+const login = () => {
+  // Simulamos datos de usuario y token
+  const userData = { name: 'John Doe', email: 'john.doe@example.com' };
+  const token = 'fake-jwt-token';
+  authStore.login(userData, token);
+};
+
+const logout = () => {
+  authStore.logout();
+};
 </script>
 ```
 
-Aquí estamos importando la store `useCounterStore` y usándola para acceder al estado `count` y las acciones `increment` y `decrement`. Cada vez que hacemos clic en los botones, el contador se actualiza y el cambio se refleja automáticamente en la interfaz gracias a la reactividad de Vue.
+Aquí estamos importando la store `useAuthStore` y usándola para acceder al estado `user` y las acciones `login` y `logout`.
+Imagina que este componente `Auth.vue` se usa en varias partes de la aplicación. Gracias a Pinia, el estado del usuario se mantiene consistente en todas partes, y cualquier cambio (como iniciar o cerrar sesión) se refleja automáticamente en todos los componentes que usan esta store.
 
 Algunos casos reales de uso:
 
@@ -479,8 +504,11 @@ Puedes explorar más sobre Pinia en la <a href="https://pinia.vuejs.org/" target
 
 ## Composables
 
-Los composables son funciones reutilizables que encapsulan lógica específica y pueden ser usados entre diferentes componentes. Son una parte fundamental del Composition API de Vue 3 y nos permiten organizar mejor nuestro código, promoviendo la reutilización y la separación de responsabilidades.
-Veamos un ejemplo real de un composable. Crea un archivo llamado `src/composables/useClipboard.js`:
+Los composables son funciones reutilizables que encapsulan lógica específica, con estado, y pueden ser usados entre diferentes componentes.
+
+Nos permiten organizar mejor nuestro código, promoviendo la reutilización y la separación de responsabilidades. Normalmente toda lógica con estado la pondríamos dentro de un `<script setup>` en un componente Vue, pero si esa lógica es algo que podría ser útil en varios componentes, podemos extraerla a un composable.
+
+Veamos un ejemplo bastante básico. Crea un archivo llamado `src/composables/useClipboard.js`:
 
 ```javascript
 import { ref } from 'vue';
@@ -504,8 +532,8 @@ export function useClipboard() {
 }
 ```
 
-Aquí estamos definiendo un composable llamado `useClipboard` que proporciona una función para copiar texto al portapapeles y un estado reactivo `copied` que indica si el texto fue copiado exitosamente.
-Ahora, veamos cómo usar este composable en un componente. Crea un componente llamado `src/components/ClipboardExample.vue`:
+Aquí estamos definiendo un composable llamado `useClipboard` que proporciona una función para copiar texto al portapapeles y un estado **reactivo** `copied` que indica si el texto fue copiado exitosamente.
+Al implementarlo podríamos tener algo como esto. Crea un componente llamado `src/components/ClipboardExample.vue`:
 
 ```vue
 <template>
@@ -523,6 +551,33 @@ const textToCopy = ref('');
 </script>
 ```
 
+Y luego importa este componente en `App.vue` y añádelo debajo del componente `HelloWorld` para probarlo:
+
+```vue
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+import ClipboardExample from './components/ClipboardExample.vue'
+</script>
+
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+      <ClipboardExample />               <!-- Aquí -->
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+```
+
 El estado `copied` nos permite mostrar un mensaje cuando el texto ha sido copiado exitosamente.
 ¿Que logramos con esto?
 
@@ -534,7 +589,7 @@ El estado `copied` nos permite mostrar un mensaje cuando el texto ha sido copiad
 
 **Estado global vs estado local**: Las stores de Pinia están diseñadas para manejar un estado global en la aplicación, datos que deben ser **accesibles y compartidos** desde cualquier parte.
 
-Los composables, por otro lado, manejan lógica y estado que puede ser reutilizado en múltiples componentes, pero que nada de eso es compartido. Por ejemplo, si tengo varios componentes que necesitan funcionalidad para copiar al portapapeles, usaría un composable, y el estado `copied` sería local en cada instancia del composable. En cambio, si necesito saber en varios lugares si actualmente se ha realizado una copia al portapapeles a nivel de aplicación, usaría una store de Pinia, porque aquí si se darían cuenta todos los componentes y todos podrían reaccionar a ese cambio.
+Los composables, por otro lado, manejan lógica y estado que puede ser reutilizado en múltiples componentes, pero que nada de eso es compartido. Por ejemplo, si tengo varios componentes que necesitan funcionalidad para copiar al portapapeles (y que necesitan algún control de estado), usaría un composable, y el estado `copied` sería local en cada instancia del composable. En cambio, si necesito saber en varios lugares si actualmente se ha realizado una copia al portapapeles a nivel de aplicación, usaría una store de Pinia, porque aquí si se darían cuenta todos los componentes y todos podrían reaccionar a ese cambio.
 
 ### ¿Cuál es la diferencia entre un composable y un archivo de utilidades (utils)?
 
@@ -546,15 +601,22 @@ export function copyToClipboard(text) {
 }
 ```
 
+Lecturas recomendadas:
+- <a href="https://vuejs.org/guide/reusability/composables.html" target="_blank" rel="noopener noreferrer">Composables - Vue.js Documentation</a>
+- <a href="https://dev.to/jacobandrewsky/good-practices-and-design-patterns-for-vue-composables-24lk" target="_blank" rel="noopener noreferrer">Good Practices and Design Patterns for Vue Composables</a>
+- <a href="https://robconery.com/frontend/what-should-be-a-plugin-vs-a-composable-vs-a-store-in-nuxt/" target="_blank" rel="noopener noreferrer">What should be a Plugin vs a Composable vs a Store in Nuxt</a>
+
+
 ### VueUse
 
 <a href="https://vueuse.org/" target="_blank" rel="noopener noreferrer">VueUse</a> es una colección de composables para Vue 3. Proporciona una amplia gama de funcionalidades listas para usar, desde manejo de estado hasta interacciones con el DOM y APIs del navegador. Puedes explorar la documentación oficial para ver todos los composables disponibles y cómo usarlos en tus proyectos.
 
 ![VueUse](/blog/getting-started-vue-vite/shared/vue-use.png)
+_VueUse_
 
 Algunos ejemplos populares de composables en VueUse incluyen:
 
-- `useBreakpoints`: para poder manejar breakpoints en tu aplicación.
+- `useBreakpoints`: para poder manejar breakpoints en tu aplicación y ayudar con el diseño responsivo.
 - `useFetch`: para realizar solicitudes HTTP de manera sencilla.
 - `useLocalStorage`: para sincronizar datos con el almacenamiento local del navegador.
 - `useDark`: para manejar temas oscuros y claros en la aplicación.
@@ -562,17 +624,6 @@ Algunos ejemplos populares de composables en VueUse incluyen:
 
 Es una colección muy útil que puede ahorrarte mucho tiempo si necesitas alguna de estas funcionalidades comunes.
 Solo ten cuidado de no sobrecargar tu proyecto con dependencias innecesarias, instala solo lo que realmente vayas a usar y solo si realmente lo necesitas.
-
----
-
-## Algunos consejos
-
-1. **Estructura del proyecto**: Mantén cuidado con la estructura del proyecto, organiza los archivos y carpetas de una manera que tenga sentido para ti y tu equipo.
-2. **Uso correcto de ref y reactive**: Investiga y comprende cuándo usar `ref` y cuándo usar `reactive` para manejar el estado en Vue 3. Ten especial cuidado con valores anidados y objetos complejos, puede significar horas de depuración si no se manejan correctamente.
-3. **Aprende a usar computed**: Son más útiles de lo que crees.
-4. **Evita lógica compleja en el template**: Mantén la lógica en los scripts y usa el template solo para la presentación.
-5. **Usa bien las directivas**: Evita usar `v-if` y `v-for` juntos en el mismo elemento, ya que puede causar comportamiento inesperado. Y recuerda siempre usar `:key` en `v-for`.
-6. **Manejo de errores**: Implementa un manejo adecuado de errores, especialmente en operaciones asíncronas como llamadas a APIs.
 
 ---
 
@@ -591,14 +642,14 @@ Todas las reglas pueden ser configuradas como "off", "warn" o "error", dependien
 "vue/multi-word-component-names": "off", // Desactiva la regla que obliga a usar nombres de componentes con múltiples palabras
 ```
 
-Con el comando `npm run lint` puedes revisar todo tu código según la configuración de tu archivo `eslint.config.js`.
+En el proyecto que creamos, con el comando `npm run lint` puedes revisar todo tu código según la configuración de tu archivo `eslint.config.js`.
 
 Sobre Prettier, existe cierto debate sobre su uso, a mucha gente no le gusta porque puede imponer un estilo que no les agrada, así que úsalo solo si te sientes cómodo con él.
 En lugar de Prettier, para intentar mantener un estilo consistente puede usarse alternativas como EditorConfig o las propias reglas de ESLint o del editor de código que estés usando.
 
 Si usas algunas de estas herramientas puedes explorar sus extensiones <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint" target="_blank" rel="noopener noreferrer">ESLint extension for VS Code</a> y <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" target="_blank" rel="noopener noreferrer">Prettier - Code formatter</a> para integrar estas herramientas directamente en tu editor.
 
-Más adelante puedes explorar otras herramientas como Husky para ejecutar linters y formateadores antes de cada commit, asegurando que todo el código que entra al repositorio cumple con los estándares definidos.
+Más adelante puedes explorar otras herramientas como Husky para ejecutar linters y formateadores antes de cada commit, asegurando que todo el código que entra al repositorio cumple con los estándares que definas.
 
 ---
 

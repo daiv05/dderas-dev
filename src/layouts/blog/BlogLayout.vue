@@ -1,6 +1,6 @@
 <template>
   <v-app class="blog-layout">
-    <v-app-bar flat elevation="0" class="blog-header">
+    <v-app-bar flat scroll-behavior="hide" scroll-threshold="100" elevation="0" class="blog-header">
       <div class="blog-header-content">
         <router-link :to="withLocalePath('/blog')" class="blog-brand">
           <span class="blog-brand-name">{{ t('navigation.brand.name') }}</span>
