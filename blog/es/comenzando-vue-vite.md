@@ -7,7 +7,7 @@ summary: 'Una guía completa para configurar tu primer proyecto Vue 3 con Vite, 
 tags: ['Vue.js', 'Vite', 'Tailwind CSS']
 image: /blog/getting-started-vue-vite/shared/vite+vue.png
 author: David Deras
-lastmod: 2025-12-15
+lastmod: 2025-12-22
 ---
 
 En esta guía, exploraremos cómo iniciar un proyecto moderno con Vue 3 y Vite, explicaremos la estructura del proyecto, como funciona una aplicación Vue, el router, Pinia, los composables, veremos algunas buenas prácticas para desarrollar aplicaciones escalables y mantenibles, y como extra publicaremos el proyecto en GitHub y veremos cómo instalar Tailwind CSS v4 para obtener estilos rápidos y responsivos.
@@ -28,7 +28,7 @@ Antes de continuar, debemos tener:
 Además, instala la extensión oficial de Vue.js para VS Code:
 
 - <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=Vue.volar" rel="noopener noreferrer">Vue.js (Volar)</a>.
-  Más adelante puede explorar otros plugins útiles como ESLint, Prettier y Tailwind CSS IntelliSense.
+  Más adelante exploraremos otros plugins útiles como ESLint, Prettier y Tailwind CSS IntelliSense.
 
 ---
 
@@ -161,7 +161,7 @@ my-vue-app/
 ├── .gitattributes        # Configuración de Git
 ├── .gitignore            # Archivos y carpetas ignoradas por Git
 ├── .prettierrc.json      # Configuración de Prettier
-├── .eslint.config.js     # Configuración de ESLint
+├── eslint.config.js      # Configuración de ESLint
 ├── index.html            # Archivo HTML principal
 ├── jsconfig.json         # Configuración de JavaScript para el editor
 ├── package-lock.json     # Versiones exactas de las dependencias (autogenerado)
@@ -331,7 +331,7 @@ Aquí estamos haciendo lo siguiente:
 7. Usamos `app.use(router)` para registrar la instancia de Vue Router y habilitar la navegación entre vistas.
 8. Finalmente, montamos la aplicación Vue en el elemento del DOM con el id `app` usando `app.mount('#app')`.
 
-Ahora, abre el archivo `index.html` en la raíz del proyecto:
+Ahora, abre el archivo `index.html` ubicado en la raíz del proyecto:
 
 ```html
 <!DOCTYPE html>
@@ -400,6 +400,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
+      /* Esta ruta usa lazy loading */
       component: () => import('../views/AboutView.vue'),
     },
   ],
@@ -477,7 +478,7 @@ Ahora, veamos cómo usar esta store en un componente. Crea un componente Vue, po
 import { useAuthStore } from '../store/auth.store';
 const authStore = useAuthStore();
 const login = () => {
-  // Simulamos datos de usuario y token
+  // Simulamos un inicio de sesión
   const userData = { name: 'John Doe', email: 'john.doe@example.com' };
   const token = 'fake-jwt-token';
   authStore.login(userData, token);
@@ -490,7 +491,7 @@ const logout = () => {
 ```
 
 Aquí estamos importando la store `useAuthStore` y usándola para acceder al estado `user` y las acciones `login` y `logout`.
-Imagina que este componente `Auth.vue` se usa en varias partes de la aplicación. Gracias a Pinia, el estado del usuario se mantiene consistente en todas partes, y cualquier cambio (como iniciar o cerrar sesión) se refleja automáticamente en todos los componentes que usan esta store.
+Gracias a Pinia, el estado del usuario se mantiene consistente en todas partes, y cualquier cambio (como iniciar o cerrar sesión) se refleja automáticamente en todos los componentes que usan esta store.
 
 Algunos casos reales de uso:
 
@@ -512,6 +513,7 @@ Veamos un ejemplo bastante básico. Crea un archivo llamado `src/composables/use
 
 ```javascript
 import { ref } from 'vue';
+
 export function useClipboard() {
   const copied = ref(false);
 
@@ -519,9 +521,11 @@ export function useClipboard() {
     try {
       await navigator.clipboard.writeText(text);
       copied.value = true;
-      setTimeout(() => (copied.value = false), 2000);
-    } catch (err) {
-      console.error('Failed to copy: ', err);
+      setTimeout(() => {
+        copied.value = false;
+      }, 2000);
+    } catch (error) {
+      console.error('Failed to copy: ', error);
     }
   };
 
@@ -533,6 +537,7 @@ export function useClipboard() {
 ```
 
 Aquí estamos definiendo un composable llamado `useClipboard` que proporciona una función para copiar texto al portapapeles y un estado **reactivo** `copied` que indica si el texto fue copiado exitosamente.
+
 Al implementarlo podríamos tener algo como esto. Crea un componente llamado `src/components/ClipboardExample.vue`:
 
 ```vue
@@ -555,9 +560,9 @@ Y luego importa este componente en `App.vue` y añádelo debajo del componente `
 
 ```vue
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import ClipboardExample from './components/ClipboardExample.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import HelloWorld from './components/HelloWorld.vue';
+import ClipboardExample from './components/ClipboardExample.vue';
 </script>
 
 <template>
@@ -566,7 +571,8 @@ import ClipboardExample from './components/ClipboardExample.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-      <ClipboardExample />               <!-- Aquí -->
+      <ClipboardExample />
+      <!-- Aquí -->
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -579,17 +585,20 @@ import ClipboardExample from './components/ClipboardExample.vue'
 ```
 
 El estado `copied` nos permite mostrar un mensaje cuando el texto ha sido copiado exitosamente.
+
 ¿Que logramos con esto?
 
-- Reutilización: Podemos usar `useClipboard` en cualquier componente que necesite funcionalidad de copiar al portapapeles, sin duplicar código.
-- Organización: La lógica relacionada con el portapapeles está encapsulada en un solo lugar.
-- Mantenimiento: Si necesitamos cambiar la forma en que copiamos al portapapeles, solo tenemos que modificar el composable, no todos los componentes que lo usan.
+- **Reutilización**: Podemos usar `useClipboard` en cualquier componente que necesite funcionalidad de copiar al portapapeles, sin duplicar código.
+- **Organización**: La lógica relacionada con el portapapeles está encapsulada en un solo lugar.
+- **Mantenimiento**: Si necesitamos cambiar la forma en que copiamos al portapapeles, solo tenemos que modificar el composable, no todos los componentes que lo usan.
 
 ### ¿Cuál es la diferencia entre un composable y una store de Pinia?
 
 **Estado global vs estado local**: Las stores de Pinia están diseñadas para manejar un estado global en la aplicación, datos que deben ser **accesibles y compartidos** desde cualquier parte.
 
-Los composables, por otro lado, manejan lógica y estado que puede ser reutilizado en múltiples componentes, pero que nada de eso es compartido. Por ejemplo, si tengo varios componentes que necesitan funcionalidad para copiar al portapapeles (y que necesitan algún control de estado), usaría un composable, y el estado `copied` sería local en cada instancia del composable. En cambio, si necesito saber en varios lugares si actualmente se ha realizado una copia al portapapeles a nivel de aplicación, usaría una store de Pinia, porque aquí si se darían cuenta todos los componentes y todos podrían reaccionar a ese cambio.
+Los composables, por otro lado, manejan lógica y estado que puede ser reutilizado en múltiples componentes, pero que **nada de eso es compartido**. Por ejemplo, si tengo varios componentes que necesitan funcionalidad para copiar al portapapeles (y que necesitan algún control de estado), usaría un composable, y el estado `copied` sería local en cada instancia del composable. En cambio, si necesito saber en varios lugares si actualmente se ha realizado una copia al portapapeles a nivel de aplicación, usaría una store de Pinia, porque aquí si se darían cuenta todos los componentes y todos podrían reaccionar a ese cambio.
+
+Pongámoslo como un ejemplo: gracias a la variable `copied` puedo mostrar algo dentro del mismo componente, como el mensaje de "Texto copiado", ahora, si quisiera que por ejemplo el layout de mi aplicación muestre un ícono en la barra de navegación cada vez que se copie algo al portapapeles, entonces sería mejor que utilizara una store de Pinia para manejar ese estado globalmente, así al copiar desde mi componente `ClipboardExample`, el layout también se daría cuenta del cambio y podría mostrar el ícono.
 
 ### ¿Cuál es la diferencia entre un composable y un archivo de utilidades (utils)?
 
@@ -602,10 +611,10 @@ export function copyToClipboard(text) {
 ```
 
 Lecturas recomendadas:
+
 - <a href="https://vuejs.org/guide/reusability/composables.html" target="_blank" rel="noopener noreferrer">Composables - Vue.js Documentation</a>
 - <a href="https://dev.to/jacobandrewsky/good-practices-and-design-patterns-for-vue-composables-24lk" target="_blank" rel="noopener noreferrer">Good Practices and Design Patterns for Vue Composables</a>
 - <a href="https://robconery.com/frontend/what-should-be-a-plugin-vs-a-composable-vs-a-store-in-nuxt/" target="_blank" rel="noopener noreferrer">What should be a Plugin vs a Composable vs a Store in Nuxt</a>
-
 
 ### VueUse
 
@@ -622,15 +631,15 @@ Algunos ejemplos populares de composables en VueUse incluyen:
 - `useDark`: para manejar temas oscuros y claros en la aplicación.
 - `useClipboard`: para copiar texto al portapapeles (similar al que creamos antes).
 
-Es una colección muy útil que puede ahorrarte mucho tiempo si necesitas alguna de estas funcionalidades comunes.
-Solo ten cuidado de no sobrecargar tu proyecto con dependencias innecesarias, instala solo lo que realmente vayas a usar y solo si realmente lo necesitas.
+Es una colección muy útil que puede ahorrarte tiempo si necesitas alguna de estas funcionalidades.
+Solo ten cuidado de no sobrecargar tu proyecto con dependencias innecesarias, instala solo lo que realmente vayas a usar y solo si realmente necesitas una librería para ella.
 
 ---
 
 ## ESLint y Prettier
 
-Acostúmbrate a usar ESLint, es demasiado útil para mantener la calidad del código y evitar errores comunes.
-La configuración generada por Vite es un buen punto de partida, pero te recomiendo personalizarla.
+Acostúmbrate a usar **ESLint**, es demasiado útil para mantener la calidad del código y evitar errores comunes.
+La configuración generada por Vite es un buen punto de partida, pero siempre recomiendo personalizarla.
 
 Puedes explorar las reglas disponibles en la documentación oficial <a href="https://eslint.org/docs/rules/" target="_blank" rel="noopener noreferrer">ESLint</a> y de <a href="https://eslint.vuejs.org/rules/" target="_blank" rel="noopener noreferrer">eslint-plugin-vue</a>.
 
@@ -642,19 +651,285 @@ Todas las reglas pueden ser configuradas como "off", "warn" o "error", dependien
 "vue/multi-word-component-names": "off", // Desactiva la regla que obliga a usar nombres de componentes con múltiples palabras
 ```
 
-En el proyecto que creamos, con el comando `npm run lint` puedes revisar todo tu código según la configuración de tu archivo `eslint.config.js`.
+En el proyecto que creamos, puedes usar el comando `npm run lint` para revisar todo tu código según la configuración del archivo `eslint.config.js`.
 
-Sobre Prettier, existe cierto debate sobre su uso, a mucha gente no le gusta porque puede imponer un estilo que no les agrada, así que úsalo solo si te sientes cómodo con él.
-En lugar de Prettier, para intentar mantener un estilo consistente puede usarse alternativas como EditorConfig o las propias reglas de ESLint o del editor de código que estés usando.
+**Sobre Prettier**, existe cierto debate sobre su uso, a mucha gente no le gusta porque puede imponer un estilo que no les agrada, así que pruébalo, explóralo y úsalo solo si te sientes cómodo con él.
+En lugar de Prettier, para intentar siempre mantener un estilo consistente, puedes usar alternativas como EditorConfig, las propias reglas de ESLint o la configuración del editor de código que estés usando.
 
-Si usas algunas de estas herramientas puedes explorar sus extensiones <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint" target="_blank" rel="noopener noreferrer">ESLint extension for VS Code</a> y <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" target="_blank" rel="noopener noreferrer">Prettier - Code formatter</a> para integrar estas herramientas directamente en tu editor.
+Si usas algunas de estas herramientas puedes explorar sus extensiones:
 
-Más adelante puedes explorar otras herramientas como Husky para ejecutar linters y formateadores antes de cada commit, asegurando que todo el código que entra al repositorio cumple con los estándares que definas.
+- <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint" target="_blank" rel="noopener noreferrer">ESLint extension for VS Code</a>
+- <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" target="_blank" rel="noopener noreferrer">Prettier - Code formatter</a>
+- <a href="https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig" target="_blank" rel="noopener noreferrer">EditorConfig for VS Code</a>
 
 ---
 
 ## EXTRA: Instalando Tailwind CSS v4
 
+CSS puro está más que bien, puede lograr resultados increíbles (a veces incluso <a href="https://github.com/you-dont-need/You-Dont-Need-JavaScript" target="_blank" rel="noopener noreferrer">sin necesitar JavaScript</a>), pero un opción que tienes para acelerar tu desarrollo y mantener un estilo consistente es Tailwind CSS.
+
+Siguiendo los pasos oficiales de la <a href="https://tailwindcss.com/docs/installation/using-vite" target="_blank" rel="noopener noreferrer">documentación de Tailwind CSS</a>, instalemos Tailwind CSS v4 en nuestro proyecto Vue con Vite.
+
+Primero (estando dentro de la carpeta del proyecto), instala Tailwind CSS y su plugin para Vite:
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+Luego, agregamos el plugin a nuestro archivo `vite.config.js`:
+
+```javascript
+import { fileURLToPath, URL } from 'node:url';
+
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueDevTools from 'vite-plugin-vue-devtools';
+import tailwindcss from '@tailwindcss/vite'; // Importamos el plugin
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    vueDevTools(),
+    tailwindcss(), // Agregamos a la configuración de Vite
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+});
+```
+
+Luego en el archivo `src/assets/main.css`, reemplaza todo el contenido por lo siguiente:
+
+```css
+@import './base.css';
+
+@import 'tailwindcss';
+```
+
+Aprovechamos a limpiar el archivo `src/assets/base.css` y dejar solo lo necesario:
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: #333;
+  background: #fff;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
+Ahora probemos que todo funciona correctamente. Primero, detén el servidor de desarrollo si está corriendo (`Ctrl + C` en la terminal) y luego vuelve a iniciarlo:
+
+```bash
+npm run dev
+```
+
+Abre el archivo `src/App.vue` y reemplaza todo el contenido por lo siguiente:
+
+```vue
+<script setup>
+import { RouterLink, RouterView } from 'vue-router';
+</script>
+
+<template>
+  <div class="flex h-screen flex-col bg-gray-50">
+    <!-- App Bar -->
+    <header class="flex h-16 items-center justify-between bg-white px-6 shadow-sm">
+      <div class="text-xl font-bold text-gray-800">My Project</div>
+      <nav class="flex gap-4" aria-label="Main Navigation">
+        <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900">Profile</a>
+      </nav>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <!-- Sidebar -->
+      <aside class="w-64 overflow-y-auto bg-white border-r border-gray-200">
+        <nav class="p-4 space-y-2" aria-label="Sidebar Navigation">
+          <RouterLink
+            to="/"
+            class="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100"
+            exact-active-class="text-indigo-700 font-bold"
+          >
+            Home
+          </RouterLink>
+          <RouterLink
+            to="/about"
+            class="block rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100"
+            exact-active-class="text-indigo-700 font-bold"
+          >
+            About
+          </RouterLink>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 overflow-y-auto p-6">
+        <RouterView />
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer
+      class="flex h-12 items-center justify-center bg-white border-t border-gray-200 text-sm text-gray-500"
+    >
+      &copy; 2025 My Project. All rights reserved.
+    </footer>
+  </div>
+</template>
+```
+
+Con esto hemos creado una estructura básica con un app bar, un sidebar, un área principal de contenido y un footer, todo estilizado con clases de Tailwind CSS.
+Idealmente cada bloque (AppBar, Sidebar, Footer) debería ser un componente separado para promover la reutilización y el mantenimiento, pero para este ejemplo lo dejamos todo en `App.vue` para simplificar.
+
+Verifica que todo funcione correctamente abriendo `http://localhost:5173` en tu navegador. Deberías ver la estructura básica con estilos aplicados.
+
+Con esto ya tienes Tailwind CSS v4 funcionando en tu proyecto. Explora su <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">documentación oficial</a> e instala su extensión para un mejor autocompletado en VS Code: <a href="https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss" target="_blank" rel="noopener noreferrer">Tailwind CSS IntelliSense</a>.
+
 ---
 
 ## EXTRA: Subiendo el proyecto a GitHub
+
+Para esto tenemos muchas opciones. Antes de comenzar asumo que ya tienes una cuenta en GitHub y que tienes Git instalado en tu máquina.
+
+1. Primero inicializamos un repositorio Git en la carpeta del proyecto:
+
+```bash
+git init
+```
+
+2. Luego creamos un archivo `.gitignore` en la raíz del proyecto (es probable que ya lo tengas) y nos aseguraremos de tener las siguientes líneas para ignorar archivos y carpetas innecesarias:
+
+```
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.tsbuildinfo
+
+.eslintcache
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Vitest
+__screenshots__/
+
+```
+
+3. Ahora agregamos todos los archivos y hacemos el commit inicial:
+
+```bash
+git add .
+```
+
+```bash
+git commit -m "Initial commit"
+```
+
+4. Ahora vamos a GitHub y creamos un nuevo repositorio. Puedes hacer esto haciendo clic en el botón "+" en la esquina superior derecha y seleccionando "New repository". Ponle un nombre a tu repositorio (por ejemplo, `my-vue-app`), agrega una descripción si quieres, y déjalo como público o privado según prefieras. No agregues ningún archivo adicional (como README, .gitignore o licencia), ya los tenemos localmente.
+
+5. Luego, seguimos las instrucciones que GitHub nos da para conectar nuestro repositorio local con el remoto. Normalmente son algo así:
+
+```bash
+git remote add origin https://example-url.git
+```
+
+```bash
+git branch -M main
+```
+
+```bash
+git push -u origin main
+```
+
+6. Verificamos status
+
+```bash
+git status
+```
+
+Debe decir que estamos en la rama `main`, estamos sincronizados con el repositorio remoto `origin/main` y que no hay nada para hacer commit.
+
+7. Finalmente, cada vez que hagamos cambios y queramos subirlos a GitHub, hacemos:
+
+```bash
+git add .
+git commit -m "Descripción de los cambios"
+git push
+```
+
+¡Y eso es todo! Ahora tienes tu proyecto Vue 3 con Vite subido a GitHub.
+
+Lo normal es que siempre uses un controlador de versiones como Git para manejar tu código, incluso en proyectos personales. Te ayudará a mantener un historial de cambios, colaborar con otros y proteger tu trabajo.
+
+Te recomiendo explorar también sobre <a href="https://www.conventionalcommits.org/en/v1.0.0/" target="_blank" rel="noopener noreferrer">Conventional Commits</a> para mantener mensajes de commit consistentes y significativos. Es algo que usan muchas empresas, equipos y proyectos open source.
+
+Algunos recursos para aprender más sobre Git y GitHub:
+
+- <a href="https://github.com/djayepro3/Guide-Git-GitHub-VSCode" target="_blank" rel="noopener noreferrer">Git & GitHub with VS Code: A Beginner's Guide</a>
+- <a href="https://docs.github.com/en/get-started/start-your-journey" target="_blank" rel="noopener noreferrer">GitHub Quickstart Guide</a>
+- <a href="https://git-scm.com/doc" target="_blank" rel="noopener noreferrer">Git Documentation</a>
+
+Extensiones para VS Code:
+
+- <a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens" target="_blank" rel="noopener noreferrer">Gitlens</a>
+- <a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph" target="_blank" rel="noopener noreferrer">Git Graph</a>
+
+---
+
+## EXTRA: Otras extensiones útiles para VS Code
+
+Algunas extensiones que siempre recomiendo para VS Code (sin importar el tipo de proyecto):
+
+- <a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens" target="_blank" rel="noopener noreferrer">Error Lens</a>: Resalta errores y advertencias directamente en el código, facilitando su identificación y corrección.
+- <a href="https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight" target="_blank" rel="noopener noreferrer">Color Highlight</a>: Resalta los colores definidos en tu código CSS, facilitando la visualización de los mismos.
+- <a href="https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments" target="_blank" rel="noopener noreferrer">Better Comments</a>: Mejora la legibilidad de los comentarios en el código mediante colores y estilos.
+- <a href="https://marketplace.visualstudio.com/items?itemName=antfu.iconify" target="_blank" rel="noopener noreferrer">Iconify Intellisense</a>: Si quieres trabajar con iconos, esta extensión te permite buscar e insertar iconos de múltiples bibliotecas directamente en tu código. A parte de ello recomiendo explorar su librería <a href="https://icon-sets.iconify.design/" target="_blank" rel="noopener noreferrer">Iconify</a> dónde puedes encontrar una gran variedad de icon sets gratuitos.
+
+---
+
+## Resumen
+
+En esta guía hemos cubierto los conceptos básicos para comenzar con Vue 3 y Vite, incluyendo la estructura del proyecto, cómo se monta la aplicación, el manejo de estado global con Pinia, el uso de composables para reutilizar lógica, y algunas herramientas útiles como ESLint, Prettier y Tailwind CSS. Espero que esta guía te haya sido útil para dar tus primeros pasos en este framework. ¡Happy coding!
