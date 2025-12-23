@@ -87,9 +87,8 @@ const router = createRouter({
         if (scroller) {
           scroller.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
         resolve({ top: 0, behavior: 'smooth' });
-      }, 50);
+      }, 100);
     });
   },
 });

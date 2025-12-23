@@ -1,6 +1,6 @@
 <template>
   <v-app class="blog-layout">
-    <v-app-bar flat scroll-behavior="hide" scroll-threshold="100" elevation="0" class="blog-header">
+    <v-app-bar flat scroll-behavior="hide" scroll-threshold="300" elevation="0" class="blog-header">
       <div class="blog-header-content">
         <router-link :to="withLocalePath('/blog')" class="blog-brand">
           <span class="blog-brand-name">{{ t('navigation.brand.name') }}</span>
@@ -240,7 +240,7 @@ onUnmounted(() => {
 .blog-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 32px 16px;
+  padding: 60px 16px;
 }
 
 .blog-footer {
