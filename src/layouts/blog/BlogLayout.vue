@@ -31,7 +31,9 @@
     <!-- Footer simple -->
     <footer class="blog-footer">
       <div class="blog-footer-content">
-        <p class="blog-footer-text">© {{ currentYear }} {{ t('navigation.brand.name') }}</p>
+        <router-link class="blog-footer-text" :to="withLocalePath('/')">
+          © {{ currentYear }} {{ t('navigation.brand.name') }}
+        </router-link>
         <div class="blog-footer-links">
           <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
             <v-icon size="20" :icon="mdiGithub"></v-icon>
