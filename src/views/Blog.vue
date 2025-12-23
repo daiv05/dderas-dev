@@ -123,6 +123,7 @@ import { useRoute, useRouter } from 'vue-router';
 import PostHeader from '@/components/PostHeader.vue';
 import { useBlog } from '@/composables/useBlog';
 import { useSeo } from '@/composables/useSeo';
+import { contactInfo } from '@/data/contact';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -208,7 +209,7 @@ watch(
 
     // Calcular alternate links correctos
     const currentLocale = getLocale();
-    const SITE_URL = 'https://deras.dev';
+    const SITE_URL = contactInfo.siteUrl;
     const SUPPORTED_LOCALES = ['en', 'es'];
     const alternateLinks = [];
 

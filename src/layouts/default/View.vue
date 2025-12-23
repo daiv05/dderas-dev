@@ -41,18 +41,23 @@
           </div>
           <v-divider></v-divider>
           <div class="nav-links">
-            <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
+            <a
+              :href="contactInfo.socials.github"
+              target="_blank"
+              rel="noopener"
+              aria-label="GitHub"
+            >
               <v-icon size="18" :icon="mdiGithub"></v-icon>
             </a>
             <a
-              href="https://linkedin.com/in/dderas"
+              :href="contactInfo.socials.linkedin"
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
             >
               <v-icon size="18" :icon="mdiLinkedin"></v-icon>
             </a>
-            <a href="mailto:davidderas50@gmail.com" aria-label="Email">
+            <a :href="`mailto:${contactInfo.email}`" aria-label="Email">
               <v-icon size="18" :icon="mdiEmail"></v-icon>
             </a>
           </div>
@@ -128,6 +133,7 @@ import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import { useLocaleNavigation } from '@/composables/useLocaleNavigation';
 import { useSeo } from '@/composables/useSeo';
+import { contactInfo } from '@/data/contact';
 import { setupGSAP, clearGSAPProps, refreshScrollTriggers } from '@/plugins/gsap';
 import sidebarItems from '@/router/sidebar-items.js';
 import { useAppStore } from '@/store/app';

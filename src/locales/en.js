@@ -1,3 +1,5 @@
+import { contactInfo } from '@/data/contact';
+
 export default {
   navigation: {
     brand: {
@@ -43,7 +45,7 @@ export default {
       description:
         'Personal portfolio, real projects and technical articles about Vue, Laravel and cloud deployments.',
       keywords: [
-        'David Deras',
+        contactInfo.name,
         'Full Stack Developer',
         'Frontend Developer',
         'Backend Developer',
@@ -57,8 +59,8 @@ export default {
         'El Salvador',
         'DDeras',
       ],
-      author: 'David Deras',
-      ogImage: 'https://deras.dev/punpun_OG.jpg',
+      author: contactInfo.name,
+      ogImage: `${contactInfo.siteUrl}/punpun_OG.jpg`,
       ogImageAlt: 'Projects and tutorials',
     },
     pages: {
@@ -70,7 +72,7 @@ export default {
       me: {
         title: 'A bit about me',
         description: 'My experience, learning, and what I have worked on.',
-        keywords: ['David Deras', 'Professional profile', 'Experience', 'DDeras', 'daiv05'],
+        keywords: [contactInfo.name, 'Professional profile', 'Experience', 'DDeras', 'daiv05'],
       },
       projects: {
         title: 'Projects',
@@ -134,7 +136,7 @@ export default {
   },
   hero: {
     eyebrow: 'Hi, I am',
-    title: 'David Deras',
+    title: contactInfo.name,
     highlight: 'Full Stack Developer (Vue · Laravel · TypeScript)',
     roleLabel: 'Current role',
     lead: 'I have over two years of experience building web applications for institutions and public projects. I enjoy working with Vue 3 and Laravel, focusing on UX and thorough documentation to ensure smooth scalability.',
@@ -159,7 +161,7 @@ export default {
     ],
     snapshotTitle: 'Quick facts',
     focusNotes: [
-      { label: 'Base', value: 'San Salvador, SV' },
+      { label: 'Base', value: `${contactInfo.city}, ${contactInfo.countryCode}` },
       { label: 'Experience', value: '2+ years' },
       { label: 'Areas', value: 'GovTech · Retail · Analytics' },
     ],
@@ -206,13 +208,16 @@ export default {
     eyebrow: 'Professional profile',
     title: 'Full Stack centered on Vue y Laravel',
     lead: 'Developer with more than two years building systems for government, retail and collaborative platforms. I focus on accessibility, SEO and cloud deployments that keep pace with multidisciplinary teams.',
-    quickFacts: [
-      { label: 'Location', value: 'San Salvador, El Salvador' },
-      { label: 'Phone', value: '+503 7464-1460' },
-      { label: 'Email', value: 'davidderas50@gmail.com' },
-      { label: 'Languages', value: 'Spanish (native) · English (A2)' },
-      { label: 'Availability', value: 'Remote · Hybrid · On-site' },
-    ],
+    facts: {
+      location: 'Location',
+      locationValue: contactInfo.location,
+      github: 'GitHub',
+      email: 'Email',
+      languages: 'Languages',
+      languagesValue: 'Spanish (native) · English (A2)',
+      mode: 'Availability',
+      modeValue: 'Remote · Hybrid · On-site',
+    },
     buttons: {
       downloadCv: 'Download resume',
       contact: 'Contact',
@@ -405,8 +410,7 @@ export default {
     },
   },
   footer: {
-    description:
-      'Full Stack Developer in San Salvador. I build apps with Vue, Laravel, and TypeScript, always keeping in mind to keep them simple and scalable.',
+    description: `${contactInfo.title} in ${contactInfo.city}. I build apps with Vue, Laravel, and TypeScript, always keeping in mind to keep them simple and scalable.`,
     quickMap: 'Sections',
     links: {
       home: 'Home',

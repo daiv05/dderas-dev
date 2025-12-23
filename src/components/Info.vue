@@ -11,11 +11,14 @@
     <div class="about-grid">
       <div ref="profileSection" class="profile-column">
         <div class="profile-card">
-          <img src="/img/me/maki.jpg" alt="David Deras" />
+          <img src="/img/me/maki.jpg" :alt="contactInfo.name" />
           <ul class="fact-list">
             <li v-for="fact in quickFacts" :key="fact.label">
               <span class="label">{{ fact.label }}</span>
-              <span class="value">{{ fact.value }}</span>
+              <span v-if="!fact.isLink" class="value">{{ fact.value }}</span>
+              <a v-else :href="fact.url" target="_blank" rel="noopener" class="value link">
+                {{ fact.value }}
+              </a>
             </li>
           </ul>
           <div class="profile-actions">
@@ -28,7 +31,7 @@
             >
               {{ t('about.buttons.downloadCv') }}
             </v-btn>
-            <v-btn variant="outlined" rounded="pill" href="mailto:davidderas50@gmail.com">
+            <v-btn variant="outlined" rounded="pill" :href="`mailto:${contactInfo.email}`">
               {{ t('about.buttons.contact') }}
             </v-btn>
           </div>
@@ -100,6 +103,7 @@
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { contactInfo } from '@/data/contact';
 import {
   gsap,
   ScrollTrigger,
@@ -116,7 +120,18 @@ const profileSection = ref(null);
 const detailsSection = ref(null);
 let ctx;
 const { t, tm } = useI18n();
-const quickFacts = computed(() => tm('about.quickFacts') ?? []);
+const quickFacts = computed(() => [
+  { label: t('about.facts.location'), value: contactInfo.location },
+  { label: t('about.facts.email'), value: contactInfo.email },
+  {
+    label: t('about.facts.github'),
+    value: 'daiv05',
+    isLink: true,
+    url: contactInfo.socials.github,
+  },
+  { label: t('about.facts.languages'), value: t('about.facts.languagesValue') },
+  { label: t('about.facts.mode'), value: t('about.facts.modeValue') },
+]);
 const skillsContent = computed(() => tm('about.skills') ?? { groups: [] });
 const skillGroups = computed(() => skillsContent.value.groups ?? []);
 const focusContent = computed(() => tm('about.focus') ?? {});
@@ -361,5 +376,16 @@ watch(
     max-width: 420px;
     margin: 0 auto;
   }
+}
+
+.link {
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
 }
 </style>

@@ -25,12 +25,11 @@
 
       <div class="footer-contact">
         <p class="mono">{{ t('footer.contact') }}</p>
-        <a href="tel:+50374641460">(+503) 7464-1460</a>
-        <a href="mailto:davidderas50@gmail.com">davidderas50@gmail.com</a>
+        <a :href="`mailto:${contactInfo.email}`">{{ contactInfo.email }}</a>
         <div class="social-inline">
-          <a href="https://github.com/daiv05" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://linkedin.com/in/dderas" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://twitter.com/daiv_09" target="_blank" rel="noopener">Twitter</a>
+          <a :href="contactInfo.socials.github" target="_blank" rel="noopener">GitHub</a>
+          <a :href="contactInfo.socials.linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a :href="contactInfo.socials.twitter" target="_blank" rel="noopener">Twitter</a>
         </div>
       </div>
     </div>
@@ -46,6 +45,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { contactInfo } from '@/data/contact';
 import { useAppStore } from '@/store/app';
 
 const currentYear = computed(() => new Date().getFullYear());

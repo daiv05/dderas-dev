@@ -40,7 +40,7 @@
           {{ collaboration.body }}
         </p>
       </div>
-      <v-btn variant="outlined" rounded="pill" size="large" href="mailto:davidderas50@gmail.com">
+      <v-btn variant="outlined" rounded="pill" size="large" :href="`mailto:${contactInfo.email}`">
         {{ collaboration.cta }}
       </v-btn>
     </v-sheet>
@@ -52,6 +52,7 @@ import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick, watch 
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import { contactInfo } from '@/data/contact';
 import {
   gsap,
   ScrollTrigger,

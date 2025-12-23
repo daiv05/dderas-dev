@@ -2,18 +2,20 @@ import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
-const SITE_URL = 'https://deras.dev';
+import { contactInfo } from '@/data/contact';
+
+const SITE_URL = contactInfo.siteUrl;
 const SUPPORTED_LOCALES = ['en', 'es'];
 const OG_LOCALE_MAP = {
   en: 'en_US',
   es: 'es_SV',
 };
 const SAME_AS_PROFILES = [
-  'https://github.com/daiv05',
-  'https://linkedin.com/in/dderas',
-  'https://twitter.com/daiv_09',
+  contactInfo.socials.github,
+  contactInfo.socials.linkedin,
+  contactInfo.socials.twitter,
 ];
-const CONTACT_EMAIL = 'davidderas50@gmail.com';
+const CONTACT_EMAIL = contactInfo.email;
 
 const upsertMetaTag = ({ name, property, content }) => {
   if (typeof document === 'undefined' || !content) return;
@@ -66,8 +68,8 @@ const upsertStructuredData = (description, keywords, image) => {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'David Deras',
-    jobTitle: 'Full Stack Developer',
+    name: contactInfo.name,
+    jobTitle: contactInfo.title,
     url: SITE_URL,
     image,
     email: `mailto:${CONTACT_EMAIL}`,
@@ -75,8 +77,8 @@ const upsertStructuredData = (description, keywords, image) => {
     description,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'San Salvador',
-      addressCountry: 'SV',
+      addressLocality: contactInfo.city,
+      addressCountry: contactInfo.countryCode,
     },
     worksFor: {
       '@type': 'Organization',

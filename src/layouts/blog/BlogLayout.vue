@@ -35,18 +35,18 @@
           © {{ currentYear }} {{ t('navigation.brand.name') }}
         </router-link>
         <div class="blog-footer-links">
-          <a href="https://github.com/daiv05" target="_blank" rel="noopener" aria-label="GitHub">
+          <a :href="contactInfo.socials.github" target="_blank" rel="noopener" aria-label="GitHub">
             <v-icon size="20" :icon="mdiGithub"></v-icon>
           </a>
           <a
-            href="https://linkedin.com/in/dderas"
+            :href="contactInfo.socials.linkedin"
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
           >
             <v-icon size="20" :icon="mdiLinkedin"></v-icon>
           </a>
-          <a href="mailto:davidderas50@gmail.com" aria-label="Email">
+          <a :href="`mailto:${contactInfo.email}`" aria-label="Email">
             <v-icon size="20" :icon="mdiEmail"></v-icon>
           </a>
         </div>
@@ -76,6 +76,7 @@ import ImageViewer from '@/components/ImageViewer.vue';
 import LocaleToggle from '@/components/LocaleToggle.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import { useSeo } from '@/composables/useSeo';
+import { contactInfo } from '@/data/contact';
 import { useAppStore } from '@/store/app';
 
 const theme = useTheme();

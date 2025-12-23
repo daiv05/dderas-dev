@@ -35,7 +35,7 @@
                 rounded="pill"
                 size="large"
                 class="text-none"
-                href="mailto:davidderas50@gmail.com"
+                :href="`mailto:${contactInfo.email}`"
               >
                 {{ t('hero.ctas.secondary') }}
               </v-btn>
@@ -91,6 +91,7 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import { contactInfo } from '@/data/contact';
 import { gsap, gsapDefaults } from '@/plugins/gsap';
 import { useAppStore } from '@/store/app';
 
@@ -115,7 +116,7 @@ let charIndex = 0;
 let isDeleting = false;
 
 const codeSnippet = `const davidDeras = {
-  location: 'San Salvador, SV',
+  location: '${contactInfo.city}, ${contactInfo.countryCode}',
   stack: ['Vue 3 + TS', 'Laravel 11', 'Node tooling'],
   sectors: ['GovTech', 'Retail', 'Data Viz'],
   currently: () => ['DTIC - MINSAL', 'MusyCharts OSS']

@@ -40,7 +40,7 @@
           {{ t('ues.noteBlock.body') }}
         </p>
       </div>
-      <v-btn variant="text" rounded="pill" href="mailto:davidderas50@gmail.com">
+      <v-btn variant="text" rounded="pill" :href="`mailto:${contactInfo.email}`">
         {{ t('ues.buttons.share') }}
       </v-btn>
     </v-sheet>
@@ -52,6 +52,7 @@ import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick } from 
 import { useI18n } from 'vue-i18n';
 
 import { useEnterAnimations } from '@/composables/useEnterAnimations.js';
+import { contactInfo } from '@/data/contact';
 
 const {
   label,
