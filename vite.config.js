@@ -71,7 +71,7 @@ export default defineConfig({
           const lang = info.split(/\s+/)[0] || '';
 
           const tabMatch = info.match(/\btab\s*=\s*(?:"([^"]+)"|'([^']+)')/);
-          const bracketMatch = info.match(/\[([^\]]+)\]/);
+          const bracketMatch = info.match(/\[(.+?)\]/);
           const tabTitle = (tabMatch?.[1] || tabMatch?.[2] || bracketMatch?.[1] || '').trim();
 
           const rendered = defaultFence
