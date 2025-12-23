@@ -4,18 +4,11 @@
       <div class="blog-header-content">
         <router-link :to="withLocalePath('/blog')" class="blog-brand">
           <span class="blog-brand-name">{{ t('navigation.brand.name') }}</span>
-          <!-- <span class="blog-brand-tag">{{ t('navigation.brand.blogTagline') }}</span> -->
         </router-link>
-
         <div class="blog-header-actions">
           <v-btn rounded="pill" size="small" class="text-none" :to="withLocalePath('/')">
             {{ t('navigation.backToMain') }}
           </v-btn>
-
-          <!-- <v-btn rounded="pill" size="small" class="text-none" :to="withLocalePath('/blog')">
-            {{ t('navigation.backToBlog') }}
-          </v-btn> -->
-
           <div class="blog-controls">
             <ThemeToggle />
             <LocaleToggle />
@@ -58,7 +51,6 @@
       </div>
     </footer>
 
-    <!-- Botón scroll to top -->
     <v-btn
       v-show="showScrollTop"
       :icon="mdiArrowUp"

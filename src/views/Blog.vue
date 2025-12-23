@@ -1,12 +1,6 @@
 <template>
   <div class="page-frame-blog">
     <section class="section-stack blog-wrapper">
-      <div>
-        <v-alert class="text-body-2" density="compact" type="error" :icon="mdiAlertCircle">
-          <template #title><span>Hey</span></template>
-          {{ t('blog.constructionNotice') }}
-        </v-alert>
-      </div>
       <div v-if="!Current" class="blog-index-wrapper">
         <div class="blog-index-content">
           <ul v-if="pagedPosts.length > 0" class="post-index">
@@ -29,9 +23,6 @@
                   <p v-if="post.summary" class="post-summary">
                     {{ post.summary }}
                   </p>
-                  <div v-if="post.tags?.length" class="post-tags">
-                    <span v-for="tag in post.tags" :key="tag" class="tag">#{{ tag }}</span>
-                  </div>
                 </div>
               </router-link>
             </li>
@@ -69,12 +60,8 @@
 
       <article v-else class="blog-post">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <router-link :to="getLocale() === 'es' ? '/es' : '/'">
-            {{ t('navigation.items.home') }}
-          </router-link>
-          <span class="separator">/</span>
           <router-link :to="getLocale() === 'es' ? '/es/blog' : '/blog'">
-            {{ t('navigation.items.blog') }}
+            {{ t('navigation.backToBlog') }}
           </router-link>
           <span class="separator">/</span>
           <span class="current">{{ currentPost?.title }}</span>
@@ -128,7 +115,7 @@
 </template>
 
 <script setup>
-import { mdiAlertCircle, mdiArrowLeft, mdiArrowRight } from '@mdi/js';
+import { mdiArrowLeft, mdiArrowRight } from '@mdi/js';
 import { computed, watch, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';

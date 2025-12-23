@@ -26,7 +26,7 @@ export default {
       tools: 'Herramientas',
     },
     backToMain: 'Portafolio',
-    backToBlog: 'Blog',
+    backToBlog: 'Inicio',
     viewBlogEntries: 'Ver posts',
     search: 'Buscar',
     links: {
