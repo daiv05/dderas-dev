@@ -94,7 +94,9 @@ const upsertStructuredData = (description, keywords, image) => {
 export function useSeo() {
   const route = useRoute();
   const { t, tm, locale } = useI18n();
-  const seoKey = computed(() => route.meta?.seoKey ?? 'home');
+  const seoKey = computed(() =>
+    typeof route.meta?.seoKey === 'string' ? route.meta.seoKey : 'home'
+  );
 
   const applySeo = () => {
     if (typeof document === 'undefined') return;

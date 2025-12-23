@@ -69,17 +69,17 @@ Configura los siguientes campos:
 
 Aquí configuraremos cómo accederemos a la VM.
 
--   **Tipo de autenticación**: Selecciona **Clave pública SSH** (Recomendado por seguridad).
--   **Nombre de usuario**: `azureuser` (o el que prefieras).
--   **Origen de clave pública SSH**: Selecciona "Generar nuevo par de claves" (Generate new key pair).
--   **Nombre del par de claves**: Dale un nombre para identificar el archivo que descargaremos (ej. `vm-ubuntu-01_key`).
+- **Tipo de autenticación**: Selecciona **Clave pública SSH** (Recomendado por seguridad).
+- **Nombre de usuario**: `azureuser` (o el que prefieras).
+- **Origen de clave pública SSH**: Selecciona "Generar nuevo par de claves" (Generate new key pair).
+- **Nombre del par de claves**: Dale un nombre para identificar el archivo que descargaremos (ej. `vm-ubuntu-01_key`).
 
 #### Reglas de puerto de entrada
 
 Para poder administrar el servidor remotamente, necesitamos abrir el puerto SSH.
 
--   **Puertos de entrada públicos**: Selecciona "Permitir los puertos seleccionados".
--   **Seleccionar puertos de entrada**: Asegúrate de que **SSH (22)** esté seleccionado.
+- **Puertos de entrada públicos**: Selecciona "Permitir los puertos seleccionados".
+- **Seleccionar puertos de entrada**: Asegúrate de que **SSH (22)** esté seleccionado.
 
 ---
 
@@ -87,8 +87,8 @@ Para poder administrar el servidor remotamente, necesitamos abrir el puerto SSH.
 
 Para un despliegue básico, las configuraciones por defecto en las pestañas de **Discos** y **Redes** suelen ser suficientes.
 
--   En **Discos**, Azure asignará un disco SSD Premium o Estándar por defecto.
--   En **Redes**, creará automáticamente una Red Virtual (VNet) y una IP Pública para que tu máquina sea accesible desde internet.
+- En **Discos**, Azure asignará un disco SSD Premium o Estándar por defecto.
+- En **Redes**, creará automáticamente una Red Virtual (VNet) y una IP Pública para que tu máquina sea accesible desde internet.
 
 Puedes avanzar haciendo clic en **Siguiente** hasta llegar a la pestaña **Revisar y crear**.
 
@@ -127,15 +127,18 @@ _Ubicación de la IP pública_ -->
 Ahora, abre tu terminal en tu computadora (donde guardaste el archivo `.pem`).
 
 1.  (Opcional pero recomendado en Linux/Mac) Cambia los permisos de la clave para que sea de solo lectura:
+
     ```bash
     chmod 400 ruta/a/tu/clave.pem
     ```
 
 2.  Conéctate usando el comando SSH:
+
     ```bash
     ssh -i ruta/a/tu/clave.pem azureuser@TU_IP_PUBLICA
     ```
-    *Reemplaza `ruta/a/tu/clave.pem` con la ruta real y `TU_IP_PUBLICA` con la IP que copiaste de Azure.*
+
+    _Reemplaza `ruta/a/tu/clave.pem` con la ruta real y `TU_IP_PUBLICA` con la IP que copiaste de Azure._
 
 3.  La primera vez te preguntará si confías en el host (`Are you sure you want to continue connecting?`). Escribe `yes` y presiona ENTER.
 

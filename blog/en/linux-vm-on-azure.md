@@ -66,17 +66,17 @@ Configure the following fields:
 
 Here we will configure how we will access the VM.
 
--   **Authentication type**: Select **SSH public key** (Recommended for security).
--   **Username**: `azureuser` (or your preferred one).
--   **SSH public key source**: Select "Generate new key pair".
--   **Key pair name**: Give it a name to identify the file we will download (e.g., `vm-ubuntu-01_key`).
+- **Authentication type**: Select **SSH public key** (Recommended for security).
+- **Username**: `azureuser` (or your preferred one).
+- **SSH public key source**: Select "Generate new key pair".
+- **Key pair name**: Give it a name to identify the file we will download (e.g., `vm-ubuntu-01_key`).
 
 #### Inbound Port Rules
 
 To be able to manage the server remotely, we need to open the SSH port.
 
--   **Public inbound ports**: Select "Allow selected ports".
--   **Select inbound ports**: Make sure **SSH (22)** is selected.
+- **Public inbound ports**: Select "Allow selected ports".
+- **Select inbound ports**: Make sure **SSH (22)** is selected.
 
 ---
 
@@ -84,8 +84,8 @@ To be able to manage the server remotely, we need to open the SSH port.
 
 For a basic deployment, the default configurations in the **Disks** and **Networking** tabs are usually sufficient.
 
--   In **Disks**, Azure will assign a Premium or Standard SSD disk by default.
--   In **Networking**, it will automatically create a Virtual Network (VNet) and a Public IP so that your machine is accessible from the internet.
+- In **Disks**, Azure will assign a Premium or Standard SSD disk by default.
+- In **Networking**, it will automatically create a Virtual Network (VNet) and a Public IP so that your machine is accessible from the internet.
 
 You can proceed by clicking **Next** until you reach the **Review + create** tab.
 
@@ -134,7 +134,8 @@ chmod 400 path/to/your/key.pem
 ```bash
 ssh -i path/to/your/key.pem azureuser@YOUR_PUBLIC_IP
 ```
-*Replace `path/to/your/key.pem` with the actual path and `YOUR_PUBLIC_IP` with the IP you copied from Azure.*
+
+_Replace `path/to/your/key.pem` with the actual path and `YOUR_PUBLIC_IP` with the IP you copied from Azure._
 
 3.  The first time, it will ask if you trust the host (`Are you sure you want to continue connecting?`). Type `yes` and press ENTER.
 
@@ -169,4 +170,3 @@ The easiest way to delete everything is to delete the **Resource Group** we crea
 4. Confirm the name and delete.
 
 ---
-

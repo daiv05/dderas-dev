@@ -15,12 +15,12 @@ const slugify = (text) => {
   return text
     .trim()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[\s_]+/g, '-')
-    .replace(/[^\w-]/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+    .replaceAll(/[\s_]+/g, '-')
+    .replaceAll(/[^\w-]/g, '')
+    .replaceAll(/-+/g, '-')
+    .replaceAll(/(^-)|(-$)/g, '');
 };
 
 export default defineConfig({
