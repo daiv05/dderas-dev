@@ -54,7 +54,7 @@ const enhanceCodeTabs = (root = document) => {
     panels.className = 'md-code-tabs__panels';
 
     tabs.forEach((tab, i) => {
-      const title = tab.getAttribute('data-title') || `Tab ${i + 1}`;
+      const title = tab.dataset.title || `Tab ${i + 1}`;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'md-code-tabs__tab';
@@ -85,8 +85,8 @@ const enhanceCodeTabs = (root = document) => {
 };
 
 export const initMarkdownEnhancements = (router) => {
-  if (!window.__mdEnhancementsInstalled) {
-    window.__mdEnhancementsInstalled = true;
+  if (!globalThis.__mdEnhancementsInstalled) {
+    globalThis.__mdEnhancementsInstalled = true;
 
     document.addEventListener('click', async (e) => {
       const btn = e.target?.closest?.('.md-code-copy');
@@ -96,7 +96,7 @@ export const initMarkdownEnhancements = (router) => {
       const ok = await copyToClipboard(text);
 
       setCopyButtonState(btn, ok ? 'copied' : 'idle');
-      window.setTimeout(() => setCopyButtonState(btn, 'idle'), COPY_RESET_MS);
+      globalThis.setTimeout(() => setCopyButtonState(btn, 'idle'), COPY_RESET_MS);
     });
   }
 

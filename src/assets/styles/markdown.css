@@ -40,6 +40,7 @@
   line-height: 1.2;
   scroll-margin-top: 88px;
   font-family: var(--font-display);
+  position: relative;
 }
 
 .markdown-body ul,
@@ -288,15 +289,6 @@ html.dark .shiki span {
   border: none;
   border-top: 1px solid var(--line-soft);
   margin: 2rem 0;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  position: relative;
 }
 
 .markdown-body .md-anchor {

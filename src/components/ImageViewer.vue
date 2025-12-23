@@ -63,14 +63,14 @@ const download = async () => {
   try {
     const response = await fetch(props.src);
     const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
+    const url = globalThis.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = props.alt || 'image';
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+    a.remove();
+    globalThis.URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Error downloading image:', error);
     // Fallback

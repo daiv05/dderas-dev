@@ -5,20 +5,6 @@
     <p v-if="summary" class="post-summary">{{ summary }}</p>
     <div class="post-metadata">
       <div class="metadata-row">
-        <!-- <span v-if="author" class="meta-item author">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            width="16"
-            height="16"
-          >
-            <path
-              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-            />
-          </svg>
-          {{ author }}
-        </span> -->
         <span v-if="date" class="meta-item date">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,9 +34,6 @@
           {{ $t ? $t('blog.post.lastUpdated') : 'Última actualización' }}: {{ formatDate(lastmod) }}
         </span>
       </div>
-      <!-- <div v-if="tags?.length" class="tags-row">
-        <span v-for="tag in tags" :key="tag" class="tag">#{{ tag }}</span>
-      </div> -->
     </div>
   </header>
 </template>
