@@ -5,7 +5,7 @@ slug: 'lampp-5-on-rhel-7'
 date: 2022-04-01
 summary: 'Deploy a tuned LAMPP stack (PHP 5.6) on RedHat 7.'
 tags: [Azure, 'RedHat 7', 'RHEL 7', 'Virtual machine', Linux]
-image: /img/tutos/rhel7-lampp56.png
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-04
 ---

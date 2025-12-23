@@ -5,7 +5,7 @@ slug: 'cuenta-edu-en-azure'
 date: 2022-02-01
 summary: 'Activa una cuenta con email .edu y recibe $100 USD de crédito sin tarjeta.'
 tags: [Azure, Cloud]
-image: /img/tutos/azure-account.png
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-04
 ---

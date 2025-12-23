@@ -5,7 +5,7 @@ slug: 'vm-linux-en-azure'
 date: 2025-12-22
 summary: 'Una guía paso a paso para desplegar tu primer servidor Ubuntu en Microsoft Azure, desde la creación hasta la conexión SSH.'
 tags: ['Azure', 'Linux', 'Ubuntu', 'Cloud Computing']
-image: /blog/linux-vm-on-azure/shared/azure-vm.jpeg
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-22
 ---
@@ -169,4 +169,4 @@ La forma más fácil de borrar todo es eliminar el **Grupo de recursos** que cre
 3. Haz clic en "Eliminar grupo de recursos".
 4. Confirma el nombre y elimina.
 
-Espero que esta guía te haya servido para perderle el miedo a la nube y desplegar tu primera máquina virtual. ¡Happy cloud computing!
+---

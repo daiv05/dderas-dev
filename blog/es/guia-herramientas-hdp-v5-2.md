@@ -5,7 +5,7 @@ slug: 'guia-herramientas-hdp-v5-2'
 date: 2022-03-01
 summary: 'Instala cada componente del stack HDP sobre RHEL 7 paso a paso.'
 tags: [Azure, 'RedHat 7', 'RHEL 7', 'Máquina virtual', Linux]
-image: /img/tutos/hdp-herramientas.png
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-04
 ---

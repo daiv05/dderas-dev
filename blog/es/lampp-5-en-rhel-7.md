@@ -5,7 +5,7 @@ slug: 'lampp-5-en-rhel-7'
 date: 2022-04-01
 summary: 'Instala un servidor LAMPP (PHP 5.6) optimizado para RedHat 7.'
 tags: [Azure, 'RedHat 7', 'RHEL 7', 'Máquina virtual', Linux]
-image: /img/tutos/rhel7-lampp56.png
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-04
 ---

@@ -939,8 +939,6 @@ Some extensions that I always recommend for VS Code (regardless of the type of p
 
 ---
 
-## Summary
-
-In this guide, we have covered the basics to get started with Vue 3 and Vite, including the project structure, how the application is mounted, global state management with Pinia, the use of composables to reuse logic, and some useful tools like ESLint, Prettier, and Tailwind CSS. I hope this guide has been helpful for you to take your first steps with this framework. Happy coding!
+Well, that's it for this introductory guide to Vue 3 with Vite. I hope you found it useful for starting your journey with this framework and its ecosystem.
 
 ---

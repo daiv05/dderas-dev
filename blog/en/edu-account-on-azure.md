@@ -5,7 +5,7 @@ slug: 'edu-account-on-azure'
 date: 2022-02-01
 summary: 'Activate an Azure account with a .edu email and get $100 credit with no card.'
 tags: [Azure, Cloud]
-image: /img/tutos/azure-account.png
+image: /img/blog/default_blog.jpg
 author: David Deras
 lastmod: 2025-12-04
 ---
