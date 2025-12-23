@@ -158,31 +158,19 @@ watch(
 
 // Scroll to top functionality
 const handleScroll = () => {
-  const main = document.querySelector('.blog-main');
-  if (main) {
-    showScrollTop.value = main.scrollTop > 300;
-  }
+  showScrollTop.value = window.scrollY > 300;
 };
 
 const scrollToTop = () => {
-  const main = document.querySelector('.blog-main');
-  if (main) {
-    main.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 onMounted(() => {
-  const main = document.querySelector('.blog-main');
-  if (main) {
-    main.addEventListener('scroll', handleScroll);
-  }
+  window.addEventListener('scroll', handleScroll);
 });
 
 onUnmounted(() => {
-  const main = document.querySelector('.blog-main');
-  if (main) {
-    main.removeEventListener('scroll', handleScroll);
-  }
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
