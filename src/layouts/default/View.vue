@@ -30,6 +30,9 @@
                 :icon="item.icon"
               ></v-icon>
             </template>
+            <template v-if="item.openInNewTab" #append>
+              <v-icon size="15" class="nav-dot" :icon="mdiArrowTopRight"></v-icon>
+            </template>
             <v-list-item-title>{{ item.title ?? t(item.titleKey) }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -81,7 +84,7 @@
         </div>
 
         <div v-if="!isDesktop" class="mobile-nav">
-          <v-slide-group v-model="mobileSection" show-arrows>
+          <v-slide-group v-model="mobileSection" show-arrows center-active>
             <v-slide-group-item v-for="item in items" :key="item.value" :value="item.value">
               <v-btn
                 variant="text"
@@ -92,6 +95,9 @@
                 @click="handleMobileNav(item)"
               >
                 {{ item.title ?? t(item.titleKey) }}
+                <template v-if="item.openInNewTab">
+                  <v-icon size="15" class="nav-dot" :icon="mdiArrowTopRight"></v-icon>
+                </template>
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
@@ -122,7 +128,7 @@
 </template>
 
 <script setup>
-import { mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
+import { mdiArrowTopRight, mdiArrowUp, mdiEmail, mdiGithub, mdiLinkedin, mdiMenu } from '@mdi/js';
 import { ref, computed, onMounted, onUnmounted, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
@@ -203,7 +209,12 @@ watch(
 );
 
 const goTo = (item) => {
-  router.push(withLocalePath(item.to));
+  if (item.openInNewTab) {
+    const url = router.resolve(withLocalePath(item.to)).href;
+    window.open(url, '_blank');
+  } else {
+    router.push(withLocalePath(item.to));
+  }
   if (!isDesktop.value) {
     drawer.value = false;
   }
@@ -383,6 +394,8 @@ onUnmounted(() => {
 }
 
 .mobile-nav {
+  display: flex;
+  justify-content: center;
   padding: 0.5rem var(--shell-padding);
   border-bottom: 1px solid var(--line-soft);
 }

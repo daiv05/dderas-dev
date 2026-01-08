@@ -54,13 +54,12 @@ npm run preview
 - **Projects**: Showcase of projects with detailed descriptions
 - **Blog**: Full-stack development articles and tutorials
 - **UES Resources**: Resources for University of El Salvador students
-- **Tools**: Experimental web tools and utilities
 
 ## 📧 Contact
 
 David Deras - davidderas50@gmail.com
 
-Prtfolio: [https://deras.dev](https://deras.dev)
+Portfolio: [https://deras.dev](https://deras.dev)
 
 ---
 

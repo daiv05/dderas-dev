@@ -1,4 +1,4 @@
-import { mdiHome, mdiAccount, mdiFolder, mdiSchool, mdiWrench, mdiPost } from '@mdi/js';
+import { mdiHome, mdiAccount, mdiFolder, mdiSchool, mdiPost } from '@mdi/js';
 
 const sidebarItems = [
   {
@@ -24,18 +24,13 @@ const sidebarItems = [
     value: 'blog',
     icon: mdiPost,
     to: '/blog',
+    openInNewTab: true,
   },
   {
     titleKey: 'navigation.items.ues',
     value: 'ues',
     icon: mdiSchool,
     to: '/resources',
-  },
-  {
-    titleKey: 'navigation.items.tools',
-    value: 'tools',
-    icon: mdiWrench,
-    to: '/tools',
   },
 ];
 

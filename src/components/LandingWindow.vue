@@ -2,7 +2,7 @@
   <section class="hero-shell">
     <v-container fluid class="hero-grid">
       <v-row class="hero-row" align="stretch">
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6" class="hero-col">
           <div ref="copyBlock" class="hero-copy">
             <p class="eyebrow" data-animate>{{ t('hero.eyebrow') }}</p>
             <h1 class="hero-title" data-animate>
@@ -42,6 +42,20 @@
             </div>
 
             <div ref="ledgerBlock" class="hero-ledger">
+              <div class="ledger-title">{{ t('hero.agendaTitle') }}</div>
+              <div class="ledger-grid no-auto-fit">
+                <div v-for="item in agenda" :key="item.title" class="ledger-item">
+                  <span class="label">{{ item.status }}</span>
+                  <span class="value mono">{{ item.title }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </v-col>
+
+        <v-col cols="12" md="6" class="hero-col">
+          <div ref="boardBlock" class="hero-board">
+            <div class="board-section" data-animate>
               <div class="ledger-title">{{ t('hero.stackTitle') }}</div>
               <div class="ledger-grid">
                 <div v-for="tech in techStack" :key="tech.name" class="ledger-item">
@@ -49,34 +63,6 @@
                   <span class="value mono">{{ tech.detail }}</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </v-col>
-
-        <v-col cols="12" md="6">
-          <div ref="boardBlock" class="hero-board">
-            <div class="board-section" data-animate>
-              <div class="board-label">{{ t('hero.agendaTitle') }}</div>
-              <ul class="board-list">
-                <li v-for="item in agenda" :key="item.title">
-                  <span>{{ item.title }}</span>
-                  <span class="mono">{{ item.status }}</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="board-section" data-animate>
-              <div class="board-label">{{ t('hero.snapshotTitle') }}</div>
-              <div class="chipline">
-                <span v-for="note in focusNotes" :key="note.label">
-                  {{ note.label }} · {{ note.value }}
-                </span>
-              </div>
-            </div>
-
-            <div class="board-section code-area" data-animate>
-              <div class="board-label">{{ t('hero.codeLabel') }}</div>
-              <div class="code-highlight" v-html="highlightedSnippet"></div>
             </div>
           </div>
         </v-col>
@@ -107,7 +93,6 @@ let ctx;
 
 const techStack = computed(() => tm('hero.techStack') ?? []);
 const agenda = computed(() => tm('hero.agenda') ?? []);
-const focusNotes = computed(() => tm('hero.focusNotes') ?? []);
 
 const currentRole = ref('');
 const roles = computed(() => tm('hero.roles') ?? []);
@@ -262,6 +247,16 @@ watch(
   margin: 0 auto;
 }
 
+.hero-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.hero-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .hero-copy,
 .hero-board {
   border: 1px solid var(--line-soft);
@@ -320,7 +315,7 @@ watch(
 
 .hero-ledger {
   border-top: 1px solid var(--line-soft);
-  padding-top: 1.25rem;
+  padding-top: 2.25rem;
 }
 
 .ledger-title {
@@ -330,10 +325,15 @@ watch(
   margin-bottom: 0.75rem;
 }
 
-.ledger-grid {
+.ledger-grid:not(.no-auto-fit) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0.75rem;
+}
+
+.ledger-grid.no-auto-fit {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .ledger-item {
@@ -355,9 +355,8 @@ watch(
 }
 
 .board-section {
-  border: 1px solid var(--line-soft);
   border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -413,8 +412,7 @@ watch(
 }
 
 @media (max-width: 959px) {
-  .hero-copy,
-  .hero-board {
+  .hero-col:not(:last-child) {
     margin-bottom: 1.5rem;
   }
 }

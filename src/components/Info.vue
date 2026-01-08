@@ -1,17 +1,9 @@
 <template>
   <section class="about-shell">
-    <div class="about-header">
-      <p ref="label" class="eyebrow">{{ t('about.eyebrow') }}</p>
-      <h2 ref="titleEl" class="section-title">{{ t('about.title') }}</h2>
-      <p ref="subtitle" class="section-lead">
-        {{ t('about.lead') }}
-      </p>
-    </div>
-
     <div class="about-grid">
       <div ref="profileSection" class="profile-column">
         <div class="profile-card">
-          <img src="/img/me/maki.jpg" :alt="contactInfo.name" />
+          <img src="/img/me/me.png" :alt="contactInfo.name" />
           <ul class="fact-list">
             <li v-for="fact in quickFacts" :key="fact.label">
               <span class="label">{{ fact.label }}</span>
@@ -22,15 +14,6 @@
             </li>
           </ul>
           <div class="profile-actions">
-            <v-btn
-              variant="flat"
-              color="primary"
-              rounded="pill"
-              href="/cv/David_Deras_FullStack_Developer.pdf"
-              download="David_Deras_FullStack_Developer.pdf"
-            >
-              {{ t('about.buttons.downloadCv') }}
-            </v-btn>
             <v-btn variant="outlined" rounded="pill" :href="`mailto:${contactInfo.email}`">
               {{ t('about.buttons.contact') }}
             </v-btn>
@@ -40,16 +23,15 @@
 
       <div ref="detailsSection" class="details-column">
         <div class="detail-block">
-          <h3>{{ focusContent.title }}</h3>
+          <h3>{{ aboutMeContent.title }}</h3>
           <p>
-            {{ focusContent.body }}
+            {{ aboutMeContent.body }}
           </p>
         </div>
 
         <div class="detail-block">
           <div class="block-header">
             <h3>{{ skillsContent.title }}</h3>
-            <span class="mono">{{ skillsContent.updated }}</span>
           </div>
           <div class="skills-groups">
             <div v-for="group in skillGroups" :key="group.title" class="skill-group">
@@ -134,7 +116,7 @@ const quickFacts = computed(() => [
 ]);
 const skillsContent = computed(() => tm('about.skills') ?? { groups: [] });
 const skillGroups = computed(() => skillsContent.value.groups ?? []);
-const focusContent = computed(() => tm('about.focus') ?? {});
+const aboutMeContent = computed(() => tm('about.me') ?? {});
 const experienceContent = computed(() => tm('about.experience') ?? { timeline: [] });
 const experience = computed(() => experienceContent.value.timeline ?? []);
 const interestsContent = computed(() => tm('about.interests') ?? { items: [] });

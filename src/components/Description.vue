@@ -1,13 +1,5 @@
 ﻿<template>
   <section ref="sectionRef" class="overview-section">
-    <div class="overview-header">
-      <p ref="titleEl" class="eyebrow">{{ t('overview.eyebrow') }}</p>
-      <h2 ref="headingEl" class="section-title">{{ t('overview.title') }}</h2>
-      <p ref="descriptionEl" class="section-lead">
-        {{ t('overview.lead') }}
-      </p>
-    </div>
-
     <div ref="gridRef" class="overview-grid">
       <v-sheet
         v-for="area in areas"
@@ -17,19 +9,16 @@
         elevation="0"
         rounded="xl"
         tabindex="0"
-        @click="navigateTo(area.to)"
-        @keyup.enter="navigateTo(area.to)"
-        @keyup.space.prevent="navigateTo(area.to)"
+        @click="navigateTo(area)"
+        @keyup.enter="navigateTo(area)"
+        @keyup.space.prevent="navigateTo(area)"
       >
         <div class="panel-top">
-          <span class="mono">{{ area.label }}</span>
-          <span class="panel-link">{{ area.cta }}</span>
+          <span class="mono"></span>
+          <span class="panel-link"><v-icon :icon="mdiArrowTopRight"></v-icon></span>
         </div>
         <h3>{{ area.title }}</h3>
         <p>{{ area.body }}</p>
-        <div class="panel-tags">
-          <span v-for="tag in area.tags" :key="tag">{{ tag }}</span>
-        </div>
       </v-sheet>
     </div>
 
@@ -48,6 +37,7 @@
 </template>
 
 <script setup>
+import { mdiArrowTopRight } from '@mdi/js';
 import { ref, onMounted, onUnmounted, onBeforeUpdate, computed, nextTick, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -74,7 +64,7 @@ let panelRefs = [];
 const ctaSection = ref(null);
 let ctx;
 
-const { t, tm } = useI18n();
+const { _t, tm } = useI18n();
 const areas = computed(() => tm('overview.cards') ?? []);
 const collaboration = computed(() => tm('overview.collaboration') ?? {});
 
@@ -89,9 +79,14 @@ onBeforeUpdate(() => {
   panelRefs = [];
 });
 
-const navigateTo = (path) => {
-  const pathWithLocale = appStore.language === 'es' ? `/es${path}` : path;
-  router.push(pathWithLocale);
+const navigateTo = (area) => {
+  const pathWithLocale = appStore.language === 'es' ? `/es${area.to}` : area.to;
+  if (area.openInNewTab) {
+    const href = router.resolve(pathWithLocale).href;
+    window.open(href, '_blank');
+  } else {
+    router.push(pathWithLocale);
+  }
 };
 
 const setupAnimations = () => {
@@ -182,7 +177,7 @@ watch(
 
 <style scoped lang="scss">
 .overview-section {
-  padding: var(--section-gap) var(--shell-padding);
+  padding: clamp(2rem, 6vw, 4rem) var(--shell-padding);
   border-bottom: 1px solid var(--line-soft);
 }
 

@@ -16,11 +16,7 @@
             {{ t('footer.links.projects') }}
           </router-link>
           <router-link :to="withLocalePath('/resources')">{{ t('footer.links.ues') }}</router-link>
-          <router-link :to="withLocalePath('/tools')">{{ t('footer.links.tools') }}</router-link>
         </div>
-        <a class="cv-link" href="/cv/David_Deras_FullStack_Developer.pdf" download>
-          {{ t('footer.downloadCv') }}
-        </a>
       </div>
 
       <div class="footer-contact">

@@ -25,7 +25,6 @@ export default {
       projects: 'Proyectos',
       blog: 'Blog',
       ues: 'Recursos UES',
-      tools: 'Herramientas',
     },
     backToMain: 'Portafolio',
     backToBlog: 'Inicio',
@@ -89,11 +88,6 @@ export default {
         description: 'Material académico organizado para estudiantes de Ingeniería de Sistemas.',
         keywords: ['Recursos', 'UES', 'Ingeniería', 'Ingeniería de Sistemas'],
       },
-      tools: {
-        title: 'Herramientas y experimentos',
-        description: 'Pequeños proyectos y cosas que voy probando.',
-        keywords: ['Herramientas', 'Experimentos', 'Dev tools'],
-      },
     },
   },
   blog: {
@@ -155,7 +149,6 @@ export default {
     ],
     agendaTitle: 'En qué estoy ahora',
     agenda: [
-      { title: 'Sistema de incidencias FIA-UES', status: 'Puesta en producción' },
       { title: 'MusyCharts v2', status: 'Rediseño y SEO' },
       { title: 'Aprendiendo React', status: 'En progreso' },
     ],
@@ -166,7 +159,7 @@ export default {
       { label: 'Áreas', value: 'GovTech · Retail · Analítica' },
     ],
     codeLabel: 'profile.js',
-    roles: ['Full Stack Developer · MINSAL', 'Vue & Laravel Specialist'],
+    roles: ['Full Stack Developer · MINSAL', 'Systems Designer', 'Software Engineer'],
   },
   overview: {
     eyebrow: 'Qué encontrarás aquí',
@@ -188,6 +181,7 @@ export default {
         tags: ['Vue 3', 'Laravel', 'Cloud'],
         cta: 'Ir al blog',
         to: '/blog',
+        openInNewTab: true,
       },
       {
         label: '03',
@@ -205,9 +199,6 @@ export default {
     },
   },
   about: {
-    eyebrow: 'Perfil profesional',
-    title: 'Full Stack orientado a Vue y Laravel',
-    lead: 'Desarrollador con más de dos años construyendo sistemas para gobierno, retail y plataformas colaborativas. Me enfoco en accesibilidad, SEO y despliegues cloud que mantienen el ritmo de equipos multidisciplinarios.',
     facts: {
       location: 'Ubicación',
       locationValue: contactInfo.location,
@@ -219,16 +210,14 @@ export default {
       modeValue: 'Remoto · Híbrido · Presencial',
     },
     buttons: {
-      downloadCv: 'Descargar CV',
       contact: 'Contactar',
     },
-    focus: {
-      title: 'Enfoque',
-      body: 'La accesibilidad, el SEO y los despliegues en la nube son los pilares que moldean mi proceso de desarrollo. Priorizo la documentación clara y las entregas iterativas para asegurar que los productos no solo cumplan con las necesidades actuales, sino que también se adapten sin problemas a futuros desafíos.',
+    me: {
+      title: 'Sobre mi',
+      body: 'Desarrollador con más de dos años construyendo sistemas para gobierno, retail y plataformas colaborativas. Me enfoco en accesibilidad, SEO y despliegues cloud que mantienen el ritmo de equipos multidisciplinarios. La accesibilidad, el SEO y los despliegues en la nube son los pilares que moldean mi proceso de desarrollo. Priorizo la documentación clara y las entregas iterativas para asegurar que los productos no solo cumplan con las necesidades actuales, sino que también se adapten sin problemas a futuros desafíos.',
     },
     skills: {
       title: 'Competencias principales',
-      updated: 'Actualizado 2025',
       groups: [
         {
           title: 'Frontend',
@@ -318,16 +307,17 @@ export default {
   },
   projects: {
     eyebrow: 'Selección de trabajo',
-    title: 'Proyectos y casos',
-    lead: 'Dossiers construidos con procesos claros y entregables iterativos. Cada caso detalla desafíos técnicos y decisiones de producto.',
+    title: 'Mis proyectos',
+    lead: 'Algunos proyectos en los que he trabajado, con comentarios sobre decisiones técnicas y aprendizajes.',
     labels: {
       summary: 'Resumen',
       deliverables: 'Entregables destacados',
       client: 'Cliente',
       technologies: 'Tecnologías',
       captures: 'Capturas',
-      viewOnline: 'Ver en producción',
+      viewOnline: 'Visitar',
       viewRepo: 'Revisar código',
+      year: 'Año',
     },
   },
   ues: {
@@ -411,68 +401,14 @@ export default {
     },
   },
   footer: {
-    description: `${contactInfo.title} en ${contactInfo.city}. Construyo apps con Vue, Laravel y TypeScript, siempre pensando en mantenerlas simples y escalables.`,
+    description: `${contactInfo.title}. Diseñando soluciones simples y escalables.`,
     quickMap: 'Secciones',
     links: {
       home: 'Inicio',
       projects: 'Proyectos',
       ues: 'Recursos UES',
-      tools: 'Herramientas',
     },
-    downloadCv: 'Descargar CV',
     contact: 'Contacto',
     builtWith: 'Hecho con ❤️ usando Vue',
-  },
-  tools: {
-    pixedai: {
-      eyebrow: 'Laboratorio visual',
-      title: 'Pixedai Studio',
-      lead: 'Convierte cualquier imagen en un pixel art consistente, ajustando bloques, escala y paletas en un panel pensado para iterar rápido.',
-      status: {
-        label: 'Modo beta · experimental',
-        body: 'Motor basado en Pixelit con mejoras de accesibilidad y presets listos para documentación, mockups o redes sociales.',
-        chips: ['Procesamiento local', 'Canvas dinámico', 'Exporta PNG'],
-      },
-      panels: {
-        inputs: {
-          title: 'Entrada y presets',
-          body: 'Selecciona la imagen fuente, define el tamaño del bloque y usa atajos para resoluciones comunes.',
-          reset: 'Reiniciar',
-          uploadLabel: 'Sube una imagen',
-          blockLabel: 'Bloque',
-          presets: 'Presets rápidos',
-          greyscale: 'Escala de grises',
-          maxHeight: 'Altura máx (px)',
-          maxWidth: 'Ancho máx (px)',
-        },
-        palette: {
-          title: 'Paleta de color',
-          body: 'Activa una librería o conserva los tonos originales.',
-          switch: 'Aplicar paleta',
-          select: 'Biblioteca',
-        },
-        preview: {
-          title: 'Vista previa',
-          body: 'Renderiza en vivo sobre canvas y exporta sin perder nitidez.',
-          actions: {
-            process: 'Procesar de nuevo',
-            download: 'Descargar PNG',
-          },
-          tips: [
-            'Las imágenes cuadradas dan resultados más uniformes.',
-            'Usa bloques bajos (≤8) para íconos o stickers.',
-            'Activa la paleta curada para mantener coherencia entre proyectos.',
-          ],
-        },
-      },
-      resolution: 'Bloque {block} · {width} x {height}',
-      presets: {
-        sticker: 'Sticker',
-        icon: 'Icono',
-        poster: 'Póster',
-        banner: 'Banner',
-      },
-      imageAlt: 'Referencia base',
-    },
   },
 };

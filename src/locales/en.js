@@ -25,7 +25,6 @@ export default {
       projects: 'Projects',
       blog: 'Blog',
       ues: 'UES resources',
-      tools: 'Tools',
     },
     backToMain: 'Portfolio',
     backToBlog: 'Home',
@@ -89,11 +88,6 @@ export default {
         description: 'Academic material organized for Computer Systems Engineering students.',
         keywords: ['Resources', 'UES', 'Engineering', 'Computer Systems Engineering'],
       },
-      tools: {
-        title: 'Tools and experiments',
-        description: 'Small projects and things I am trying out.',
-        keywords: ['Tools', 'Experiments', 'Dev tools'],
-      },
     },
   },
   blog: {
@@ -155,7 +149,6 @@ export default {
     ],
     agendaTitle: 'What I am doing now',
     agenda: [
-      { title: 'FIA-UES incident management system', status: 'Production ready' },
       { title: 'MusyCharts v2', status: 'UI/UX and SEO redesign' },
       { title: 'Learning React', status: 'In progress' },
     ],
@@ -166,7 +159,7 @@ export default {
       { label: 'Areas', value: 'GovTech · Retail · Analytics' },
     ],
     codeLabel: 'profile.js',
-    roles: ['Full Stack Developer · MINSAL', 'Vue & Laravel Specialist'],
+    roles: ['Full Stack Developer · MINSAL', 'Systems Designer', 'Software Engineer'],
   },
   overview: {
     eyebrow: 'Content map',
@@ -188,6 +181,7 @@ export default {
         tags: ['Vue 3', 'Laravel', 'Cloud'],
         cta: 'Go to blog',
         to: '/blog',
+        openInNewTab: true,
       },
       {
         label: '03',
@@ -207,7 +201,7 @@ export default {
   about: {
     eyebrow: 'Professional profile',
     title: 'Full Stack centered on Vue y Laravel',
-    lead: 'Developer with more than two years building systems for government, retail and collaborative platforms. I focus on accessibility, SEO and cloud deployments that keep pace with multidisciplinary teams.',
+    lead: '',
     facts: {
       location: 'Location',
       locationValue: contactInfo.location,
@@ -219,16 +213,14 @@ export default {
       modeValue: 'Remote · Hybrid · On-site',
     },
     buttons: {
-      downloadCv: 'Download resume',
       contact: 'Contact',
     },
-    focus: {
-      title: 'Approach',
-      body: 'Accessibility, SEO and cloud deployments are the pillars that shape my development process. I prioritize clear documentation and iterative deliveries to ensure that products not only meet current needs but also adapt seamlessly to future challenges.',
+    me: {
+      title: 'About me',
+      body: 'Developer with more than two years building systems for government, retail and collaborative platforms. I focus on accessibility, SEO and cloud deployments that keep pace with multidisciplinary teams. Accessibility, SEO and cloud deployments are the pillars that shape my development process. I prioritize clear documentation and iterative deliveries to ensure that products not only meet current needs but also adapt seamlessly to future challenges.',
     },
     skills: {
       title: 'Core skills',
-      updated: 'Updated 2025',
       groups: [
         {
           title: 'Frontend',
@@ -318,16 +310,17 @@ export default {
   },
   projects: {
     eyebrow: 'Selected work',
-    title: 'Projects & case studies',
-    lead: 'Dossiers built with clear processes and iterative deliverables. Each case details technical challenges and product decisions.',
+    title: 'My projects',
+    lead: 'Some projects I have worked on, with comments on technical decisions and learnings.',
     labels: {
       summary: 'Summary',
       deliverables: 'Key deliverables',
       client: 'Client',
       technologies: 'Technologies',
       captures: 'Screens',
-      viewOnline: 'View in production',
+      viewOnline: 'Visit',
       viewRepo: 'Review code',
+      year: 'Year',
     },
   },
   ues: {
@@ -410,68 +403,14 @@ export default {
     },
   },
   footer: {
-    description: `${contactInfo.title} in ${contactInfo.city}. I build apps with Vue, Laravel, and TypeScript, always keeping in mind to keep them simple and scalable.`,
+    description: `${contactInfo.title}. Designing simple and scalable solutions.`,
     quickMap: 'Sections',
     links: {
       home: 'Home',
       projects: 'Projects',
       ues: 'UES resources',
-      tools: 'Tools',
     },
-    downloadCv: 'Download resume',
     contact: 'Contact',
     builtWith: 'Made with ❤️ using Vue',
-  },
-  tools: {
-    pixedai: {
-      eyebrow: 'Visual lab',
-      title: 'Pixedai Studio',
-      lead: 'Turn any image into consistent pixel art by adjusting blocks, scale and palettes in a panel built for fast iteration.',
-      status: {
-        label: 'Beta · experimental mode',
-        body: 'Engine powered by Pixelit with accessibility fixes and presets ready for docs, mockups or social media.',
-        chips: ['Local processing', 'Dynamic canvas', 'PNG export'],
-      },
-      panels: {
-        inputs: {
-          title: 'Input & presets',
-          body: 'Select the source image, define block size and use shortcuts for common resolutions.',
-          reset: 'Reset',
-          uploadLabel: 'Upload an image',
-          blockLabel: 'Block',
-          presets: 'Quick presets',
-          greyscale: 'Greyscale',
-          maxHeight: 'Max height (px)',
-          maxWidth: 'Max width (px)',
-        },
-        palette: {
-          title: 'Color palette',
-          body: 'Enable a library or keep the original tones.',
-          switch: 'Apply palette',
-          select: 'Library',
-        },
-        preview: {
-          title: 'Preview',
-          body: 'Live rendering on canvas with lossless export.',
-          actions: {
-            process: 'Process again',
-            download: 'Download PNG',
-          },
-          tips: [
-            'Square images produce more uniform results.',
-            'Use low blocks (≤8) for icons or stickers.',
-            'Activate the curated palette to keep visual consistency across projects.',
-          ],
-        },
-      },
-      resolution: 'Block {block} · {width} x {height}',
-      presets: {
-        sticker: 'Sticker',
-        icon: 'Icon',
-        poster: 'Poster',
-        banner: 'Banner',
-      },
-      imageAlt: 'Base reference',
-    },
   },
 };

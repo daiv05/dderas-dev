@@ -32,12 +32,6 @@ const routes = [
         component: () => import('@/views/Ues.vue'),
         meta: { seoKey: 'ues' },
       },
-      {
-        path: 'tools',
-        name: 'Tools',
-        component: () => import('@/views/Herramientas.vue'),
-        meta: { seoKey: 'tools' },
-      },
     ],
   },
   {

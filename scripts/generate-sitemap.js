@@ -36,7 +36,6 @@ const STATIC_ROUTES = [
   { path: '/projects', priority: 0.8 },
   { path: '/blog', priority: 0.9 },
   { path: '/resources', priority: 0.6 },
-  { path: '/tools', priority: 0.5 },
 ];
 
 function localePath(locale, basePath) {

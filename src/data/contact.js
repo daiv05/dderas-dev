@@ -1,5 +1,5 @@
 export const contactInfo = {
-  name: 'David Deras',
+  name: '-',
   title: 'Full Stack Developer',
   location: 'San Salvador, El Salvador',
   city: 'San Salvador',
